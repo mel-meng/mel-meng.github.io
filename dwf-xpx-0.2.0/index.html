@@ -1,0 +1,3419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XPX to ICM DWF Export</title>
+  <style>
+:root {
+  --bg: #f7f9fc;
+  --surface: #ffffff;
+  --surface-soft: #f3f7fb;
+  --ink: #162033;
+  --muted: #667085;
+  --muted-2: #8a94a6;
+  --line: #dbe4ee;
+  --line-strong: #cbd5e1;
+  --primary: #007c70;
+  --primary-dark: #005f56;
+  --primary-soft: #e5f6f3;
+  --primary-softer: #f0fbf9;
+  --blue: #2563eb;
+  --blue-soft: #eff6ff;
+  --green: #16845b;
+  --green-soft: #ecfdf3;
+  --amber: #a15c00;
+  --amber-soft: #fff7e6;
+  --danger: #b42318;
+  --danger-soft: #fff0f0;
+  --shadow: 0 24px 60px rgba(16, 24, 40, 0.08);
+  --shadow-soft: 0 10px 28px rgba(16, 24, 40, 0.06);
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --max: 1120px;
+  --panel: #ffffff;
+  --red: #dc2626;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(0, 124, 112, 0.12), transparent 28rem),
+    radial-gradient(circle at 92% 4%, rgba(37, 99, 235, 0.09), transparent 24rem),
+    linear-gradient(180deg, #fbfcff 0%, var(--bg) 46%, #edf2f7 100%);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--blue);
+}
+
+.shell {
+  width: min(var(--max), calc(100% - 36px));
+  margin: 0 auto;
+  padding: 24px 0 84px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--primary), #18b39e);
+  display: grid;
+  place-items: center;
+  color: white;
+  box-shadow: 0 8px 18px rgba(0, 124, 112, 0.24);
+  font-size: 17px;
+}
+
+.hero {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(219, 228, 238, 0.92);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary), #32c0aa, #76d9cb);
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  gap: 28px;
+  padding: 36px;
+  align-items: stretch;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(42px, 6vw, 76px);
+  line-height: 0.96;
+  letter-spacing: -0.06em;
+  margin-bottom: 18px;
+}
+
+h2 {
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  margin-bottom: 7px;
+}
+
+.subhead {
+  font-size: 20px;
+  color: var(--muted);
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+
+.golden-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  margin-bottom: 18px;
+}
+
+.simple-flow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.flow-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--line);
+  background: white;
+  padding: 10px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-weight: 750;
+  box-shadow: var(--shadow-soft);
+}
+
+.flow-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-size: 12px;
+}
+
+.arrow {
+  color: var(--muted-2);
+}
+
+.upload-panel {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.dropzone-host.drag-over .dropzone {
+  border-color: var(--primary);
+  background: var(--primary-softer);
+  transform: translateY(-1px);
+}
+
+.dropzone {
+  border: 2px dashed #a9bacb;
+  border-radius: 20px;
+  background: var(--surface-soft);
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.dropzone:hover {
+  border-color: var(--primary);
+  background: var(--primary-softer);
+  transform: translateY(-1px);
+}
+
+.drop-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 14px;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-size: 28px;
+}
+
+.dropzone strong {
+  display: block;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.dropzone span {
+  color: var(--muted);
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button,
+.button {
+  border: 0;
+  appearance: none;
+  border-radius: 13px;
+  padding: 12px 16px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  min-height: 46px;
+}
+
+button:hover,
+.button:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+button.primary,
+button.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 12px 24px rgba(0, 124, 112, 0.22);
+  border: 0;
+}
+
+button.primary:hover:not(:disabled),
+button.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+button.secondary {
+  background: #eef3f8;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 12px 0 0;
+}
+
+.hidden-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+
+.section {
+  margin-top: 24px;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.ready-panel {
+  padding: 28px;
+  border: 1px solid rgba(22, 132, 91, 0.25);
+  background: linear-gradient(180deg, #fff 0%, #f6fffa 100%);
+  margin-bottom: 24px;
+}
+
+.ready-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 22px;
+}
+
+.status-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.check {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--green-soft);
+  color: var(--green);
+  font-weight: 900;
+  border: 1px solid rgba(22, 132, 91, 0.18);
+  flex: 0 0 auto;
+}
+
+.file-name {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.metric {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 15px;
+}
+
+.metric b {
+  display: block;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 6px;
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.export-box {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  background: var(--ink);
+  color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.export-box h2 {
+  color: white;
+}
+
+.export-box p {
+  color: rgba(255, 255, 255, 0.74);
+  margin-bottom: 0;
+}
+
+.export-box .primary {
+  background: #ffffff;
+  color: var(--primary-dark);
+  box-shadow: none;
+  min-width: 190px;
+}
+
+.export-files {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.export-secondary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.export-secondary-actions .secondary {
+  font-size: 12px;
+  min-height: 36px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.export-secondary-actions .secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.export-explorer-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.ready-warnings {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border: 1px solid #fde68a;
+  border-radius: 14px;
+  background: var(--amber-soft);
+}
+
+.ready-warnings-title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.parser-notes-export {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.import-note {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  background: var(--blue-soft);
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  border-radius: 16px;
+  padding: 14px;
+  font-weight: 650;
+}
+
+.import-note small {
+  display: block;
+  color: #47628a;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.import-note a {
+  color: #1d4ed8;
+}
+
+.warning-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #f2d49a;
+  background: var(--amber-soft);
+  color: #7a4300;
+  padding: 8px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.accordion-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.accordion-grid details {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.accordion-grid summary {
+  list-style: none;
+  padding: 20px 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 850;
+  letter-spacing: -0.015em;
+}
+
+.accordion-grid summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-grid summary::after {
+  content: "+";
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
+.accordion-grid details[open] summary::after {
+  content: "−";
+}
+
+.summary-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.summary-text span {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.details-body {
+  border-top: 1px solid var(--line);
+  padding: 22px;
+  background: #fbfdff;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 13px;
+}
+
+.validation-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.validation-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.validation-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 14px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+}
+
+.dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--green-soft);
+  color: var(--green);
+  font-weight: 900;
+  font-size: 12px;
+  margin-top: 1px;
+}
+
+.dot.info {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.dot.warn {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+.import-placeholder-steps {
+  margin: 12px 0;
+  padding-left: 1.4rem;
+  font-size: 14px;
+}
+
+.import-placeholder-steps li {
+  margin-bottom: 6px;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  background: #eef2f7;
+  padding: 2px 6px;
+  border-radius: 7px;
+  font-size: 0.92em;
+}
+
+.error {
+  border-left: 3px solid var(--danger);
+  background: var(--danger-soft);
+  padding: 12px;
+  border-radius: 8px;
+  color: var(--danger);
+  margin-bottom: 16px;
+}
+
+.status.ok {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.status.busy {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.icm-template-warning {
+  margin: 0 0 12px;
+  color: var(--amber);
+  font-size: 14px;
+}
+
+.icm-unit-panel {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.icm-unit-panel-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: var(--green);
+}
+
+.icm-unit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.icm-unit-block {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #f8fafc;
+  font-size: 13px;
+}
+
+.icm-unit-block h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.icm-unit-block p {
+  margin: 0 0 6px;
+}
+
+.icm-unit-note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.icm-unit-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.icm-unit-warn {
+  margin: 8px 0 0;
+  color: var(--amber);
+  font-size: 13px;
+}
+
+.icm-unit-example {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.icm-assumptions {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.icm-assumptions-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.icm-assumptions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.icm-assumptions-block {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 13px;
+}
+
+.icm-assumptions-block h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.icm-assumptions-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.icm-assumptions-list li {
+  margin: 4px 0;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+select {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+pre {
+  background: #101828;
+  color: #d6e4ff;
+  padding: 16px;
+  border-radius: 15px;
+  overflow: auto;
+  font-size: 13px;
+  line-height: 1.45;
+  max-height: 520px;
+}
+
+.warnings {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.warnings li {
+  padding: 8px 12px;
+  border-left: 3px solid var(--amber);
+  background: var(--amber-soft);
+  margin-bottom: 6px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+}
+
+.warnings li.unresolved {
+  border-left-color: var(--danger);
+  background: var(--danger-soft);
+}
+
+footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+#viewer-section {
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+#viewer-section h2 {
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+
+#warnings-section.ready-warnings {
+  margin-top: 0;
+}
+
+.csv-export-section {
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.csv-export-section h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.csv-export-hint {
+  margin: 0 0 18px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.csv-export-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.csv-export-item {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  background: #fafbfc;
+}
+
+.csv-export-item h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.csv-export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.csv-export-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.explorer-hint {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.explorer-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+  min-height: 420px;
+  align-items: start;
+}
+
+.tree-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tree-toolbar {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.tree-filter-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.tree-filter-label input {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.tree-panel {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f8fafc;
+  padding: 10px;
+  max-height: 640px;
+  overflow: auto;
+}
+
+.tree-root,
+.tree-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tree-group {
+  margin-bottom: 12px;
+}
+
+.tree-group-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.tree-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 6px 8px;
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  min-height: auto;
+  font-weight: 600;
+}
+
+.tree-item:hover {
+  background: #e2e8f0;
+  border-color: var(--line);
+  transform: none;
+}
+
+.tree-item.selected {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+.tree-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  background: var(--red);
+  border-radius: 4px;
+}
+
+.tree-empty {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 4px 8px;
+}
+
+.detail-panel {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 16px;
+  min-height: 420px;
+  max-height: 640px;
+  overflow: auto;
+}
+
+.detail-empty {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.detail-view {
+  font-size: 14px;
+}
+
+.detail-header {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.detail-section {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.detail-section:last-child {
+  border-bottom: none;
+}
+
+.detail-section h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #334155;
+}
+
+.detail-section h5 {
+  margin: 12px 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.field-list {
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.field-row dt {
+  margin: 0;
+  font-weight: 600;
+  color: #475569;
+}
+
+.field-row dd {
+  margin: 0;
+}
+
+.detail-warning {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  background: var(--danger-soft);
+  border-left: 3px solid var(--danger);
+  border-radius: 0 6px 6px 0;
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.detail-link {
+  margin: 8px 0 0;
+}
+
+.link-button {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--blue);
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  min-height: auto;
+  font-weight: 600;
+}
+
+.link-button:hover {
+  background: none;
+  color: #1d4ed8;
+  transform: none;
+}
+
+.temporal-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.multiplier-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.multiplier-table th,
+.multiplier-table td {
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.multiplier-table th {
+  background: #f1f5f9;
+}
+
+.multiplier-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.multiplier-cell {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 11px;
+  background: #f8fafc;
+}
+
+.hour-label {
+  display: block;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.hour-value {
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 100px;
+  padding: 4px 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f8fafc;
+}
+
+.bar {
+  flex: 1;
+  min-width: 4px;
+  background: #3b82f6;
+  border-radius: 2px 2px 0 0;
+}
+
+.bar-axis {
+  display: flex;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.bar-label {
+  flex: 1;
+  font-size: 9px;
+  text-align: center;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.raw-json {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.flat-table-section {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.flat-table-section.flat-table-reference {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.flat-table-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.flat-table-title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.flat-table-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  flex-basis: 100%;
+}
+
+.flat-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.flat-table-count {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.table-scroll {
+  max-height: 420px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.flat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.flat-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--line);
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.flat-table tbody td {
+  border-bottom: 1px solid #eef2f7;
+  padding: 5px 8px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.flat-table-row {
+  cursor: pointer;
+}
+
+.flat-table-row:hover {
+  background: #eff6ff;
+}
+
+.flat-table-row:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+
+.raw-json summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.raw-json .controls {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+  .hero-inner,
+  .ready-header,
+  .export-box {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics,
+  .validation-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ready-header .warning-mini {
+    justify-self: start;
+  }
+
+  .explorer-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .temporal-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .shell {
+    width: min(100% - 22px, var(--max));
+    padding-top: 14px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hero-inner {
+    padding: 22px;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+
+  .subhead {
+    font-size: 17px;
+  }
+
+  .metrics,
+  .validation-list {
+    grid-template-columns: 1fr;
+  }
+
+  .button-row button,
+  .export-box .primary {
+    width: 100%;
+  }
+
+  .accordion-grid summary {
+    align-items: flex-start;
+  }
+}
+
+</style>
+  <!-- Build template for npm run build — open release/dwf-xpx-0.1.0/index.html instead. -->
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar" aria-label="Page header">
+      <div class="brand"><span class="mark" aria-hidden="true">↗</span> XPX to ICM DWF Export</div>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-inner">
+        <div>
+          <div class="golden-badge">★ Recommended workflow</div>
+          <h1 id="page-title">Load XPX. Export ICM CSVs.</h1>
+          <p class="subhead">A simple conversion step for XP-SWMM dry weather flow data. Load one XPX file and create the two CSV files needed for InfoWorks ICM import.</p>
+
+          <div class="simple-flow" aria-label="Golden path workflow">
+            <div class="flow-step"><span class="flow-num">1</span> Load XPX</div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="flow-step"><span class="flow-num">2</span> Check ready status</div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="flow-step"><span class="flow-num">3</span> Export ICM CSVs</div>
+          </div>
+        </div>
+
+        <aside class="upload-panel" aria-label="Load XPX file">
+          <div id="drop-zone" class="dropzone-host">
+            <label class="dropzone" for="file-input">
+              <span>
+                <span class="drop-icon" aria-hidden="true">📄</span>
+                <strong>Drop your .xpx file here</strong>
+                <span>or choose a file from your computer</span>
+              </span>
+            </label>
+            <input class="hidden-input" id="file-input" type="file" accept=".xpx,.XPX,text/plain" />
+            <div class="button-row">
+              <button class="primary" type="button" id="choose-btn">Choose XPX file</button>
+              <button class="secondary" type="button" id="load-sample">Load sample</button>
+              <button class="secondary" type="button" id="load-multi-sample">Load multi-node sample</button>
+            </div>
+            <p id="status-box" class="hint status" aria-live="polite"></p>
+            <p class="hint">The main path is intentionally short: load a model, then export the ICM files. See <a href="#section-prepare-xpx">how to prepare your XPX file</a> for input requirements.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div id="error-box" class="error" hidden></div>
+
+    <section class="panel ready-panel" id="ready-panel" hidden aria-labelledby="ready-title">
+      <div class="ready-header">
+        <div>
+          <div class="status-title">
+            <span class="check" aria-hidden="true">✓</span>
+            <div>
+              <h2 id="ready-title">Ready to export</h2>
+              <p class="file-name"><strong id="filename-label"></strong> parsed successfully.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="warnings-section" class="ready-warnings" hidden>
+        <h3 class="ready-warnings-title">Parser notes and warnings</h3>
+        <ul id="warnings-list" class="warnings"></ul>
+      </section>
+
+      <div class="metrics" aria-label="Export readiness summary">
+        <div class="metric"><b id="dwf-node-count">0</b><span>DWF nodes</span></div>
+        <div class="metric"><b id="icm-profile-count">0</b><span>Wastewater profiles</span></div>
+        <div class="metric"><b id="unresolved-count">0</b><span>Unresolved references</span></div>
+        <div class="metric"><b id="icm-files-count">2</b><span>ICM files created</span></div>
+      </div>
+
+      <div id="icm-export-section">
+        <div class="export-box">
+          <div>
+            <h2>Export the ICM files</h2>
+            <p>This creates both files needed for the normal ICM import workflow.</p>
+            <div class="export-files" aria-label="Files created">
+              <span class="file-chip">Waste water.csv</span>
+              <span class="file-chip">subcatchment.CSV</span>
+            </div>
+            <p class="export-explorer-note">Review parsed DWF nodes and temporal patterns in the <strong>XPX DWF Explorer</strong> below before importing into ICM.</p>
+            <p class="export-secondary-actions">
+              <button id="export-icm-wastewater" type="button" class="secondary" disabled>Export Waste water.csv only</button>
+              <button id="export-icm-subcatchment" type="button" class="secondary" disabled>Export subcatchment.CSV only</button>
+            </p>
+          </div>
+          <button class="primary" type="button" id="export-icm-both" disabled>Export ICM CSVs</button>
+        </div>
+
+        <p id="icm-template-warning" class="icm-template-warning" hidden></p>
+
+        <div class="import-note">
+          <div aria-hidden="true">→</div>
+          <div>
+            Import into ICM in this order: Waste Water event first, then subcatchment update.
+            <small>After import, confirm the subcatchment foul-flow display unit is cfs before reviewing values. <a href="#section-import-icm">Full import steps</a></small>
+          </div>
+        </div>
+      </div>
+
+      <div class="parser-notes-export">
+        <button id="export-parser-notes-csv" type="button" class="secondary" disabled>Export parser notes CSV</button>
+      </div>
+
+      <span id="icm-subcatchment-count" hidden>0</span>
+    </section>
+
+    <section class="panel section" id="viewer-section" hidden aria-labelledby="explorer-title">
+      <h2 id="explorer-title">XPX DWF Explorer</h2>
+      <p class="explorer-hint">XPSWMM-style view after parse.</p>
+      <div class="explorer-layout">
+        <div class="tree-column">
+          <div id="tree-toolbar" class="tree-toolbar">
+            <label class="tree-filter-label">
+              <input id="dwf-filter" type="checkbox" />
+              Show only nodes with DWF loadings
+            </label>
+          </div>
+          <nav id="object-tree" class="tree-panel" aria-label="XPX objects"></nav>
+        </div>
+        <div id="detail-panel" class="detail-panel" role="region" aria-live="polite">
+          <p class="detail-empty">Select a node or temporal variation in the tree.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section csv-export-section" id="csv-export-section" hidden aria-labelledby="csv-export-title">
+      <h2 id="csv-export-title">Additional CSV Export</h2>
+      <p class="csv-export-hint">Reference exports for inspection — not ICM import format. Network column definitions: <a href="../doc/xpx/network-export.html">network-export.html</a>.</p>
+      <div class="csv-export-grid">
+        <div class="csv-export-item">
+          <h3>Node DWF info CSV</h3>
+          <p class="muted small">One row per node with DWF fields from the parsed model.</p>
+          <div class="csv-export-actions">
+            <span id="nodes-dwf-count" class="csv-export-count"></span>
+            <button id="export-nodes-csv" type="button" class="secondary">Export node DWF info CSV</button>
+          </div>
+        </div>
+        <div class="csv-export-item">
+          <h3>Network node CSV</h3>
+          <p class="muted small">Design-input node table from XPX <code>NODE</code> records.</p>
+          <div class="csv-export-actions">
+            <span id="network-nodes-count" class="csv-export-count"></span>
+            <button id="export-network-nodes-csv" type="button" class="secondary" disabled>Export network nodes CSV</button>
+          </div>
+        </div>
+        <div class="csv-export-item">
+          <h3>Network link CSV</h3>
+          <p class="muted small">Design-input link table from XPX <code>LINK</code> records.</p>
+          <div class="csv-export-actions">
+            <span id="network-links-count" class="csv-export-count"></span>
+            <button id="export-network-links-csv" type="button" class="secondary" disabled>Export network links CSV</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section accordion-grid" aria-label="Workflow details">
+      <details id="section-prepare-xpx">
+        <summary>
+          <span class="summary-text">How to prepare your XPX file <span>Export requirements from XP-SWMM before using this tool.</span></span>
+        </summary>
+        <div class="details-body">
+          <p class="muted">Full step-by-step instructions coming soon. Refer to <strong>Section: Preparing XPX input</strong> (below).</p>
+          <p class="muted small">This section will describe how to export a compatible <code>.xpx</code> file from XP-SWMM with the DWF node and temporal variation data this tool expects.</p>
+        </div>
+      </details>
+
+      <details id="section-import-icm">
+        <summary>
+          <span class="summary-text">How to import the CSV files into ICM <span>InfoWorks ICM import order and mapping file.</span></span>
+        </summary>
+        <div class="details-body">
+          <p class="muted">Full step-by-step instructions coming soon. Refer to <strong>Section: Importing CSV files into ICM</strong> (below).</p>
+          <ol class="import-placeholder-steps">
+            <li>Master Database → Import InfoWorks → <strong>Waste Water event</strong> → exported <code>*.Waste water.csv</code></li>
+            <li>Import <strong>subcatchment update</strong> → exported <code>*.subcatchment.CSV</code> (see <a href="help.html">help.html</a> for column mapping)</li>
+            <li>In ICM, confirm subcatchment foul-flow display is <strong>cfs</strong> before trusting <code>additional_foul_flow</code> values.</li>
+          </ol>
+          <p class="muted small">Mapping reference: <a href="../doc/icm/mapping.md">mapping.md</a>, <a href="../doc/icm/subcatchment-units.md">subcatchment-units.md</a></p>
+        </div>
+      </details>
+
+      <details id="validation-summary" open>
+        <summary>
+          <span class="summary-text">Review export summary <span>For users who want confidence before importing into ICM.</span></span>
+        </summary>
+        <div class="details-body">
+          <div id="validation-list" class="validation-list">
+            <p class="muted validation-empty">Load an XPX file to see export readiness checks.</p>
+          </div>
+        </div>
+      </details>
+
+      <details id="assumptions-accordion">
+        <summary>
+          <span class="summary-text">Assumptions used for this export <span>A compact reference for QA, demos, and repeatability.</span></span>
+        </summary>
+        <div class="details-body">
+          <div id="icm-unit-panel" class="icm-unit-panel" hidden>
+            <h3 class="icm-unit-panel-title">Units and ICM import</h3>
+            <div class="icm-unit-grid">
+              <section class="icm-unit-block">
+                <h4>XPX source (this file)</h4>
+                <p class="icm-unit-note">Per-node <code>DRY_WTH_UN</code> + <code>T_SEWAGE</code> — not inferred from flow magnitude.</p>
+                <ul id="icm-xpx-units-list" class="icm-unit-list"></ul>
+                <p id="icm-xpx-units-mixed" class="icm-unit-warn" hidden></p>
+              </section>
+              <section class="icm-unit-block">
+                <h4>ICM subcatchment CSV</h4>
+                <p><code>additional_foul_flow</code> → <strong id="icm-subcatchment-unit-label">cfs</strong></p>
+                <p id="icm-subcatchment-example" class="icm-unit-example"></p>
+              </section>
+              <section class="icm-unit-block">
+                <h4>ICM Waste Water event CSV</h4>
+                <p>Profile multipliers; template average-flow unit → <strong id="icm-wwg-unit-label">ft³/day</strong></p>
+                <p class="icm-unit-note">Profile header <code>FLOW</code> is exported as 0.</p>
+              </section>
+            </div>
+          </div>
+
+          <section id="icm-assumptions" class="icm-assumptions" hidden>
+            <h3 class="icm-assumptions-title">Export assumptions</h3>
+            <div class="icm-assumptions-grid">
+              <div class="icm-assumptions-block">
+                <h4>Subcatchment CSV columns</h4>
+                <ul id="icm-subcatchment-columns" class="icm-assumptions-list"></ul>
+                <p id="icm-total-area-note" class="icm-unit-note"></p>
+                <p class="icm-unit-note"><code>x</code>, <code>y</code> from XPX <code>NODE</code> line (same as node DWF info CSV).</p>
+              </div>
+              <div class="icm-assumptions-block">
+                <h4>Row inclusion</h4>
+                <p class="icm-unit-note">One row per node with DWF loading (<code>hasDwfLoading</code>) — same rule as explorer filter.</p>
+              </div>
+              <div class="icm-assumptions-block">
+                <h4>Not exported to ICM</h4>
+                <ul class="icm-assumptions-list">
+                  <li><code>T_DWF_PFAC</code> (peaking factor)</li>
+                  <li>Census / area-only DWF (<code>T_ASUB</code>, <code>T_POPDEN</code> without <code>T_SEWAGE</code>)</li>
+                  <li>Unreferenced temporal variations</li>
+                  <li>Network node/link design-input export (separate workflow — Additional CSV Export)</li>
+                </ul>
+              </div>
+              <div class="icm-assumptions-block">
+                <h4>Waste Water event CSV</h4>
+                <ul class="icm-assumptions-list">
+                  <li>Profile header <code>FLOW</code> = 0; shape in calibration multipliers</li>
+                  <li><code>wastewater_profile</code> is integer <code>PROFILE_NUMBER</code>, not pattern name</li>
+                  <li>Profiles: referenced pattern names only; stable alphabetical numbering</li>
+                  <li>Hourly multipliers rotated for ICM 0-based hours (<code>00:00</code> = XPX H24, then H1…H23)</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    Open <code>release/dwf-xpx-0.1.0/index.html</code> on <code>file://</code>.
+    For the large sample, use <strong>Choose XPX file</strong> and select <code>sample/multi_node.xpx</code>.
+  </footer>
+
+  <script defer>
+(() => {
+  // <define:__ICM_UNITS__>
+  var define_ICM_UNITS_default = { subcatchment: { field: "additional_foul_flow", unit: "cfs", source: "Cottonwood ICM subcatchment template \u2014 verify in ICM UI if network changes" }, subcatchmentArea: { field: "total_area", unit: "acre", value: 0.1, source: "Fixed per DWF node export (ICM_SUBCATCHMENT_TOTAL_AREA_ACRES)" }, wastewaterEvent: { field: "FLOW / calibration multipliers", unit: "ft3/day", source: "Waste water.csv line 5 (Units_Average_Flow)" } };
+
+  // src/xpx/dwf-filter.js
+  function hasDwfLoading(node) {
+    const si = node.sewerInputs;
+    const dwf = si.dryWeatherFlow;
+    if (si.enabled === false || dwf.enabled === false) {
+      return false;
+    }
+    const hasAssignment = dwf.baseFlow !== null || dwf.temporalVariationRef !== null;
+    const togglesOn = si.enabled === true && dwf.enabled === true;
+    return togglesOn || dwf.enabled !== false && hasAssignment;
+  }
+  function filterDwfNodes(nodes) {
+    return nodes.filter(hasDwfLoading);
+  }
+
+  // src/icm/csv-writers.js
+  var PROFILE_SECTION_HEADER = "PROFILE_NUMBER,PROFILE_DESCRIPTION,FLOW";
+  var SUBCATCHMENT_CSV_HEADER = "subcatchment_id,node_id,x,y,total_area,wastewater_profile,additional_foul_flow";
+  function escapeCsvField(field) {
+    const text = String(field);
+    if (/[",\r\n]/.test(text)) {
+      return `"${text.replace(/"/g, '""')}"`;
+    }
+    return text;
+  }
+  function rowsToCsv(rows) {
+    const body = rows.map((row) => row.map((cell) => escapeCsvField(cell)).join(",")).join("\r\n");
+    return `\uFEFF${body}`;
+  }
+  function formatCsvNumber(value) {
+    if (value === null || value === void 0) {
+      return "";
+    }
+    return String(value);
+  }
+  function formatWwgTime(hour) {
+    return `${String(hour).padStart(2, "0")}:00`;
+  }
+  function formatWwgFlowMultiplier(value) {
+    const rounded = Math.round(value * 1e6) / 1e6;
+    return String(rounded);
+  }
+  function parseWwgTemplate(templateText) {
+    const lines = templateText.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
+    const blockStarts = [];
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i] === PROFILE_SECTION_HEADER) {
+        blockStarts.push(i);
+      }
+    }
+    if (blockStarts.length === 0) {
+      throw new Error("WWG template: no profile block found");
+    }
+    const header = lines.slice(0, blockStarts[0]);
+    const end = blockStarts.length > 1 ? blockStarts[1] : lines.length;
+    const profileBlockPrototype = lines.slice(blockStarts[0], end);
+    if (profileBlockPrototype.length < 2) {
+      throw new Error("WWG template: profile block too short");
+    }
+    return { header, profileBlockPrototype };
+  }
+  function buildWwgProfileBlock(block, profile) {
+    const lines = [...block];
+    lines[1] = `${profile.profileNumber},${profile.name},0`;
+    const patchCalibration = (sectionName, flows) => {
+      const sectionIndex = lines.indexOf(sectionName);
+      if (sectionIndex === -1) {
+        throw new Error(`WWG template block missing ${sectionName}`);
+      }
+      const dataStart = sectionIndex + 2;
+      for (let h = 0; h < 24; h++) {
+        const rowIndex = dataStart + h;
+        const parts = lines[rowIndex].split(",");
+        if (parts.length < 3) {
+          throw new Error(`Invalid calibration row at index ${rowIndex}`);
+        }
+        parts[0] = formatWwgTime(h);
+        parts[1] = formatWwgFlowMultiplier(flows[h]);
+        lines[rowIndex] = parts.join(",");
+      }
+    };
+    patchCalibration("CALIBRATION_WEEKDAY", profile.diurnal.weekday);
+    patchCalibration("CALIBRATION_WEEKEND", profile.diurnal.weekend);
+    return lines;
+  }
+  function subcatchmentRowsToCsv(rows) {
+    const headerRow = SUBCATCHMENT_CSV_HEADER.split(",");
+    const dataRows = rows.map((row) => [
+      row.subcatchment_id,
+      row.node_id,
+      formatCsvNumber(row.x),
+      formatCsvNumber(row.y),
+      formatCsvNumber(row.total_area),
+      formatCsvNumber(row.wastewater_profile),
+      formatCsvNumber(row.additional_foul_flow)
+    ]);
+    return rowsToCsv([headerRow, ...dataRows]);
+  }
+  function wwgProfilesToWasteWaterCsv(profiles, templateText) {
+    const { header, profileBlockPrototype } = parseWwgTemplate(templateText);
+    const sorted = [...profiles].sort((a, b) => a.profileNumber - b.profileNumber);
+    const blocks = sorted.map(
+      (profile) => buildWwgProfileBlock(profileBlockPrototype, profile)
+    );
+    const lines = [...header, ...blocks.flat()];
+    return lines.join("\r\n");
+  }
+
+  // src/icm/diurnal.js
+  function computeDiurnalFlows(temporalVariation) {
+    const { hourlyMultipliers, dailyMultipliers } = temporalVariation;
+    const weekday = [];
+    const weekend = [];
+    for (let h = 0; h < 24; h++) {
+      const xpxHour = (h + 23) % 24;
+      weekday.push(hourlyMultipliers[xpxHour] * dailyMultipliers[0]);
+      weekend.push(hourlyMultipliers[xpxHour] * dailyMultipliers[5]);
+    }
+    return { weekday, weekend };
+  }
+
+  // src/icm/profile-registry.js
+  function buildProfileRegistry(patternNames) {
+    const unique = [...new Set(patternNames)].sort();
+    const registry = /* @__PURE__ */ new Map();
+    for (let i = 0; i < unique.length; i++) {
+      registry.set(unique[i], i + 1);
+    }
+    return registry;
+  }
+
+  // src/icm/flow-units.js
+  var ICM_SUBCATCHMENT_FLOW_UNIT = "cfs";
+  var GPM_PER_CFS = 448.831;
+  var TO_CFS = {
+    /** cfs (0) — passthrough */
+    0: (flow) => flow,
+    /** cms (1) */
+    1: (flow) => flow / 0.0283168,
+    /** gpm (2) */
+    2: (flow) => flow / GPM_PER_CFS,
+    /** L/s (3) */
+    3: (flow) => flow / 28.3168
+  };
+  function convertBaseFlowToIcmCfs(baseFlow, xpxUnitCode) {
+    if (baseFlow === null || baseFlow === void 0) {
+      throw new Error("baseFlow is required for unit conversion");
+    }
+    const code = String(xpxUnitCode);
+    const convert = TO_CFS[code];
+    if (!convert) {
+      throw new Error(`Unknown XPX flow unit code: ${xpxUnitCode}`);
+    }
+    return convert(baseFlow);
+  }
+
+  // src/icm/subcatchment.js
+  var ICM_SUBCATCHMENT_TOTAL_AREA_ACRES = 0.1;
+  function buildSubcatchmentRow(node, profileRegistry, flowConverter = convertBaseFlowToIcmCfs) {
+    const dwf = node.sewerInputs.dryWeatherFlow;
+    const patternName = dwf.temporalVariationRef?.name ?? null;
+    const wastewater_profile = patternName !== null ? profileRegistry.get(patternName) ?? null : null;
+    let additional_foul_flow = null;
+    if (dwf.baseFlow !== null && dwf.units !== null) {
+      additional_foul_flow = flowConverter(dwf.baseFlow, dwf.units);
+    }
+    return {
+      subcatchment_id: node.name,
+      node_id: node.name,
+      x: node.geometry.x,
+      y: node.geometry.y,
+      total_area: ICM_SUBCATCHMENT_TOTAL_AREA_ACRES,
+      wastewater_profile,
+      additional_foul_flow
+    };
+  }
+  function buildSubcatchmentRows(nodes, profileRegistry, flowConverter = convertBaseFlowToIcmCfs) {
+    return nodes.map(
+      (node) => buildSubcatchmentRow(node, profileRegistry, flowConverter)
+    );
+  }
+
+  // src/shared/dwf-units.js
+  var DWF_UNITS_LABELS = {
+    0: "cfs",
+    1: "cms",
+    2: "gpm",
+    3: "L/s"
+  };
+  function labelXpxFlowUnit(code) {
+    if (code === null || code === void 0) {
+      return null;
+    }
+    return DWF_UNITS_LABELS[String(code)] ?? null;
+  }
+
+  // src/icm/xpx-unit-summary.js
+  function summarizeXpxFlowUnits(exportNodes) {
+    const counts = /* @__PURE__ */ new Map();
+    for (const node of exportNodes) {
+      const code = node.sewerInputs.dryWeatherFlow.units;
+      if (code === null || code === void 0) {
+        continue;
+      }
+      const key = String(code);
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    const units = [...counts.entries()].map(([code, nodeCount]) => ({
+      code,
+      label: labelXpxFlowUnit(code),
+      nodeCount
+    })).sort((a, b) => b.nodeCount - a.nodeCount);
+    const dominant = units.length > 0 ? units[0] : null;
+    return {
+      units,
+      mixed: units.length > 1,
+      dominant
+    };
+  }
+
+  // src/icm/index.js
+  function exportIcmDwf(model, options = {}) {
+    const flowConverter = options.flowConverter ?? convertBaseFlowToIcmCfs;
+    const exportNodes = filterDwfNodes(model.nodes);
+    const xpxUnitSummary = summarizeXpxFlowUnits(exportNodes);
+    const patternNames = exportNodes.map((n) => n.sewerInputs.dryWeatherFlow.temporalVariationRef?.name).filter((name) => name !== null && name !== void 0);
+    const profileRegistry = buildProfileRegistry(patternNames);
+    const variationByName = new Map(
+      model.temporalVariations.map((tv) => [tv.name, tv])
+    );
+    const wwgProfiles = [...profileRegistry.entries()].sort((a, b) => a[1] - b[1]).map(([name, profileNumber]) => {
+      const tv = variationByName.get(name);
+      return {
+        name,
+        profileNumber,
+        diurnal: tv ? computeDiurnalFlows(tv) : { weekday: [], weekend: [] }
+      };
+    });
+    const subcatchmentRows = buildSubcatchmentRows(
+      exportNodes,
+      profileRegistry,
+      flowConverter
+    );
+    return {
+      exportNodes,
+      profileRegistry,
+      wwgProfiles,
+      subcatchmentRows,
+      xpxUnitSummary,
+      icmSubcatchmentUnit: ICM_SUBCATCHMENT_FLOW_UNIT
+    };
+  }
+  function exportIcmCsv(model, wwgTemplateText2, options = {}) {
+    const result = exportIcmDwf(model, options);
+    return {
+      ...result,
+      subcatchmentCsv: subcatchmentRowsToCsv(result.subcatchmentRows),
+      wasteWaterCsv: wwgProfilesToWasteWaterCsv(
+        result.wwgProfiles,
+        wwgTemplateText2
+      )
+    };
+  }
+
+  // src/xpx/tokenize.js
+  function tokenizeLine(line) {
+    const tokens = [];
+    let i = 0;
+    const len = line.length;
+    while (i < len) {
+      while (i < len && line[i] === " ") {
+        i += 1;
+      }
+      if (i >= len) {
+        break;
+      }
+      if (line[i] === '"') {
+        i += 1;
+        let value = "";
+        while (i < len) {
+          if (line[i] === '"') {
+            i += 1;
+            break;
+          }
+          value += line[i];
+          i += 1;
+        }
+        if (i <= len && line[i - 1] !== '"') {
+          throw new Error("Unterminated quoted string");
+        }
+        tokens.push(value);
+      } else {
+        let value = "";
+        while (i < len && line[i] !== " ") {
+          value += line[i];
+          i += 1;
+        }
+        tokens.push(value);
+      }
+    }
+    return tokens;
+  }
+  function splitLines(text) {
+    const lines = text.split(/\r?\n/);
+    const result = [];
+    for (let i = 0; i < lines.length; i += 1) {
+      const trimmed = lines[i].trimEnd();
+      if (trimmed.length === 0) {
+        continue;
+      }
+      result.push({ line: i + 1, text: trimmed });
+    }
+    return result;
+  }
+  function tokenizeText(text) {
+    const lines = splitLines(text);
+    const result = [];
+    for (const { line, text: lineText } of lines) {
+      const tokens = tokenizeLine(lineText);
+      result.push({ line, tokens });
+    }
+    return result;
+  }
+
+  // src/xpx/parse-records.js
+  var KNOWN_RECORD_TYPES = /* @__PURE__ */ new Set(["NODE", "LINK", "DATA", "GLDBITEM", "GLDBDATA"]);
+  function coerceValue(token) {
+    if (/^-?(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?$/.test(token)) {
+      return Number(token);
+    }
+    return token;
+  }
+  function parseNumber(token, context) {
+    const value = coerceValue(token);
+    if (typeof value !== "number" || Number.isNaN(value)) {
+      throw new Error(`${context}: expected numeric value, got "${token}"`);
+    }
+    return value;
+  }
+  function parseNodeRecord(line, tokens) {
+    if (tokens.length !== 5) {
+      throw new Error(`Line ${line}: NODE record expected 5 tokens, got ${tokens.length}`);
+    }
+    return {
+      type: "NODE",
+      line,
+      id: parseNumber(tokens[1], `Line ${line}: NODE id`),
+      name: tokens[2],
+      x: parseNumber(tokens[3], `Line ${line}: NODE x`),
+      y: parseNumber(tokens[4], `Line ${line}: NODE y`)
+    };
+  }
+  function parseLinkRecord(line, tokens) {
+    if (tokens.length !== 5) {
+      throw new Error(`Line ${line}: LINK record expected 5 tokens, got ${tokens.length}`);
+    }
+    return {
+      type: "LINK",
+      line,
+      typeCode: parseNumber(tokens[1], `Line ${line}: LINK typeCode`),
+      name: tokens[2],
+      usNode: tokens[3],
+      dsNode: tokens[4]
+    };
+  }
+  function parseDataRecord(line, tokens) {
+    if (tokens.length < 6) {
+      throw new Error(`Line ${line}: DATA record expected at least 6 tokens, got ${tokens.length}`);
+    }
+    const count = parseNumber(tokens[4], `Line ${line}: DATA count`);
+    const valueTokens = tokens.slice(5);
+    if (valueTokens.length !== count) {
+      throw new Error(
+        `Line ${line}: DATA count ${count} does not match ${valueTokens.length} value tokens`
+      );
+    }
+    const values = valueTokens.map((token) => coerceValue(token));
+    return {
+      type: "DATA",
+      line,
+      field: tokens[1],
+      objectName: tokens[2],
+      flag1: parseNumber(tokens[3], `Line ${line}: DATA flag1`),
+      count,
+      value: count === 1 ? values[0] : values[0],
+      values
+    };
+  }
+  function parseGldbItemRecord(line, tokens) {
+    if (tokens.length !== 3) {
+      throw new Error(`Line ${line}: GLDBITEM record expected 3 tokens, got ${tokens.length}`);
+    }
+    return {
+      type: "GLDBITEM",
+      line,
+      library: tokens[1],
+      name: tokens[2]
+    };
+  }
+  function parseGldbDataRecord(line, tokens) {
+    if (tokens.length < 6) {
+      throw new Error(`Line ${line}: GLDBDATA record expected at least 6 tokens, got ${tokens.length}`);
+    }
+    const count = parseNumber(tokens[4], `Line ${line}: GLDBDATA count`);
+    const valueTokens = tokens.slice(5);
+    if (valueTokens.length !== count) {
+      throw new Error(
+        `Line ${line}: GLDBDATA count ${count} does not match ${valueTokens.length} value tokens`
+      );
+    }
+    const values = valueTokens.map((token) => coerceValue(token));
+    return {
+      type: "GLDBDATA",
+      line,
+      field: tokens[1],
+      library: tokens[2],
+      item: tokens[3],
+      count,
+      values
+    };
+  }
+  function parseRecord(line, tokens) {
+    const recordType = tokens[0];
+    switch (recordType) {
+      case "NODE":
+        return parseNodeRecord(line, tokens);
+      case "LINK":
+        return parseLinkRecord(line, tokens);
+      case "DATA":
+        return parseDataRecord(line, tokens);
+      case "GLDBITEM":
+        return parseGldbItemRecord(line, tokens);
+      case "GLDBDATA":
+        return parseGldbDataRecord(line, tokens);
+      default:
+        return { type: "UNKNOWN", line, recordType };
+    }
+  }
+  function parseRecords(text) {
+    const tokenized = tokenizeText(text);
+    const records = [];
+    const warnings = [];
+    for (const { line, tokens } of tokenized) {
+      if (tokens.length === 0) {
+        continue;
+      }
+      try {
+        const record = parseRecord(line, tokens);
+        if (record.type === "UNKNOWN") {
+          if (!KNOWN_RECORD_TYPES.has(record.recordType)) {
+            warnings.push({
+              line,
+              message: `Skipped unrecognized record type "${record.recordType}"`
+            });
+          }
+          continue;
+        }
+        records.push(record);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        throw new Error(message.startsWith("Line") ? message : `Line ${line}: ${message}`);
+      }
+    }
+    return { records, warnings };
+  }
+
+  // src/xpx/field-map.js
+  var DWF_NODE_FIELDS = {
+    T_FSEWIN: { property: "sewerInputsEnabled", confidence: "inferred" },
+    USEINTFLG: { property: "dwfEnabled", confidence: "inferred" },
+    DRY_WTH: { property: "method", confidence: "inferred" },
+    DRY_WTH_UN: { property: "units", confidence: "inferred" },
+    T_SEWAGE: { property: "baseFlow", confidence: "inferred" },
+    T_ASUB: { property: "area", confidence: "inferred" },
+    T_POPDEN: { property: "density", confidence: "inferred" },
+    T_DWF_PFAC: { property: "peakingFactor", confidence: "inferred" },
+    T_WATER: { property: "winterWaterUse", confidence: "inferred" },
+    T_PRTY: { property: "predominantLanduse", confidence: "inferred" },
+    T_DWF_TVAR: { property: "temporalVariationName", confidence: "inferred" }
+  };
+  var TEMPORAL_VARIATIONS_LIBRARY = "Temporal Variations";
+  var GLDB_TEMPORAL_FIELDS = {
+    T_HV: "hourlyMultipliers",
+    T_DV: "dailyMultipliers"
+  };
+  var EXPECTED_ARRAY_LENGTHS = {
+    T_HV: 24,
+    T_DV: 7
+  };
+  var NETWORK_NODE_FIELDS = {
+    GRELEV: "groundElevation",
+    Z: "invertElevation",
+    T_NTYPE: "nodeType"
+  };
+  var NETWORK_LINK_FIELDS = {
+    LEN: "length",
+    DEEP: "diameter",
+    SLOPE: "slope",
+    ROUGH: "roughness",
+    NKLASS: "shape",
+    ZP1: "usInvert",
+    ZP2: "dsInvert"
+  };
+
+  // src/xpx/assemble-dwf.js
+  function libraryKey(library, name) {
+    return `${library}\0${name}`;
+  }
+  function toBool(value) {
+    if (value === 1 || value === "1") {
+      return true;
+    }
+    if (value === 0 || value === "0") {
+      return false;
+    }
+    return Boolean(value);
+  }
+  function emptyNetwork() {
+    return {
+      groundElevation: null,
+      invertElevation: null,
+      nodeType: null
+    };
+  }
+  function normalizeNetworkNodeValue(value, fieldName) {
+    if (fieldName === "T_NTYPE") {
+      return String(value);
+    }
+    return value;
+  }
+  function normalizeNetworkLinkValue(value, fieldName) {
+    if (fieldName === "NKLASS") {
+      return String(value);
+    }
+    return value;
+  }
+  function assembleDwfModel(records, warnings) {
+    const nodeMap = /* @__PURE__ */ new Map();
+    const nodeFieldValues = /* @__PURE__ */ new Map();
+    const nodeNetworkValues = /* @__PURE__ */ new Map();
+    const linkMap = /* @__PURE__ */ new Map();
+    const linkFieldValues = /* @__PURE__ */ new Map();
+    const temporalMap = /* @__PURE__ */ new Map();
+    for (const record of records) {
+      if (record.type === "NODE") {
+        nodeMap.set(record.name, {
+          id: record.id,
+          name: record.name,
+          geometry: { x: record.x, y: record.y }
+        });
+        if (!nodeFieldValues.has(record.name)) {
+          nodeFieldValues.set(record.name, /* @__PURE__ */ new Map());
+        }
+        if (!nodeNetworkValues.has(record.name)) {
+          nodeNetworkValues.set(record.name, /* @__PURE__ */ new Map());
+        }
+      }
+      if (record.type === "LINK") {
+        linkMap.set(record.name, {
+          name: record.name,
+          typeCode: record.typeCode,
+          usNode: record.usNode,
+          dsNode: record.dsNode
+        });
+        if (!linkFieldValues.has(record.name)) {
+          linkFieldValues.set(record.name, /* @__PURE__ */ new Map());
+        }
+      }
+      if (record.type === "DATA") {
+        if (!record.objectName) {
+          continue;
+        }
+        if (NETWORK_NODE_FIELDS[record.field]) {
+          if (!nodeNetworkValues.has(record.objectName)) {
+            nodeNetworkValues.set(record.objectName, /* @__PURE__ */ new Map());
+          }
+          nodeNetworkValues.get(record.objectName).set(
+            record.field,
+            normalizeNetworkNodeValue(record.value, record.field)
+          );
+        }
+        if (NETWORK_LINK_FIELDS[record.field]) {
+          if (!linkFieldValues.has(record.objectName)) {
+            linkFieldValues.set(record.objectName, /* @__PURE__ */ new Map());
+          }
+          linkFieldValues.get(record.objectName).set(
+            record.field,
+            normalizeNetworkLinkValue(record.value, record.field)
+          );
+        }
+        if (!DWF_NODE_FIELDS[record.field]) {
+          continue;
+        }
+        if (!nodeFieldValues.has(record.objectName)) {
+          nodeFieldValues.set(record.objectName, /* @__PURE__ */ new Map());
+        }
+        nodeFieldValues.get(record.objectName).set(record.field, record.value);
+      }
+      if (record.type === "GLDBITEM" && record.library === TEMPORAL_VARIATIONS_LIBRARY) {
+        const key = libraryKey(record.library, record.name);
+        if (!temporalMap.has(key)) {
+          temporalMap.set(key, {
+            library: record.library,
+            name: record.name
+          });
+        }
+      }
+      if (record.type === "GLDBDATA" && record.library === TEMPORAL_VARIATIONS_LIBRARY && GLDB_TEMPORAL_FIELDS[record.field]) {
+        const key = libraryKey(record.library, record.item);
+        if (!temporalMap.has(key)) {
+          temporalMap.set(key, {
+            library: record.library,
+            name: record.item
+          });
+        }
+        const item = temporalMap.get(key);
+        const property = GLDB_TEMPORAL_FIELDS[record.field];
+        item[property] = record.values;
+        const expected = EXPECTED_ARRAY_LENGTHS[record.field];
+        if (expected !== void 0 && record.values.length !== expected) {
+          warnings.push({
+            line: record.line,
+            message: `${record.field} for "${record.item}" expected ${expected} values, got ${record.values.length}`
+          });
+        }
+      }
+    }
+    const nodes = [];
+    for (const [name, nodeBase] of nodeMap) {
+      const fields = nodeFieldValues.get(name) ?? /* @__PURE__ */ new Map();
+      const networkFields = nodeNetworkValues.get(name) ?? /* @__PURE__ */ new Map();
+      const dwf = {};
+      const network = emptyNetwork();
+      for (const [fieldName, property] of Object.entries(NETWORK_NODE_FIELDS)) {
+        if (networkFields.has(fieldName)) {
+          network[property] = networkFields.get(fieldName);
+        }
+      }
+      for (const [fieldName, meta] of Object.entries(DWF_NODE_FIELDS)) {
+        if (fields.has(fieldName)) {
+          let value = fields.get(fieldName);
+          if (fieldName === "T_FSEWIN" || fieldName === "USEINTFLG") {
+            value = toBool(value);
+          } else if (fieldName === "DRY_WTH_UN" || fieldName === "T_PRTY" || fieldName === "T_DWF_TVAR") {
+            value = String(value);
+          }
+          dwf[meta.property] = value;
+        }
+      }
+      const temporalVariationName = fields.get("T_DWF_TVAR");
+      const temporalVariationRef = temporalVariationName !== void 0 && temporalVariationName !== "" ? { library: TEMPORAL_VARIATIONS_LIBRARY, name: String(temporalVariationName) } : null;
+      nodes.push({
+        ...nodeBase,
+        network,
+        sewerInputs: {
+          enabled: dwf.sewerInputsEnabled ?? null,
+          dryWeatherFlow: {
+            enabled: dwf.dwfEnabled ?? null,
+            method: dwf.method ?? null,
+            units: dwf.units ?? null,
+            baseFlow: dwf.baseFlow ?? null,
+            area: dwf.area ?? null,
+            density: dwf.density ?? null,
+            peakingFactor: dwf.peakingFactor ?? null,
+            winterWaterUse: dwf.winterWaterUse ?? null,
+            predominantLanduse: dwf.predominantLanduse ?? null,
+            temporalVariationRef
+          }
+        }
+      });
+    }
+    nodes.sort((a, b) => a.name.localeCompare(b.name));
+    const links = [];
+    for (const [name, linkBase] of linkMap) {
+      const fields = linkFieldValues.get(name) ?? /* @__PURE__ */ new Map();
+      const linkProps = { ...linkBase };
+      for (const [fieldName, property] of Object.entries(NETWORK_LINK_FIELDS)) {
+        if (fields.has(fieldName)) {
+          linkProps[property] = fields.get(fieldName);
+        } else {
+          linkProps[property] = null;
+        }
+      }
+      links.push(linkProps);
+    }
+    links.sort((a, b) => a.name.localeCompare(b.name));
+    const temporalVariations = [...temporalMap.values()].sort(
+      (a, b) => a.name.localeCompare(b.name)
+    );
+    const resolved = [];
+    for (const node of nodes) {
+      const ref = node.sewerInputs.dryWeatherFlow.temporalVariationRef;
+      if (!ref) {
+        resolved.push({
+          nodeName: node.name,
+          temporalVariation: null,
+          unresolvedRef: null
+        });
+        continue;
+      }
+      const key = libraryKey(ref.library, ref.name);
+      const temporalVariation = temporalMap.get(key) ?? null;
+      resolved.push({
+        nodeName: node.name,
+        temporalVariation,
+        unresolvedRef: temporalVariation ? null : { ...ref }
+      });
+      if (!temporalVariation) {
+        warnings.push({
+          line: 0,
+          message: `Node "${node.name}" references unresolved temporal variation "${ref.name}"`
+        });
+      }
+    }
+    return { nodes, links, temporalVariations, resolved };
+  }
+
+  // src/xpx/network-export.js
+  var NETWORK_NODE_CSV_HEADERS = [
+    "name",
+    "id",
+    "x",
+    "y",
+    "ground_elevation",
+    "invert_elevation",
+    "node_type"
+  ];
+  var NETWORK_LINK_CSV_HEADERS = [
+    "name",
+    "type_code",
+    "us_node",
+    "ds_node",
+    "length",
+    "diameter",
+    "slope",
+    "roughness",
+    "shape",
+    "us_invert",
+    "ds_invert"
+  ];
+  function escapeCsvField2(field) {
+    const text = String(field);
+    if (/[",\r\n]/.test(text)) {
+      return `"${text.replace(/"/g, '""')}"`;
+    }
+    return text;
+  }
+  function formatCsvValue(value) {
+    if (value === null || value === void 0) {
+      return "";
+    }
+    return String(value);
+  }
+  function rowsToCsv2(rows) {
+    const body = rows.map((row) => row.map((cell) => escapeCsvField2(cell)).join(",")).join("\r\n");
+    return `\uFEFF${body}`;
+  }
+  function networkNodeCsvRow(node) {
+    const network = node.network ?? {};
+    return [
+      formatCsvValue(node.name),
+      formatCsvValue(node.id),
+      formatCsvValue(node.geometry.x),
+      formatCsvValue(node.geometry.y),
+      formatCsvValue(network.groundElevation),
+      formatCsvValue(network.invertElevation),
+      formatCsvValue(network.nodeType)
+    ];
+  }
+  function networkLinkCsvRow(link) {
+    return [
+      formatCsvValue(link.name),
+      formatCsvValue(link.typeCode),
+      formatCsvValue(link.usNode),
+      formatCsvValue(link.dsNode),
+      formatCsvValue(link.length),
+      formatCsvValue(link.diameter),
+      formatCsvValue(link.slope),
+      formatCsvValue(link.roughness),
+      formatCsvValue(link.shape),
+      formatCsvValue(link.usInvert),
+      formatCsvValue(link.dsInvert)
+    ];
+  }
+  function networkNodesToCsv(model) {
+    const rows = [NETWORK_NODE_CSV_HEADERS];
+    for (const node of model.nodes) {
+      rows.push(networkNodeCsvRow(node));
+    }
+    return rowsToCsv2(rows);
+  }
+  function networkLinksToCsv(model) {
+    const rows = [NETWORK_LINK_CSV_HEADERS];
+    for (const link of model.links ?? []) {
+      rows.push(networkLinkCsvRow(link));
+    }
+    return rowsToCsv2(rows);
+  }
+  function exportNetworkCsv(model) {
+    return {
+      networkNodesCsv: networkNodesToCsv(model),
+      networkLinksCsv: networkLinksToCsv(model)
+    };
+  }
+
+  // src/xpx/index.js
+  function parseXpxDwf(text, options = {}) {
+    const { filename = "" } = options;
+    const lines = splitLines(text);
+    const { records, warnings } = parseRecords(text);
+    const model = assembleDwfModel(records, warnings);
+    return {
+      source: {
+        filename,
+        lineCount: lines.length,
+        parseWarnings: warnings
+      },
+      ...model,
+      fieldMeta: Object.fromEntries(
+        Object.entries(DWF_NODE_FIELDS).map(([field, meta]) => [field, meta.confidence])
+      )
+    };
+  }
+
+  // src/ui/display-maps.js
+  var DWF_METHOD_LABELS = {
+    0: "Direct Flow",
+    1: "Unit Flow Rate",
+    2: "Census-Based"
+  };
+  var LANDUSE_LABELS = {
+    0: "Residential",
+    1: "Commercial",
+    2: "Industrial",
+    3: "Parkland"
+  };
+  function labelFor(map, raw) {
+    if (raw === null || raw === void 0) {
+      return null;
+    }
+    const key = String(raw);
+    return map[key] ?? null;
+  }
+  function formatWithLabel(raw, map) {
+    if (raw === null || raw === void 0) {
+      return "\u2014";
+    }
+    const label = labelFor(map, raw);
+    if (label) {
+      return `${raw} (${label})`;
+    }
+    return String(raw);
+  }
+
+  // src/ui/flat-tables.js
+  function formatCsvValue2(value) {
+    if (value === null || value === void 0) {
+      return "";
+    }
+    if (typeof value === "boolean") {
+      return value ? "true" : "false";
+    }
+    return String(value);
+  }
+  function escapeCsvField3(field) {
+    const text = String(field);
+    if (/[",\r\n]/.test(text)) {
+      return `"${text.replace(/"/g, '""')}"`;
+    }
+    return text;
+  }
+  function rowsToCsv3(rows) {
+    const body = rows.map((row) => row.map((cell) => escapeCsvField3(cell)).join(",")).join("\r\n");
+    return `\uFEFF${body}`;
+  }
+  function basenameFromFilename(filename) {
+    const base = filename.replace(/\.xpx$/i, "").replace(/\.txt$/i, "");
+    return base || "export";
+  }
+  function resolvedByNode(model) {
+    const map = /* @__PURE__ */ new Map();
+    for (const entry of model.resolved) {
+      map.set(entry.nodeName, entry);
+    }
+    return map;
+  }
+  function patternResolvedStatus(entry) {
+    if (!entry) {
+      return "";
+    }
+    if (entry.unresolvedRef) {
+      return "No";
+    }
+    if (entry.temporalVariation) {
+      return "Yes";
+    }
+    return "";
+  }
+  var NODE_CSV_HEADERS = [
+    "Name",
+    "ID",
+    "X",
+    "Y",
+    "Sewer inputs",
+    "DWF enabled",
+    "Method",
+    "Units",
+    "Flow rate",
+    "Area",
+    "Density",
+    "Peaking factor",
+    "Winter water use",
+    "Landuse",
+    "Pattern",
+    "Pattern resolved"
+  ];
+  var PARSER_NOTES_CSV_HEADERS = ["Line", "Category", "Message"];
+  function nodeCsvRow(node, resolvedEntry) {
+    const dwf = node.sewerInputs.dryWeatherFlow;
+    return [
+      formatCsvValue2(node.name),
+      formatCsvValue2(node.id),
+      formatCsvValue2(node.geometry.x),
+      formatCsvValue2(node.geometry.y),
+      formatCsvValue2(node.sewerInputs.enabled),
+      formatCsvValue2(dwf.enabled),
+      formatCsvValue2(dwf.method),
+      formatCsvValue2(dwf.units),
+      formatCsvValue2(dwf.baseFlow),
+      formatCsvValue2(dwf.area),
+      formatCsvValue2(dwf.density),
+      formatCsvValue2(dwf.peakingFactor),
+      formatCsvValue2(dwf.winterWaterUse),
+      formatCsvValue2(dwf.predominantLanduse),
+      formatCsvValue2(dwf.temporalVariationRef?.name ?? null),
+      formatCsvValue2(patternResolvedStatus(resolvedEntry))
+    ];
+  }
+  function nodesToCsv(model) {
+    const resolved = resolvedByNode(model);
+    const rows = [NODE_CSV_HEADERS];
+    for (const node of model.nodes) {
+      rows.push(nodeCsvRow(node, resolved.get(node.name)));
+    }
+    return rowsToCsv3(rows);
+  }
+  function parserNotesToCsv(model) {
+    const rows = [PARSER_NOTES_CSV_HEADERS];
+    for (const w of model.source.parseWarnings) {
+      rows.push([
+        formatCsvValue2(w.line),
+        "parser note",
+        formatCsvValue2(w.message)
+      ]);
+    }
+    for (const r of model.resolved) {
+      if (r.unresolvedRef) {
+        rows.push([
+          "0",
+          "unresolved reference",
+          formatCsvValue2(
+            `Node "${r.nodeName}" \u2192 unresolved temporal variation "${r.unresolvedRef.name}"`
+          )
+        ]);
+      }
+    }
+    return rowsToCsv3(rows);
+  }
+  function countParserNotes(model) {
+    let count = model.source.parseWarnings.length;
+    for (const r of model.resolved) {
+      if (r.unresolvedRef) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+  function downloadCsv(filename, csvText) {
+    const blob = new Blob([csvText], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // src/ui/app.js
+  var currentModel = null;
+  var currentIcmExport = null;
+  var currentNetworkExport = null;
+  var dwfFilterEnabled = false;
+  var dropZone = document.getElementById("drop-zone");
+  var fileInput = document.getElementById("file-input");
+  var chooseBtn = document.getElementById("choose-btn");
+  var readyPanel = document.getElementById("ready-panel");
+  var icmExportSection = document.getElementById("icm-export-section");
+  var viewerSection = document.getElementById("viewer-section");
+  var csvExportSection = document.getElementById("csv-export-section");
+  var warningsSection = document.getElementById("warnings-section");
+  var errorBox = document.getElementById("error-box");
+  var dwfNodeCount = document.getElementById("dwf-node-count");
+  var unresolvedCount = document.getElementById("unresolved-count");
+  var filenameLabel = document.getElementById("filename-label");
+  var validationList = document.getElementById("validation-list");
+  var warningsList = document.getElementById("warnings-list");
+  var statusBox = document.getElementById("status-box");
+  var loadSampleBtn = document.getElementById("load-sample");
+  var loadMultiSampleBtn = document.getElementById("load-multi-sample");
+  var objectTree = document.getElementById("object-tree");
+  var detailPanel = document.getElementById("detail-panel");
+  var dwfFilterCheckbox = document.getElementById("dwf-filter");
+  var nodesDwfCount = document.getElementById("nodes-dwf-count");
+  var exportNodesCsvBtn = document.getElementById("export-nodes-csv");
+  var exportParserNotesCsvBtn = document.getElementById("export-parser-notes-csv");
+  var networkNodesCount = document.getElementById("network-nodes-count");
+  var networkLinksCount = document.getElementById("network-links-count");
+  var exportNetworkNodesCsvBtn = document.getElementById("export-network-nodes-csv");
+  var exportNetworkLinksCsvBtn = document.getElementById("export-network-links-csv");
+  var icmSubcatchmentCount = document.getElementById("icm-subcatchment-count");
+  var icmProfileCount = document.getElementById("icm-profile-count");
+  var exportIcmSubcatchmentBtn = document.getElementById("export-icm-subcatchment");
+  var exportIcmWastewaterBtn = document.getElementById("export-icm-wastewater");
+  var exportIcmBothBtn = document.getElementById("export-icm-both");
+  var icmTemplateWarning = document.getElementById("icm-template-warning");
+  var icmUnitPanel = document.getElementById("icm-unit-panel");
+  var icmXpxUnitsList = document.getElementById("icm-xpx-units-list");
+  var icmXpxUnitsMixed = document.getElementById("icm-xpx-units-mixed");
+  var icmSubcatchmentUnitLabel = document.getElementById(
+    "icm-subcatchment-unit-label"
+  );
+  var icmWwgUnitLabel = document.getElementById("icm-wwg-unit-label");
+  var icmSubcatchmentExample = document.getElementById(
+    "icm-subcatchment-example"
+  );
+  var icmAssumptionsPanel = document.getElementById("icm-assumptions");
+  var icmSubcatchmentColumnsList = document.getElementById(
+    "icm-subcatchment-columns"
+  );
+  var icmTotalAreaNote = document.getElementById("icm-total-area-note");
+  var DWF_FILTER_DEFAULT_THRESHOLD = 50;
+  var SINGLE_NODE_EMBEDDED = true ? 'DATA METRIC "" 0 1 "0" \r\nNODE 134 "8-2-24" 41793.13 75979.42 \r\nLAYER 2D_GRID_EXTENT 1 "Layer 1" \r\nDATA E_RTNDITR "8-2-24" 0 1 46319.000 \r\nDATA E_RMNDITR "8-2-24" 0 1 1.00 \r\nDATA Y0 "8-2-24" 0 1 0.0 \r\nDATA E_NODEVOLEVAP "8-2-24" 0 1 0.0 \r\nDATA E_NODEVOLOUT "8-2-24" 0 1 0.0 \r\nDATA T_KLAND "8-2-24" 0 1 "5" \r\nDATA E_MAXSURCHARGE "8-2-24" 0 1 0.0 \r\nDATA E_FINFLOOD "8-2-24" 0 1 0.0 \r\nDATA E_FINELEV "8-2-24" 0 1 4294.483 \r\nDATA E_NODEVOLINRNF "8-2-24" 0 1 0.0 \r\nDATA E_NODEVOLININT "8-2-24" 0 1 6986.59 \r\nDATA E_NODEVOLINOUT "8-2-24" 0 1 0.0 \r\nDATA E_NODEVOLINDWF "8-2-24" 0 1 0.0 \r\nDATA T_RNSURCH "8-2-24" 0 1 0.0 \r\nDATA ICAP "8-2-24" 0 1 0 \r\nDATA JPRT "8-2-24" 0 1 0 \r\nDATA GINFLOW "8-2-24" 0 1 0 \r\nDATA T_RVOLUME "8-2-24" 0 1 0.0 \r\nDATA E_MAXIT "8-2-24" 0 1 13.000 \r\nDATA E_RSRFDTH "8-2-24" 0 1 0.210 \r\nDATA E_ENDVOL "8-2-24" 0 1 11.70 \r\nDATA E_RVOLUME "8-2-24" 0 1 2.645 \r\nDATA DRY_WTH_UN "8-2-24" 0 1 "2" \r\nDATA T_ASUB "8-2-24" 0 1 0.0 \r\nDATA E_NODEAORATE "8-2-24" 0 1 0.0 \r\nDATA E_NODEAIRATE "8-2-24" 0 1 0.081 \r\nDATA E_NODEVOLPONDED "8-2-24" 0 1 0.0 \r\nDATA JPLT "8-2-24" 0 1 0 \r\nDATA E_RNSURCH "8-2-24" 0 1 0.0 \r\nDATA T_RSRFDTH "8-2-24" 0 1 0.0 \r\nDATA T_DWF_PFAC "8-2-24" 0 1 1.000 \r\nDATA T_FOUTS "8-2-24" 0 1 1 \r\nDATA E_CONTVOLNODE "8-2-24" 0 1 0.04 \r\nDATA DRY_WTH "8-2-24" 0 1 0 \r\nDATA T_POPDEN "8-2-24" 0 1 0.0 \r\nDATA T_DWF_TVAR "8-2-24" 0 1 "Daily1" \r\nDATA E_RNFLOOD "8-2-24" 0 1 0.0 \r\nDATA E_NODEFLOWNET "8-2-24" 0 1 17.50 \r\nDATA E_RFLDLSS "8-2-24" 0 1 0.0 \r\nDATA E_FINVOLNODE "8-2-24" 0 1 2.64 \r\nDATA T_NPE "8-2-24" 0 1 0 \r\nDATA SFLOOD "8-2-24" 0 1 "0" \r\nDATA E_STVOL "8-2-24" 0 1 0.0 \r\nDATA GRELEV "8-2-24" 0 1 4308.540 \r\nDATA E_NONCONVERGE "8-2-24" 0 1 0.0 \r\nDATA T_FSEWIN "8-2-24" 0 1 1 \r\nDATA E_REGLELV "8-2-24" 0 1 4294.540 \r\nDATA INQ "8-2-24" 0 1 0 \r\nDATA USEINTFLG "8-2-24" 0 1 1 \r\nDATA T_RTDRWFW "8-2-24" 0 1 0.0 \r\nDATA T_WATER "8-2-24" 0 1 0.0 \r\nDATA JNRR "8-2-24" 0 1 1 \r\nDATA E_TIMMAXHGL "8-2-24" 0 1 8.033 \r\nDATA E_RNDINFL "8-2-24" 0 1 6986.552 \r\nDATA E_FINDEPTH "8-2-24" 0 1 0.153 \r\nDATA T_RPLRBMP "8-2-24" 0 1 0.0 \r\nDATA T_NTYPE "8-2-24" 0 1 "19" \r\nDATA T_KUNIT "8-2-24" 0 1 "0" \r\nDATA E_MAXGUTDEPTH "8-2-24" 0 1 0.0 \r\nDATA E_BASININFIL "8-2-24" 0 1 0.0 \r\nDATA T_FCON "8-2-24" 0 1 0 \r\nDATA E_NODEVOLINUSER "8-2-24" 0 1 0.0 \r\nDATA E_RFREEBD "8-2-24" 0 1 14.00 \r\nDATA E_RSRFELV "8-2-24" 0 1 4294.540 \r\nDATA QINST "8-2-24" 0 1 0.0 \r\nDATA FLGOUTF "8-2-24" 0 1 0 \r\nDATA T_FPFAREA "8-2-24" 0 1 0 \r\nDATA E_RSRFARE "8-2-24" 0 1 12.57 \r\nDATA E_RCONTER "8-2-24" 0 1 0.001 \r\nDATA E_MAXGUTVEL "8-2-24" 0 1 0.0 \r\nDATA LOCMODT "8-2-24" 0 1 "1" \r\nDATA LOCMODE "8-2-24" 0 1 "1" \r\nDATA E_TOTALIT "8-2-24" 0 1 46319.000 \r\nDATA T_NSAVREV "8-2-24" 0 1 1 \r\nDATA E_REGLREL "8-2-24" 0 1 14.000 \r\nDATA E_NODEVLINCON "8-2-24" 0 1 0.0 \r\nDATA T_RSRFELV "8-2-24" 0 1 0.0 \r\nDATA T_RSRFARE "8-2-24" 0 1 0.0 \r\nDATA E_MAXCROWN "8-2-24" 0 1 4295.000 \r\nDATA E_FINEGL "8-2-24" 0 1 0.153 \r\nDATA T_RNDINFL "8-2-24" 0 1 0.0 \r\nDATA T_NYN "8-2-24" 0 1 0 \r\nDATA T_PRTY "8-2-24" 0 1 "3" \r\nDATA T_SEWAGE "8-2-24" 0 1 223.000 \r\nDATA Z "8-2-24" 0 1 4294.330000 \r\nDATA T_FCHCGO "8-2-24" 0 1 1 \r\nDATA E_CONTVOL "8-2-24" 0 1 5.803 \r\nDATA T_FUDEF "8-2-24" 0 1 0 \r\nDATA E_RWTRTRSFR "8-2-24" 0 1 0.0 \r\nDATA INTPERCENT "8-2-24" 0 1 100.00 \r\nDATA T_QCON "8-2-24" 0 1 0.0 \r\nDATA E_CONTVOLINFLOW "8-2-24" 0 1 0.001 \r\nDATA E_FINFREEB "8-2-24" 0 1 14.057 \r\nDATA NODST "8-2-24" 0 1 0 \r\nDATA E_MAXGUTWIDTH "8-2-24" 0 1 0.0 \r\nDATA E_NODEFLOWTOTAL "8-2-24" 0 1 13956.09 \r\nDATA E_CONVERGEEFF "8-2-24" 0 1 1.004 \r\nDATA 2D_ADV_FLG "" 0 1 1 \r\nDATA EXT_FILLPAT "" 0 1 -1 \r\nDATA LACH_DAYTYPE "" 0 1 0 \r\nDATA MZERO "" 0 1 0 \r\nDATA RES_FLVECTOR "" 0 1 0 \r\nDATA 2D_LOG_DIR "" 0 1 "2D\\Log" \r\nDATA W_OBJSEL "" 0 1 "0" \r\nDATA LACH_ZONE "" 0 97 "A03" "A04" "A05" "A06" "A07" "A08" "A09" "A10" "A11" "A12" "A13" "A14" "A15" "A16" "A17" "A18" "A19" "A20" "A21" "A22" "A23" "A24" "A25" "A26" "A27" "A28" "A29" "A30" "A31" "A32" "A33" "A34" "A35" "A36" "A37" "A38" "A39" "A40" "A41" "A42" "A43" "A44" "A45" "A46" "A47" "A48" "A49" "A50" "A51" "A52" "A53" "A54" "A55" "A56" "A57" "A58" "A59" "A60" "A61" "A62" "A63" "A64" "A65" "A66" "A67" "A68" "A69" "A70" "A71" "A72" "A73" "A74" "A75" "A76" "A77" "A78" "A79" "A80" "A81" "A82" "A83" "A84" "A85" "A86" "A87" "A88" "A89" "A90" "A91" "A92" "A93" "A94" "A95" "A96" "A97" "A98" "A99" \r\nDATA E_NDESN "" 0 1 0 \r\nDATA H_REGENTAG "" 0 1 0 \r\nDATA GE_SHOW "" 0 1 0 \r\nDATA RELG_FLGVIEW "" 0 1 0 \r\nDATA YSL "" 0 1 2006 \r\nDATA TBLVAREX_TITLE "" 0 13 "Node Name" "Node Y" "Node X" "Ground Elevation (Spill Crest)" "Area (SAN)" "Temporal Variation (DWF)" "Units Type (SAN)" "Flow Rate (SAN)" "Dry Weather Flow Generation Method (SAN)" "Invert Elevation" "Constant Inflow Flag" "Constant Inflow (Sewer Input)" "Node Type" \r\nDATA GRID_STEPY "" 0 1 20.0000 \r\nDATA GRID_STEPX "" 0 1 20.0000 \r\nDATA LINKLBLHT "" 0 1 0.09100 \r\nDATA R_NMN "" 0 1 0 \r\nDATA CNTLJD "" 0 1 0 \r\nDATA PRNT_PTYPE "" 0 1 0 \r\nDATA TBLVAREX_ROWHT "" 0 13 48 48 48 48 48 48 48 48 48 48 48 48 48 \r\nDATA TBLVAREX_FONT "" 0 13 "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" \r\nDATA W_IMPXPXH "" 0 1 "0" \r\nDATA R_NSC "" 0 1 0 \r\nDATA TEXTDISPTYPE "" 0 1 0 \r\nDATA CAT_FILLPAT "" 0 1 4 \r\nDATA RELG_FLGLOCK "" 0 1 1 \r\nDATA PRNT_ORITN "" 0 1 1 \r\nDATA RES_FPFONT "" 0 1 "arial" \r\nDATA RES_FLFONT "" 0 1 "arial" \r\nDATA NODE_FLGVIEW "" 0 1 1 \r\nDATA TBLVAREX_PARENT "" 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nDATA SVIEW_NUM "" 0 1 0 \r\nDATA W_TIDY "" 0 1 0 \r\nDATA RES_FPNUM "" 0 1 0 \r\nDATA RES_FLNUM "" 0 1 0 \r\nDATA TBL_PUMPFLAG "" 0 1 0 \r\nDATA GRID_COLOUR "" 0 1 "000000FF" \r\nDATA T_TRIBA "" 0 1 0.0 \r\nDATA 2DMD_DOM_ID "" 0 1 1 \r\nDATA _XFGV "" 0 1 1 \r\nDATA QDV_EIDX "" 0 1 -1 \r\nDATA CNTLR "" 0 1 0 \r\nDATA CNTLT "" 0 1 0 \r\nDATA 2D_PO_TPOINT "" 0 1 0 \r\nDATA SAVERES_TYPE "" 0 1 "1" \r\nDATA CNTLH "" 0 1 1 \r\nDATA ND_DT_VAR "" 0 1 1 \r\nDATA TBLVAREX_DATACW "" 0 13 12 12 12 12 12 12 12 12 12 12 12 12 12 \r\nDATA TBLVAREX_DATACC "" 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nDATA EXT_LINECOL "" 0 1 16711680 \r\nDATA 2D_RGH_TSET "" 0 1 0 \r\nDATA LKSIZETYPE "" 0 1 0 \r\nDATA R_IYRSTR "" 0 1 2006 \r\nDATA R_IYRSTP "" 0 1 2006 \r\nDATA QDV_LTBLINDX "" 0 1 -1 \r\nDATA NDSIZETYPE "" 0 1 0 \r\nDATA T_FGNU "" 0 1 0 \r\nDATA MOSL "" 0 1 4 \r\nDATA R_STPHR "" 0 1 0 \r\nDATA GRID_SNAP "" 0 1 0 \r\nDATA FONT_FLAGS "" 0 1 0 \r\nDATA TBLOBJ "" 0 1 "1" \r\nDATA _XFGDV "" 0 1 1 \r\nDATA FILEI "" 0 1 "E:\\BowenCollins\\2021 XPSWMM Model\\CID\\CID_Existing_2020.INT" \r\nDATA SR_N_FONTNAME "" 0 1 "Arial" \r\nDATA SR_L_FONTNAME "" 0 1 "Arial" \r\nDATA QDV_NTBLINDX "" 0 1 -1 \r\nDATA REV_VELOCITY_FLAG "" 0 1 1 \r\nDATA TBLVAREX_FSIZE "" 0 13 9 9 9 9 9 9 9 9 9 9 9 9 9 \r\nDATA NLBL_FLGSEL "" 0 1 1 \r\nDATA TBLVAREX_VSBLE "" 0 13 1 1 1 1 1 1 1 1 1 1 1 1 1 \r\nDATA JC_2DINFLOW_TYPE "" 0 1 "1" \r\nDATA CNTLPL "" 0 1 0 \r\nDATA MOZERO "" 0 1 4 \r\nDATA _XFSV "" 0 1 1 \r\nDATA LLBL_FLGSEL "" 0 1 1 \r\nDATA GRID_SHOW "" 0 1 0 \r\nDATA HZERO "" 0 1 0 \r\nDATA LKCS_FLGLOCK "" 0 1 0 \r\nDATA T_FEVAP "" 0 1 0 \r\nDATA TBLOBJSEL "" 0 1 "2" \r\nDATA RELG_VECTYPE "" 0 1 "3" \r\nDATA EXT_LINESIZE "" 0 1 1 \r\nDATA T_NPRINT "" 0 1 0 \r\nDATA CAT_FLGLOCK "" 0 1 1 \r\nDATA 2D_TXT_FLGSEL "" 0 1 0 \r\nDATA 2D_EXT_FLGSEL "" 0 1 0 \r\nDATA RELG_VECVIEW "" 0 1 0 \r\nDATA NCAT_FLGSEL "" 0 1 0 \r\nDATA FM_RNFJCSMELTSINGLE "" 0 1 0 \r\nDATA LINK_FLGSEL "" 0 1 1 \r\nDATA 2D_TOP_TVER "" 0 1 0 \r\nDATA TEXTLBLHT "" 0 1 0.09100 \r\nDATA TIN_NUM "" 0 1 0 \r\nDATA CAT_FLGVIEW "" 0 1 1 \r\nDATA _PIPEVIEW "" 0 1 1 \r\nDATA T_GNU "" 0 1 0.0 \r\nDATA T_SAVREV "" 0 1 1 \r\nDATA 2D_DATA_DIR "" 0 1 "2D\\Data" \r\nDATA EXT_FILLALPHAF "" 0 1 0 \r\nDATA EXT_FILLALPHAB "" 0 1 0 \r\nDATA TBLUSEFILTER "" 0 1 0 \r\nDATA CAT_SHOWVERTS "" 0 1 0 \r\nDATA DZERO "" 0 1 28 \r\nDATA CFGMSG "" 0 1 0 \r\nDATA 2D_EXT_TYPE "" 0 1 "0" \r\nDATA QDV_GRPTYPE "" 0 1 -1 \r\nDATA 2D_TOP_TPOLY "" 0 1 0 \r\nDATA T_EPSIL "" 0 1 0.001 \r\nDATA SR_N_TRANSP "" 0 1 0.0 \r\nDATA SR_L_TRANSP "" 0 1 0.0 \r\nDATA T_NITER "" 0 1 2 \r\nDATA EXT_FILLCOLF "" 0 1 0 \r\nDATA EXT_FILLCOLB "" 0 1 0 \r\nDATA _FIXREP "" 0 1 "0" \r\nDATA SAVERES "" 0 1 15.0 \r\nDATA SZERO "" 0 1 0 \r\nDATA 2D_EXT_NAME "" 0 1 "Layer 1" \r\nDATA TRN_DT_VAR "" 0 1 0 \r\nDATA T_NINFIL "" 0 1 0 \r\nDATA TEXTCOUNT "" 0 1 0 \r\nDATA EXT_LINESTYLE "" 0 1 0 \r\nDATA T_NCNTRL "" 0 1 1 \r\nDATA LKCS_FLGVIEW "" 0 1 1 \r\nDATA PRNT_PMART "" 0 1 9.520 \r\nDATA PRNT_PMARR "" 0 1 3.670 \r\nDATA PRNT_PMARO "" 0 1 0 \r\nDATA PRNT_PMARL "" 0 1 3.670 \r\nDATA PRNT_PMARC "" 0 1 0 \r\nDATA PRNT_PMARB "" 0 1 9.520 \r\nDATA PRNT_NMART "" 0 1 2.000 \r\nDATA PRNT_NMARR "" 0 1 2.000 \r\nDATA PRNT_NMARO "" 0 1 0 \r\nDATA PRNT_NMARL "" 0 1 2.000 \r\nDATA PRNT_NMARC "" 0 1 0 \r\nDATA PRNT_NMARB "" 0 1 2.000 \r\nDATA CAT_FLGSEL "" 0 1 1 \r\nDATA E_FEVAP "" 0 1 0 \r\nDATA TBL_VIEWFLAG "" 0 1 0 \r\nDATA _XSEL "" 0 1 "1" \r\nDATA T_INFLEW "" 0 1 1 \r\nDATA T_DOCYCLE "" 0 1 0 \r\nDATA TBLVAR_FIELD "" 0 13 "FD_NODE_NAME" "FD_NODE_Y" "FD_NODE_X" "F_GRELEV" "F_T_ASUB" "F_T_DWF_TVAR" "F_DRY_WTH_UN" "F_T_SEWAGE" "F_T_PRTY" "F_Z" "F_T_FCON" "F_T_QCON" "F_T_NTYPE" \r\nDATA EMODE_SOLVE "" 0 1 1 \r\nDATA PRNT_SCALE "" 0 1 1 \r\nDATA 2D_REG_TPOLY "" 0 1 0 \r\nDATA W_OBJCREAT "" 0 1 1 \r\nDATA CAT_TPLINE "" 0 1 0 \r\nDATA LACH_FREQ "" 0 1 2 \r\nDATA LKTXDISPTYPE "" 0 1 "0" \r\nDATA LACH_DAY4PER "" 0 1 100.000 \r\nDATA 2D_REG_TVER "" 0 1 0 \r\nDATA LACH_FREQFLAG "" 0 1 1 \r\nDATA LACH_STORM "" 0 1 5 \r\nDATA LACH_STATE "" 0 1 0 \r\nDATA HOTFN "" 0 1 "E:\\BowenCollins\\2021 XPSWMM Model\\CID\\cid.hot" \r\nDATA 2D_REG_TPLINE "" 0 1 0 \r\nDATA W_IMPFMT "" 0 1 "0" \r\nDATA 2D_PO_TVER "" 0 1 0 \r\nDATA 2D_PO_TSET "" 0 1 0 \r\nDATA W_IMPRNF "" 0 1 1 \r\nDATA T_NCNTRL2 "" 0 1 0 \r\nDATA W_IMPSTT "" 0 1 1 \r\nDATA W_IMPTRN "" 0 1 1 \r\nDATA R_RAINFLAG "" 0 1 0 \r\nDATA W_IMPEXT "" 0 1 1 \r\nDATA INV_DROP "" 0 1 7.000 \r\nDATA REDO "" 0 1 "2" \r\nDATA LACH_DAY2PER "" 0 1 40.000 \r\nDATA 2D_ERRORS_REPORTED "" 0 1 0 \r\nDATA RMODE_SOLVE "" 0 1 0 \r\nDATA CAT_VERTSIZE "" 0 1 4.000 \r\nDATA CAT_FILLALPHAF "" 0 1 255 \r\nDATA CAT_FILLALPHAB "" 0 1 128 \r\nDATA 2D_EXTENTS_TYPE "" 0 1 "0" \r\nDATA LINK_DT_VAR "" 0 1 1 \r\nDATA CAT_TVER "" 0 1 0 \r\nDATA CAT_TSET "" 0 1 0 \r\nDATA R_MONTH "" 0 1 4 \r\nDATA TBLVAR_TYPE "" 0 13 3 3 3 3 3 3 3 3 3 3 3 3 3 \r\nDATA TBLVAREX_DATPRE "" 0 13 3 3 3 3 3 3 3 3 3 3 3 3 3 \r\nDATA HDR_DT_VAR "" 0 1 0 \r\nDATA T_FPOLIST "" 0 1 0 \r\nDATA T_INTPRT "" 0 1 "0" \r\nDATA T_INTPR2 "" 0 1 1 \r\nDATA TBL_CURSC "" 0 1 0 \r\nDATA TBL_CURTAB "" 0 1 0 \r\nDATA LIDLINK_FLGSEL "" 0 1 1 \r\nDATA CNTLOC "" 0 1 0 \r\nDATA YZERO "" 0 1 2006 \r\nDATA RELG_FLGSEL "" 0 1 0 \r\nDATA SSL "" 0 1 0 \r\nDATA NDTXDISPTYPE "" 0 1 0 \r\nDATA _SRTSIZE "" 0 1 "0" \r\nDATA INV_GELEV "" 0 1 0.0 \r\nDATA CNTLMC "" 0 1 0 \r\nDATA TBLVAREX_FLIP "" 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nDATA TBL_CONFLAG "" 0 1 0 \r\nDATA _XGVAR "" 0 1 "2" \r\nDATA LINKWIDTH "" 0 1 0.01000 \r\nDATA TBLVAREX_ALIGN "" 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nDATA NODELBLHT "" 0 1 0.09100 \r\nDATA SR_N_BKGND "" 0 1 "3" \r\nDATA SR_L_BKGND "" 0 1 "3" \r\nDATA T_DWDAYS "" 0 1 0.0 \r\nDATA SR_N_FONTSZ "" 0 1 10 \r\nDATA SR_L_FONTSZ "" 0 1 10 \r\nDATA PRNT_PSIZE "" 0 1 9 \r\nDATA PRNT_HSIZE "" 0 1 12 \r\nDATA PRNT_FSIZE "" 0 1 12 \r\nDATA 2D_TOP_TPLINE "" 0 1 0 \r\nDATA W_IMPMSGA "" 0 1 0 \r\nDATA MSL "" 0 1 0 \r\nDATA PRNT_PSCLE "" 0 1 1000.000 \r\nDATA PRNT_NSCLE "" 0 1 1000.000 \r\nDATA PRNT_HSTLE "" 0 1 0 \r\nDATA PRNT_FSTLE "" 0 1 0 \r\nDATA W_IMPMSGS "" 0 1 0 \r\nDATA PRNT_ASRAT "" 0 1 0 \r\nDATA LACH_TFREQ "" 0 1 50 \r\nDATA T_DT "" 0 1 60.000 \r\nDATA RES_FPCOL "" 0 1 16776960 \r\nDATA RES_FLCOL "" 0 1 16776960 \r\nDATA NODELINETH "" 0 1 1 \r\nDATA LACH_CURFREQ "" 0 1 50 \r\nDATA TBL_SPECFLAG "" 0 1 0 \r\nDATA SR_N_DISPLAY "" 0 1 "0" \r\nDATA SR_L_DISPLAY "" 0 1 "0" \r\nDATA FM_AVAILABLEPIPES "" 0 1 0 \r\nDATA NODEWIDTH "" 0 1 0.10000 \r\nDATA QDV_DISP "" 0 1 0 \r\nDATA _XFGSV "" 0 1 1 \r\nDATA TBLVAREX_FSTYLE "" 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nDATA R_NHR "" 0 1 0 \r\nDATA T_RMVVAR "" 0 1 0 \r\nDATA META_NUMIMAGES "" 0 1 0 \r\nDATA 2D_RGH_TVER "" 0 1 0 \r\nDATA 2D_CHECKF_DIR "" 0 1 0 \r\nDATA T_KPRINT "" 0 1 0 \r\nDATA APP_CURITEM "" 0 1 2 \r\nDATA R_STPSC "" 0 1 0 \r\nDATA RES_FLMAP "" 0 1 0 \r\nDATA MODE "" 0 1 "1" \r\nDATA LLBL_FLGLOCK "" 0 1 0 \r\nDATA 2D_EXTENT_NO "" 0 1 1 \r\nDATA NODEBASENAME "" 0 1 "Node" \r\nDATA HSL "" 0 1 0 \r\nDATA NODE_FLGSEL "" 0 1 1 \r\nDATA 2D_RGH_TPOLY "" 0 1 0 \r\nDATA LIDLINK_FLGVIEW "" 0 1 1 \r\nDATA CAT_FILLCOLF "" 0 1 16744576 \r\nDATA CAT_FILLCOLB "" 0 1 16448214 \r\nDATA R_STPMN "" 0 1 0 \r\nDATA LKTXFONTNAME "" 0 1 "Arial" \r\nDATA _XFNV "" 0 1 1 \r\nDATA QDV_NIDX "" 0 1 -1 \r\nDATA LIDLINK_FLGLOCK "" 0 1 0 \r\nDATA RELG_MAPTYPE "" 0 1 "1" \r\nDATA _XNVAR "" 0 1 "2" \r\nDATA CFGNUM "" 0 1 1 \r\nDATA _XFLV "" 0 1 1 \r\nDATA RELG_MAPVIEW "" 0 1 0 \r\nDATA PEST_DAT "" 0 1 1 \r\nDATA _XGDVAR "" 0 1 "2" \r\nDATA NLBL_FLGLOCK "" 0 1 0 \r\nDATA FM_RNFJCPRNTPERDATA "" 0 1 0 \r\nDATA GRID_WIDTH "" 0 1 0.0 \r\nDATA G_POLLUTE "" 0 1 0 \r\nDATA TBLUNITDISP "" 0 1 0 \r\nDATA LACH_ZONERAIN "" 0 97 .6 .8 1 1.2 1.4 1.6 1.8 2 2.2 2.4 2.6 2.8 3 3.2 3.4 3.6 3.8 4 4.2 4.4 4.6 4.8 5 5.2 5.4 5.6 5.8 6 6.2 6.4 6.6 6.8 7 7.2 7.4 7.6 7.8 8 8.2 8.4 8.6 8.8 9 9.2 9.4 9.6 9.8 10 10.2 10.4 10.6 10.8 11 11.2 11.4 11.6 11.8 12 12.2 12.4 12.6 12.8 13 13.2 13.4 13.6 13.8 14 14.2 14.4 14.6 14.8 15 15.2 15.4 15.6 15.8 16 16.2 16.4 16.6 16.8 17 17.2 17.4 17.6 17.8 18 18.2 18.4 18.6 18.8 19 19.2 19.4 19.6 19.8 \r\nDATA TBLVAREX_FCOLOR "" 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nDATA DSL "" 0 1 29 \r\nDATA 2D_TXT_FLGLOCK "" 0 1 0 \r\nDATA 2D_EXT_FLGLOCK "" 0 1 0 \r\nDATA NLBL_FLGVIEW "" 0 1 1 \r\nDATA R_NDAY "" 0 1 28 \r\nDATA LINKBASENAME "" 0 1 "Link" \r\nDATA LINK_FLGVIEW "" 0 1 1 \r\nDATA NCAT_FLGLOCK "" 0 1 0 \r\nDATA _XFLAV "" 0 1 1 \r\nDATA FONT_ID "" 0 3 1 -101 0 \r\nDATA _MINMEM "" 0 1 "0" \r\nDATA LINK_FLGLOCK "" 0 1 0 \r\nDATA TEXTFONTNAME "" 0 1 "Arial" \r\nDATA NCAT_FLGVIEW "" 0 1 1 \r\nDATA TEXTCOLOR "" 0 1 2 \r\nDATA 2D_EXT_QTREE_LVL "" 0 1 "0" \r\nDATA NODEHEIGHT "" 0 1 0.10000 \r\nDATA T_FTRIBA "" 0 1 0 \r\nDATA RES_FPMCHART "" 0 1 0 \r\nDATA RES_FLMCHART "" 0 1 0 \r\nDATA LLBL_FLGVIEW "" 0 1 1 \r\nDATA _NODEVIEW "" 0 1 1 \r\nDATA EXT_VERTSIZE "" 0 1 4.000 \r\nDATA RES_FPLABEL "" 0 1 1 \r\nDATA RES_FLLABEL "" 0 1 1 \r\nDATA QDV_DISP_TBL "" 0 1 1 \r\nDATA JC_2DINFLOW_CHK "" 0 1 1 \r\nDATA QDV_DISP_CTL "" 0 1 1 \r\nDATA SIMULTANEOUSLY "" 0 1 0 \r\nDATA GRID_ORIGINY "" 0 1 0.0 \r\nDATA GRID_ORIGINX "" 0 1 0.0 \r\nDATA CMODE_SOLVE "" 0 1 0 \r\nDATA _HIDEBLNK "" 0 1 1 \r\nDATA T_NDESN "" 0 1 0 \r\nDATA QDV_MLINK "" 0 1 "0" \r\nDATA _NCOUNT "" 0 1 0 \r\nDATA 2D_TXT_FLGVIEW "" 0 1 0 \r\nDATA 2D_EXT_FLGVIEW "" 0 1 0 \r\nDATA CONFPAR "" 0 1 "SPATIAL=0.55" \r\nDATA H_REGEN "" 0 1 0.010 \r\nDATA XPAPPFILE "" 0 1 "swmmxp" \r\nDATA LINKCOLOR "" 0 1 0 \r\nDATA CONFFLAG "" 0 1 1 \r\nDATA _HIDECRE "" 0 1 1 \r\nDATA REP_DEST "" 0 1 "8" \r\nDATA CTLRR "" 0 1 1 \r\nDATA _HIDEINACT "" 0 1 1 \r\nDATA EXT_SHOWVERTS "" 0 1 0 \r\nDATA 2D_TOP_TSET "" 0 1 0 \r\nDATA RNF_DT_VAR "" 0 1 0 \r\nDATA R_STPMON "" 0 1 4 \r\nDATA R_STPDAY "" 0 1 29 \r\nDATA MODE_HILITE "" 0 1 0 \r\nDATA XPVERSION "" 0 1 450 \r\nDATA TBL_ORIFLAG "" 0 1 0 \r\nDATA 2D_CHECK_SX "" 0 1 "2" \r\nDATA 2D_CHECK_HX "" 0 1 "2" \r\nDATA 2D_OUTPUT_DIR "" 0 1 "2D\\Output" \r\nDATA 2D_CHECK_DIR "" 0 1 "2D\\Check" \r\nDATA TBLVAR_INDX "" 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nDATA TBLVAR_INST "" 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nDATA CAT_LINESTYLE "" 0 1 0 \r\nDATA CAT_TPOLY "" 0 1 0 \r\nDATA 2D_REG_TSET "" 0 1 0 \r\nDATA TMODE_SOLVE "" 0 1 1 \r\nDATA CAT_LINECOL "" 0 1 16744576 \r\nDATA LKCS_FLGSEL "" 0 1 1 \r\nDATA _INTCREAT "" 0 1 "0" \r\nDATA _XLVAR "" 0 1 "2" \r\nDATA DELT "" 0 1 60.0 \r\nDATA LACH_FREQFACT "" 0 1 0.387 \r\nDATA FONT_N "" 0 3 "Arial" "Arial" "arial" \r\nDATA NODE_FLGLOCK "" 0 1 0 \r\nDATA T_NFILTH "" 0 1 0 \r\nDATA LACH_DAY1PER "" 0 1 10.000 \r\nDATA TBL_WEIRFLAG "" 0 1 0 \r\nDATA CAT_LINESIZE "" 0 1 1 \r\nDATA ALPHA "" 0 1 "Standard" \r\nDATA W_XPXFIL "" 0 1 "H:\\HOME\\GREG\\Projects\\Modeling\\CID\\txt Files from db\\model.xpx" \r\nDATA LNK_DT_VAR "" 0 1 1 \r\nDATA NDTXFONTNAME "" 0 1 "Arial" \r\nDATA PRNT_HFCLR "" 0 1 0 \r\nDATA PRNT_FFCLR "" 0 1 0 \r\nDATA PRNT_PFRMT "" 0 1 "0" \r\nDATA PRNT_HFONT "" 0 1 "Arial" \r\nDATA PRNT_FFONT "" 0 1 "Arial" \r\nDATA GRID_SQUARE "" 0 1 1 \r\nDATA NODECOLOR "" 0 1 2 \r\nDATA 2D_ADV_VAL "" 0 2 "PRE 2007-07-AA" "PRE 2012" \r\nDATA 2D_ADV_PAR "" 0 2 "Defaults" "Defaults" \r\nDATA LACH_DAY3PER "" 0 1 35.000 \r\nGLDBITEM "Temporal Variations" "Daily1" \r\nGLDBDATA T_HV "Temporal Variations" "Daily1" 24 .0722 .0653 .0648 .0679 .0988 .2058 .2633 .2386 .2018 .1779 .1567 .1425 .1387 .132 .133 .1334 .1464 .1628 .1796 .1962 .1955 .1764 .1381 .0957 \r\nGLDBDATA T_DV "Temporal Variations" "Daily1" 7 1.09 1.09 1.09 1.09 1.09 1.09 1.09 \r\nGLDBITEM "Temporal Variations" "Commercial1" \r\nGLDBDATA T_HV "Temporal Variations" "Commercial1" 24 .064 .066 .081 .073 .073 .074 .115 .17 .169 .174 .199 .241 .21 .244 .239 .196 .166 .183 .171 .172 .17 .153 .105 .074 \r\nGLDBDATA T_DV "Temporal Variations" "Commercial1" 7 1 1 1 1 1 1 1 \r\nGLDBITEM "Temporal Variations" "Infiltration" \r\nGLDBDATA T_HV "Temporal Variations" "Infiltration" 24 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 \r\nGLDBDATA T_DV "Temporal Variations" "Infiltration" 7 1 1 1 1 1 1 1 \r\nGLDBITEM "Temporal Variations" "BC_Ski" \r\nGLDBDATA T_HV "Temporal Variations" "BC_Ski" 24 .1758 .1681 .1605 .1528 .1375 .1223 .0841 .0535 .0611 .0917 .1375 .214 .2445 .2369 .2292 .214 .1987 .2017 .2078 .2094 .2124 .214 .1987 .1834 \r\nGLDBDATA T_DV "Temporal Variations" "BC_Ski" 7 1 1 1 1 1 1 1 \r\nGLDBITEM "Temporal Variations" "LC_Ski" \r\nGLDBDATA T_HV "Temporal Variations" "LC_Ski" 24 .0996 .0249 .0373 .0498 .0747 .0996 .1245 .1493 .1742 .1991 .224 .2489 .239 .224 .1991 .1742 .1493 .1618 .1867 .2365 .2738 .2987 .2614 .1991 \r\nGLDBDATA T_DV "Temporal Variations" "LC_Ski" 7 1 1 1 1 1 1 1 \r\nGLDBITEM "Temporal Variations" "Canyon_Daily" \r\nGLDBDATA T_HV "Temporal Variations" "Canyon_Daily" 24 .187 .15 .127 .102 .094 .078 .077 .091 .109 .185 .232 .251 .215 .184 .218 .232 .202 .202 .238 .295 .247 .198 .193 .198 \r\nGLDBDATA T_DV "Temporal Variations" "Canyon_Daily" 7 1 1 1 1 1 1.1 1.1 \r\nGLDBITEM "Pump Ratings" "15 hp Flygt" \r\nGLDBDATA PRATEX "Pump Ratings" "15 hp Flygt" 3 98.5 57.4 37.2 \r\nGLDBDATA PRATEY "Pump Ratings" "15 hp Flygt" 3 0 1.48 2.23 \r\nGLDBDATA FM_PUMPRATINGCURVES "Pump Ratings" "15 hp Flygt" 1 0 \r\nGLDBITEM "XP Tables" "nodes" \r\nGLDBDATA TBLVAREX_TITLE "XP Tables" "nodes" 13 "Node Name" "Node Y" "Node X" "Ground Elevation (Spill Crest)" "Area (SAN)" "Temporal Variation (DWF)" "Units Type (SAN)" "Flow Rate (SAN)" "Dry Weather Flow Generation Method (SAN)" "Invert Elevation" "Constant Inflow Flag" "Constant Inflow (Sewer Input)" "Node Type" \r\nGLDBDATA TBLVAREX_ROWHT "XP Tables" "nodes" 13 48 48 48 48 48 48 48 48 48 48 48 48 48 \r\nGLDBDATA TBLVAREX_FONT "XP Tables" "nodes" 13 "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" \r\nGLDBDATA TBLVAREX_PARENT "XP Tables" "nodes" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_PUMPFLAG "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBLVAREX_DATACW "XP Tables" "nodes" 13 12 12 12 12 12 12 12 12 12 12 12 12 12 \r\nGLDBDATA TBLVAREX_DATACC "XP Tables" "nodes" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBLOBJ "XP Tables" "nodes" 1 "1" \r\nGLDBDATA TBLVAREX_FSIZE "XP Tables" "nodes" 13 9 9 9 9 9 9 9 9 9 9 9 9 9 \r\nGLDBDATA TBLVAREX_VSBLE "XP Tables" "nodes" 13 1 1 1 1 1 1 1 1 1 1 1 1 1 \r\nGLDBDATA TBLOBJSEL "XP Tables" "nodes" 1 "2" \r\nGLDBDATA TBLUSEFILTER "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBL_VIEWFLAG "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBLVAR_FIELD "XP Tables" "nodes" 13 "FD_NODE_NAME" "FD_NODE_Y" "FD_NODE_X" "F_GRELEV" "F_T_ASUB" "F_T_DWF_TVAR" "F_DRY_WTH_UN" "F_T_SEWAGE" "F_T_PRTY" "F_Z" "F_T_FCON" "F_T_QCON" "F_T_NTYPE" \r\nGLDBDATA TBLVAR_TYPE "XP Tables" "nodes" 13 3 3 3 3 3 3 3 3 3 3 3 3 3 \r\nGLDBDATA TBLVAREX_DATPRE "XP Tables" "nodes" 13 3 3 3 3 3 3 3 3 3 3 3 3 3 \r\nGLDBDATA TBL_CURSC "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBL_CURTAB "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBLVAREX_FLIP "XP Tables" "nodes" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_CONFLAG "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBLVAREX_ALIGN "XP Tables" "nodes" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_SPECFLAG "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBLVAREX_FSTYLE "XP Tables" "nodes" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBLUNITDISP "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBLVAREX_FCOLOR "XP Tables" "nodes" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_ORIFLAG "XP Tables" "nodes" 1 0 \r\nGLDBDATA TBLVAR_INDX "XP Tables" "nodes" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBLVAR_INST "XP Tables" "nodes" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_WEIRFLAG "XP Tables" "nodes" 1 0 \r\nGLDBITEM "XP Tables" "links" \r\nGLDBDATA TBLVAREX_DATUNT "XP Tables" "links" 12 "0" "0" "0" "ft" "0" "ft" "ft" "ft" "0" "cfs" "cfs" "%" \r\nGLDBDATA TBLVAREX_TITLE "XP Tables" "links" 13 "Roughness" "Shape" "UpNode" "UpInvEl" "DownNode" "DownInvEl" "Length" "Diameter" "Slope" "Max Flow" "Full Flow" "q/Q" "d/D" \r\nGLDBDATA TBLVAREX_ROWHT "XP Tables" "links" 13 48 48 48 48 48 48 48 48 48 48 48 48 48 \r\nGLDBDATA TBLVAREX_FONT "XP Tables" "links" 13 "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" "Arial" \r\nGLDBDATA TBLVAREX_PARENT "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_PUMPFLAG "XP Tables" "links" 1 0 \r\nGLDBDATA TBLVAREX_DATACW "XP Tables" "links" 13 12 12 12 12 12 12 12 12 12 12 12 12 12 \r\nGLDBDATA TBLVAREX_DATACC "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBLOBJ "XP Tables" "links" 1 "2" \r\nGLDBDATA TBLVAREX_FSIZE "XP Tables" "links" 13 9 9 9 9 9 9 9 9 9 9 9 9 9 \r\nGLDBDATA TBLVAREX_VSBLE "XP Tables" "links" 13 1 1 1 1 1 1 1 1 1 1 1 1 1 \r\nGLDBDATA TBLUSEFILTER "XP Tables" "links" 1 0 \r\nGLDBDATA TBL_VIEWFLAG "XP Tables" "links" 1 0 \r\nGLDBDATA TBLVAR_FIELD "XP Tables" "links" 13 "F_ROUGH" "F_NKLASS" "FD_LINK_US_NODE" "F_ZP1" "FD_LINK_DS_NODE" "F_ZP2" "F_LEN" "F_DEEP" "F_SLOPE" "F_E_RMAXFLO" "F_E_RDSGNFF" "F_E_RPMXFLO" "F_E_MAXDD" \r\nGLDBDATA TBLVAR_TYPE "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBLVAREX_DATPRE "XP Tables" "links" 13 3 3 3 3 3 3 3 3 3 3 3 3 3 \r\nGLDBDATA TBL_CURSC "XP Tables" "links" 1 0 \r\nGLDBDATA TBLVAREX_FLIP "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_CONFLAG "XP Tables" "links" 1 1 \r\nGLDBDATA TBLVAREX_ALIGN "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_SPECFLAG "XP Tables" "links" 1 0 \r\nGLDBDATA TBLVAREX_FSTYLE "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBLUNITDISP "XP Tables" "links" 1 0 \r\nGLDBDATA TBLVAREX_FCOLOR "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_ORIFLAG "XP Tables" "links" 1 0 \r\nGLDBDATA TBLVAR_INDX "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBLVAR_INST "XP Tables" "links" 13 0 0 0 0 0 0 0 0 0 0 0 0 0 \r\nGLDBDATA TBL_WEIRFLAG "XP Tables" "links" 1 0 \r\nGLDBITEM "XP Tables" "temp" \r\nGLDBDATA TBLVAREX_TITLE "XP Tables" "temp" 1 "Hourly Variation" \r\nGLDBDATA TBLFILTFLD "XP Tables" "temp" 1 "F_T_HV" \r\nGLDBDATA TBLVAREX_ROWHT "XP Tables" "temp" 2 48 48 \r\nGLDBDATA TBLVAREX_FONT "XP Tables" "temp" 1 "Arial" \r\nGLDBDATA TBLVAREX_PARENT "XP Tables" "temp" 1 0 \r\nGLDBDATA TBL_PUMPFLAG "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLVAREX_DATACW "XP Tables" "temp" 1 12 \r\nGLDBDATA TBLVAREX_DATACC "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLOBJ "XP Tables" "temp" 1 "3" \r\nGLDBDATA TBLVAREX_FSIZE "XP Tables" "temp" 1 9 \r\nGLDBDATA TBLVAREX_VSBLE "XP Tables" "temp" 1 1 \r\nGLDBDATA TBLFILTOPPR "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLFILTOPER "XP Tables" "temp" 1 "0" \r\nGLDBDATA TBLUSEFILTER "XP Tables" "temp" 1 0 \r\nGLDBDATA TBL_VIEWFLAG "XP Tables" "temp" 1 1 \r\nGLDBDATA TBLVAR_FIELD "XP Tables" "temp" 1 "F_T_HV" \r\nGLDBDATA TBLVAR_TYPE "XP Tables" "temp" 1 5 \r\nGLDBDATA TBLVAREX_DATPRE "XP Tables" "temp" 1 3 \r\nGLDBDATA TBL_CURSC "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLVAREX_FLIP "XP Tables" "temp" 2 0 0 \r\nGLDBDATA TBL_CONFLAG "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLVAREX_ALIGN "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLFILTVALID "XP Tables" "temp" 1 "Daily1" \r\nGLDBDATA TBL_SPECFLAG "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLVAREX_FSTYLE "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLFILTJOIN "XP Tables" "temp" 1 "n" \r\nGLDBDATA TBLUNITDISP "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLVAREX_FCOLOR "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLFILTCOMPTYPE "XP Tables" "temp" 1 "0" \r\nGLDBDATA TBL_ORIFLAG "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLVAR_INDX "XP Tables" "temp" 1 0 \r\nGLDBDATA TBLVAR_INST "XP Tables" "temp" 1 0 \r\nGLDBDATA TBL_WEIRFLAG "XP Tables" "temp" 1 0 \r\n' : void 0;
+  var WWG_TEMPLATE_EMBEDDED = true ? "!Version=1,type=WWG,encoding=UTF8\r\nTITLE,POLLUTANT_COUNT\r\nUser defined WWG item,16\r\nUnits_Concentration,Units_Salt_Concentration,Units_Temperature,Units_Average_Flow\r\nmg/l,kg/m3,degF,ft3/day\r\nPROFILE_NUMBER,PROFILE_DESCRIPTION,FLOW\r\n1,description 1,0\r\nSEDIMENT,AVERAGE_CONCENTRATION\r\nSF1,0\r\nSF2,0\r\nPOLLUTANT,DISSOLVED,SF1,SF2\r\nBOD,0,0,0\r\nCOD,0,0,0\r\nTKN,0,0,0\r\nNH4,0,0,0\r\nTPH,0,0,0\r\nPL1,0,0,0\r\nPL2,0,0,0\r\nPL3,0,0,0\r\nPL4,0,0,0\r\nDO_,0,0,0\r\nNO2,0,0,0\r\nNO3,0,0,0\r\nPH_,0,0,0\r\nSAL,0,0,0\r\nTW_,32,0,0\r\nCOL,0,0,0\r\nCALIBRATION_WEEKDAY\r\nTIME,FLOW,POLLUTANT\r\n00:00,1,1\r\n01:00,1,1\r\n02:00,1,1\r\n03:00,1,1\r\n04:00,1,1\r\n05:00,1,1\r\n06:00,1,1\r\n07:00,1,1\r\n08:00,1,1\r\n09:00,1,1\r\n10:00,1,1\r\n11:00,1,1\r\n12:00,1,1\r\n13:00,1,1\r\n14:00,1,1\r\n15:00,1,1\r\n16:00,1,1\r\n17:00,1,1\r\n18:00,1,1\r\n19:00,1,1\r\n20:00,1,1\r\n21:00,1,1\r\n22:00,1,1\r\n23:00,1,1\r\nCALIBRATION_WEEKEND\r\nTIME,FLOW,POLLUTANT\r\n00:00,1,1\r\n01:00,1,1\r\n02:00,1,1\r\n03:00,1,1\r\n04:00,1,1\r\n05:00,1,1\r\n06:00,1,1\r\n07:00,1,1\r\n08:00,1,1\r\n09:00,1,1\r\n10:00,1,1\r\n11:00,1,1\r\n12:00,1,1\r\n13:00,1,1\r\n14:00,1,1\r\n15:00,1,1\r\n16:00,1,1\r\n17:00,1,1\r\n18:00,1,1\r\n19:00,1,1\r\n20:00,1,1\r\n21:00,1,1\r\n22:00,1,1\r\n23:00,1,1\r\nCALIBRATION_MONTHLY\r\nMONTH,FLOW,POLLUTANT\r\nJANUARY,1,1\r\nFEBRUARY,1,1\r\nMARCH,1,1\r\nAPRIL,1,1\r\nMAY,1,1\r\nJUNE,1,1\r\nJULY,1,1\r\nAUGUST,1,1\r\nSEPTEMBER,1,1\r\nOCTOBER,1,1\r\nNOVEMBER,1,1\r\nDECEMBER,1,1\r\nDESIGN_PROFILES\r\nTIME,FLOW,POLLUTANT\r\n00:00,1,1\r\n01:00,1,1\r\n02:00,1,1\r\n03:00,1,1\r\n04:00,1,1\r\n05:00,1,1\r\n06:00,1,1\r\n07:00,1,1\r\n08:00,1,1\r\n09:00,1,1\r\n10:00,1,1\r\n11:00,1,1\r\n12:00,1,1\r\n13:00,1,1\r\n14:00,1,1\r\n15:00,1,1\r\n16:00,1,1\r\n17:00,1,1\r\n18:00,1,1\r\n19:00,1,1\r\n20:00,1,1\r\n21:00,1,1\r\n22:00,1,1\r\n23:00,1,1\r\nPROFILE_NUMBER,PROFILE_DESCRIPTION,FLOW\r\n2,description 2,0\r\nSEDIMENT,AVERAGE_CONCENTRATION\r\nSF1,0\r\nSF2,0\r\nPOLLUTANT,DISSOLVED,SF1,SF2\r\nBOD,0,0,0\r\nCOD,0,0,0\r\nTKN,0,0,0\r\nNH4,0,0,0\r\nTPH,0,0,0\r\nPL1,0,0,0\r\nPL2,0,0,0\r\nPL3,0,0,0\r\nPL4,0,0,0\r\nDO_,0,0,0\r\nNO2,0,0,0\r\nNO3,0,0,0\r\nPH_,0,0,0\r\nSAL,0,0,0\r\nTW_,32,0,0\r\nCOL,0,0,0\r\nCALIBRATION_WEEKDAY\r\nTIME,FLOW,POLLUTANT\r\n00:00,2,1\r\n01:00,2,1\r\n02:00,2,1\r\n03:00,2,1\r\n04:00,2,1\r\n05:00,2,1\r\n06:00,2,1\r\n07:00,2,1\r\n08:00,2,1\r\n09:00,2,1\r\n10:00,2,1\r\n11:00,2,1\r\n12:00,2,1\r\n13:00,2,1\r\n14:00,2,1\r\n15:00,2,1\r\n16:00,2,1\r\n17:00,2,1\r\n18:00,2,1\r\n19:00,2,1\r\n20:00,2,1\r\n21:00,2,1\r\n22:00,2,1\r\n23:00,2,1\r\nCALIBRATION_WEEKEND\r\nTIME,FLOW,POLLUTANT\r\n00:00,1,1\r\n01:00,1,1\r\n02:00,1,1\r\n03:00,1,1\r\n04:00,1,1\r\n05:00,1,1\r\n06:00,1,1\r\n07:00,1,1\r\n08:00,1,1\r\n09:00,1,1\r\n10:00,1,1\r\n11:00,1,1\r\n12:00,1,1\r\n13:00,1,1\r\n14:00,1,1\r\n15:00,1,1\r\n16:00,1,1\r\n17:00,1,1\r\n18:00,1,1\r\n19:00,1,1\r\n20:00,1,1\r\n21:00,1,1\r\n22:00,1,1\r\n23:00,1,1\r\nCALIBRATION_MONTHLY\r\nMONTH,FLOW,POLLUTANT\r\nJANUARY,1,1\r\nFEBRUARY,1,1\r\nMARCH,1,1\r\nAPRIL,1,1\r\nMAY,1,1\r\nJUNE,1,1\r\nJULY,1,1\r\nAUGUST,1,1\r\nSEPTEMBER,1,1\r\nOCTOBER,1,1\r\nNOVEMBER,1,1\r\nDECEMBER,1,1\r\nDESIGN_PROFILES\r\nTIME,FLOW,POLLUTANT\r\n00:00,1,1\r\n01:00,1,1\r\n02:00,1,1\r\n03:00,1,1\r\n04:00,1,1\r\n05:00,1,1\r\n06:00,1,1\r\n07:00,1,1\r\n08:00,1,1\r\n09:00,1,1\r\n10:00,1,1\r\n11:00,1,1\r\n12:00,1,1\r\n13:00,1,1\r\n14:00,1,1\r\n15:00,1,1\r\n16:00,1,1\r\n17:00,1,1\r\n18:00,1,1\r\n19:00,1,1\r\n20:00,1,1\r\n21:00,1,1\r\n22:00,1,1\r\n23:00,1,1\r\n" : void 0;
+  var ICM_UNITS_EMBEDDED = typeof define_ICM_UNITS_default !== "undefined" ? define_ICM_UNITS_default : void 0;
+  var wwgTemplateText = WWG_TEMPLATE_EMBEDDED ?? null;
+  var icmUnitsContract = ICM_UNITS_EMBEDDED ?? null;
+  var DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  function escapeHtml(text) {
+    return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  function formatValue(value) {
+    if (value === null || value === void 0) {
+      return "\u2014";
+    }
+    if (typeof value === "boolean") {
+      return value ? "Yes" : "No";
+    }
+    return String(value);
+  }
+  function formatBoolField(value) {
+    if (value === null || value === void 0) {
+      return "\u2014";
+    }
+    return value ? "Enabled" : "Disabled";
+  }
+  function setStatus(message, kind = "") {
+    statusBox.textContent = message;
+    statusBox.className = kind ? `status ${kind}` : "status";
+  }
+  function hideError() {
+    errorBox.hidden = true;
+    errorBox.textContent = "";
+  }
+  function showError(message) {
+    errorBox.hidden = false;
+    errorBox.textContent = message;
+  }
+  function fieldRow(label, value) {
+    return `<div class="field-row"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`;
+  }
+  function renderBarChart(values, labels) {
+    const max = Math.max(...values, 1e-4);
+    const bars = values.map((value, index) => {
+      const pct = Math.max(value / max * 100, 2);
+      const title = `${labels[index]}: ${value}`;
+      return `<div class="bar" style="height:${pct}%" title="${escapeHtml(title)}"></div>`;
+    }).join("");
+    const axis = labels.map((label) => `<span class="bar-label">${escapeHtml(label)}</span>`).join("");
+    return `<div class="bar-chart">${bars}</div><div class="bar-axis">${axis}</div>`;
+  }
+  function unresolvedByNode(model) {
+    const map = /* @__PURE__ */ new Map();
+    for (const entry of model.resolved) {
+      if (entry.unresolvedRef) {
+        map.set(entry.nodeName, entry.unresolvedRef);
+      }
+    }
+    return map;
+  }
+  function getVisibleNodes() {
+    if (!currentModel) {
+      return [];
+    }
+    if (!dwfFilterEnabled) {
+      return currentModel.nodes;
+    }
+    return filterDwfNodes(currentModel.nodes);
+  }
+  function buildTree(model) {
+    const unresolved = unresolvedByNode(model);
+    const visibleNodes = dwfFilterEnabled ? filterDwfNodes(model.nodes) : model.nodes;
+    const nodeLabel = dwfFilterEnabled && model.nodes.length > 0 ? `Nodes (${visibleNodes.length}/${model.nodes.length})` : "Nodes";
+    const nodeItems = visibleNodes.map((node) => {
+      const badge = unresolved.has(node.name) ? '<span class="tree-badge" title="Unresolved temporal variation">!</span>' : "";
+      return `<li><button type="button" class="tree-item" data-kind="node" data-key="${escapeHtml(node.name)}">Node ${escapeHtml(node.name)}${badge}</button></li>`;
+    }).join("");
+    const variationItems = model.temporalVariations.map(
+      (variation) => `<li><button type="button" class="tree-item" data-kind="variation" data-key="${escapeHtml(variation.name)}">${escapeHtml(variation.name)}</button></li>`
+    ).join("");
+    objectTree.innerHTML = `
+    <ul class="tree-root">
+      <li class="tree-group">
+        <span class="tree-group-label">${escapeHtml(nodeLabel)}</span>
+        <ul>${nodeItems || '<li class="tree-empty">No nodes</li>'}</ul>
+      </li>
+      <li class="tree-group">
+        <span class="tree-group-label">Temporal Variations</span>
+        <ul>${variationItems || '<li class="tree-empty">No patterns</li>'}</ul>
+      </li>
+    </ul>`;
+  }
+  function selectTreeItem(kind, key) {
+    for (const item of objectTree.querySelectorAll(".tree-item")) {
+      item.classList.toggle(
+        "selected",
+        item.dataset.kind === kind && item.dataset.key === key
+      );
+    }
+    if (!currentModel) {
+      return;
+    }
+    if (kind === "node") {
+      const node = currentModel.nodes.find((n) => n.name === key);
+      const resolved = currentModel.resolved.find((r) => r.nodeName === key);
+      if (node) {
+        renderNodeDetail(node, resolved ?? null);
+      }
+      return;
+    }
+    if (kind === "variation") {
+      const variation = currentModel.temporalVariations.find((t) => t.name === key);
+      if (variation) {
+        renderTemporalDetail(variation);
+      }
+    }
+  }
+  function renderNodeDetail(node, resolvedEntry) {
+    const dwf = node.sewerInputs.dryWeatherFlow;
+    const ref = dwf.temporalVariationRef;
+    const refName = ref?.name ?? "\u2014";
+    const resolved = resolvedEntry?.temporalVariation ?? null;
+    const unresolved = resolvedEntry?.unresolvedRef ?? null;
+    let temporalHtml = fieldRow("Pattern name", refName);
+    if (unresolved) {
+      temporalHtml += `<p class="detail-warning">Unresolved temporal variation &quot;${escapeHtml(unresolved.name)}&quot;.</p>`;
+    } else if (resolved) {
+      temporalHtml += fieldRow("Resolved library item", resolved.name);
+      temporalHtml += `<p class="detail-link"><button type="button" class="link-button" data-jump-kind="variation" data-jump-key="${escapeHtml(resolved.name)}">Show pattern in tree</button></p>`;
+    }
+    detailPanel.innerHTML = `
+    <article class="detail-view">
+      <header class="detail-header">
+        <h3 class="detail-title">Sanitary Node : Node ${escapeHtml(node.name)}</h3>
+      </header>
+      <section class="detail-section">
+        <h4>Node</h4>
+        <dl class="field-list">
+          ${fieldRow("ID", formatValue(node.id))}
+          ${fieldRow("Name", formatValue(node.name))}
+          ${fieldRow("X", formatValue(node.geometry.x))}
+          ${fieldRow("Y", formatValue(node.geometry.y))}
+        </dl>
+      </section>
+      <section class="detail-section">
+        <h4>Sewer Inputs : Node ${escapeHtml(node.name)}</h4>
+        <dl class="field-list">
+          ${fieldRow("Sewer inputs", formatBoolField(node.sewerInputs.enabled))}
+        </dl>
+        <h5>Dry Weather Flow</h5>
+        <dl class="field-list">
+          ${fieldRow("Dry weather flow", formatBoolField(dwf.enabled))}
+          ${fieldRow("Generation method", formatWithLabel(dwf.method, DWF_METHOD_LABELS))}
+          ${fieldRow("Units", formatWithLabel(dwf.units, DWF_UNITS_LABELS))}
+          ${fieldRow("Flow rate", formatValue(dwf.baseFlow))}
+          ${fieldRow("Area", formatValue(dwf.area))}
+          ${fieldRow("Density", formatValue(dwf.density))}
+          ${fieldRow("Peaking factor", formatValue(dwf.peakingFactor))}
+          ${fieldRow("Winter water use", formatValue(dwf.winterWaterUse))}
+          ${fieldRow("Predominant landuse", formatWithLabel(dwf.predominantLanduse, LANDUSE_LABELS))}
+        </dl>
+        <h5>Temporal Variation</h5>
+        <dl class="field-list">${temporalHtml}</dl>
+      </section>
+    </article>`;
+  }
+  function renderTemporalDetail(variation) {
+    const dailyRows = variation.dailyMultipliers.map(
+      (value, index) => `<tr><th scope="row">${DAY_LABELS[index]}</th><td>${escapeHtml(String(value))}</td></tr>`
+    ).join("");
+    const hourlyCells = variation.hourlyMultipliers.map(
+      (value, index) => `<div class="multiplier-cell"><span class="hour-label">H${index + 1}</span><span class="hour-value">${escapeHtml(String(value))}</span></div>`
+    ).join("");
+    const hourlyLabels = variation.hourlyMultipliers.map((_, index) => String(index + 1));
+    detailPanel.innerHTML = `
+    <article class="detail-view">
+      <header class="detail-header">
+        <h3 class="detail-title">(T) Temporal Variation : ${escapeHtml(variation.name)}</h3>
+      </header>
+      <div class="temporal-panels">
+        <section class="detail-section">
+          <h4>Daily Variation</h4>
+          <table class="multiplier-table">
+            <thead><tr><th scope="col">Day</th><th scope="col">Multiplier</th></tr></thead>
+            <tbody>${dailyRows}</tbody>
+          </table>
+          ${renderBarChart(variation.dailyMultipliers, DAY_LABELS)}
+        </section>
+        <section class="detail-section">
+          <h4>Hourly Variation</h4>
+          <div class="multiplier-grid">${hourlyCells}</div>
+          ${renderBarChart(variation.hourlyMultipliers, hourlyLabels)}
+        </section>
+      </div>
+    </article>`;
+  }
+  function autoSelectFirst() {
+    if (!currentModel) {
+      return;
+    }
+    const visibleNodes = getVisibleNodes();
+    if (visibleNodes.length > 0) {
+      selectTreeItem("node", visibleNodes[0].name);
+      return;
+    }
+    if (currentModel.temporalVariations.length > 0) {
+      selectTreeItem("variation", currentModel.temporalVariations[0].name);
+    }
+  }
+  function getSelectedTreeNodeName() {
+    const selected = objectTree.querySelector('.tree-item.selected[data-kind="node"]');
+    return selected instanceof HTMLButtonElement ? selected.dataset.key ?? null : null;
+  }
+  function ensureVisibleSelection() {
+    if (!currentModel || !dwfFilterEnabled) {
+      return;
+    }
+    const selectedName = getSelectedTreeNodeName();
+    if (!selectedName) {
+      autoSelectFirst();
+      return;
+    }
+    const visible = getVisibleNodes();
+    if (!visible.some((node) => node.name === selectedName)) {
+      autoSelectFirst();
+    }
+  }
+  function exportNodesCsv() {
+    if (!currentModel) {
+      return;
+    }
+    const base = basenameFromFilename(currentModel.source.filename || "export");
+    downloadCsv(`${base}.nodes.csv`, nodesToCsv(currentModel));
+  }
+  function exportParserNotesCsv() {
+    if (!currentModel) {
+      return;
+    }
+    const base = basenameFromFilename(currentModel.source.filename || "export");
+    downloadCsv(`${base}.parser-notes.csv`, parserNotesToCsv(currentModel));
+  }
+  function updateCsvExportSection(model) {
+    nodesDwfCount.textContent = `${model.nodes.length} row(s)`;
+  }
+  function updateParserNotesExport(model) {
+    const hasNotes = countParserNotes(model) > 0;
+    exportParserNotesCsvBtn.disabled = !hasNotes;
+  }
+  function setNetworkExportEnabled(enabled) {
+    exportNetworkNodesCsvBtn.disabled = !enabled;
+    exportNetworkLinksCsvBtn.disabled = !enabled;
+  }
+  function updateNetworkExport(model) {
+    currentNetworkExport = exportNetworkCsv(model);
+    networkNodesCount.textContent = `${model.nodes.length} node(s)`;
+    networkLinksCount.textContent = `${model.links.length} link(s)`;
+    setNetworkExportEnabled(true);
+  }
+  function exportNetworkNodesCsv() {
+    if (!currentNetworkExport) {
+      return;
+    }
+    const base = basenameFromFilename(currentModel?.source.filename || "export");
+    downloadCsv(`${base}.network-nodes.csv`, currentNetworkExport.networkNodesCsv);
+  }
+  function exportNetworkLinksCsv() {
+    if (!currentNetworkExport) {
+      return;
+    }
+    const base = basenameFromFilename(currentModel?.source.filename || "export");
+    downloadCsv(`${base}.network-links.csv`, currentNetworkExport.networkLinksCsv);
+  }
+  function setIcmExportEnabled(enabled) {
+    exportIcmSubcatchmentBtn.disabled = !enabled;
+    exportIcmWastewaterBtn.disabled = !enabled;
+    exportIcmBothBtn.disabled = !enabled;
+  }
+  function showIcmTemplateWarning(message) {
+    icmTemplateWarning.textContent = message;
+    icmTemplateWarning.hidden = false;
+  }
+  function hideIcmTemplateWarning() {
+    icmTemplateWarning.hidden = true;
+    icmTemplateWarning.textContent = "";
+  }
+  function getIcmUnitsContract() {
+    if (icmUnitsContract) {
+      return icmUnitsContract;
+    }
+    return {
+      subcatchment: { unit: "cfs", field: "additional_foul_flow" },
+      subcatchmentArea: { field: "total_area", unit: "acre", value: 0.1 },
+      wastewaterEvent: { unit: "ft3/day", field: "FLOW / calibration multipliers" }
+    };
+  }
+  function renderIcmAssumptions(contract) {
+    if (!icmAssumptionsPanel || !icmSubcatchmentColumnsList) {
+      return;
+    }
+    icmAssumptionsPanel.hidden = false;
+    const columns = SUBCATCHMENT_CSV_HEADER.split(",");
+    icmSubcatchmentColumnsList.innerHTML = columns.map((col) => `<li><code>${escapeHtml(col)}</code></li>`).join("");
+    if (icmTotalAreaNote) {
+      const area = contract.subcatchmentArea;
+      if (area) {
+        icmTotalAreaNote.textContent = `${area.field} = ${area.value} ${area.unit} on every row (project constant).`;
+      } else {
+        icmTotalAreaNote.textContent = "total_area = 0.1 acre on every row (project constant).";
+      }
+    }
+  }
+  function renderIcmUnitPanel(model, icmExport) {
+    const contract = getIcmUnitsContract();
+    icmUnitPanel.hidden = false;
+    icmSubcatchmentUnitLabel.textContent = contract.subcatchment.unit;
+    icmWwgUnitLabel.textContent = contract.wastewaterEvent.unit === "ft3/day" ? "ft\xB3/day" : contract.wastewaterEvent.unit;
+    const { xpxUnitSummary } = icmExport;
+    if (xpxUnitSummary.units.length === 0) {
+      icmXpxUnitsList.innerHTML = "<li>No <code>DRY_WTH_UN</code> on export nodes (flow may be pattern-only).</li>";
+    } else {
+      icmXpxUnitsList.innerHTML = xpxUnitSummary.units.map((u) => {
+        const label = u.label ?? "unknown";
+        return `<li><code>DRY_WTH_UN "${escapeHtml(u.code)}"</code> (${escapeHtml(label)}) \u2014 ${u.nodeCount} node(s)</li>`;
+      }).join("");
+    }
+    if (xpxUnitSummary.mixed) {
+      icmXpxUnitsMixed.hidden = false;
+      icmXpxUnitsMixed.textContent = "Multiple XPX unit codes in this file \u2014 each node is converted from its own DRY_WTH_UN.";
+    } else {
+      icmXpxUnitsMixed.hidden = true;
+      icmXpxUnitsMixed.textContent = "";
+    }
+    const exampleNode = model.nodes.find((n) => n.name === "16-2-53") ?? icmExport.exportNodes.find(
+      (n) => n.sewerInputs.dryWeatherFlow.baseFlow !== null && n.sewerInputs.dryWeatherFlow.units !== null
+    );
+    if (exampleNode) {
+      const dwf = exampleNode.sewerInputs.dryWeatherFlow;
+      const xpxLabel = labelXpxFlowUnit(dwf.units) ?? dwf.units;
+      const cfs = convertBaseFlowToIcmCfs(dwf.baseFlow, dwf.units);
+      icmSubcatchmentExample.textContent = `Example ${exampleNode.name}: ${dwf.baseFlow} ${xpxLabel} \u2192 ${cfs.toFixed(4)} ${contract.subcatchment.unit} in CSV`;
+    } else {
+      icmSubcatchmentExample.textContent = "";
+    }
+  }
+  function renderValidationSummary(model, icmExport) {
+    if (!validationList) {
+      return;
+    }
+    if (!icmExport) {
+      validationList.innerHTML = '<p class="muted validation-empty">Load an XPX file to see export readiness checks.</p>';
+      return;
+    }
+    const dwfCount = filterDwfNodes(model.nodes).length;
+    const profileCount = icmExport.wwgProfiles.length;
+    const contract = getIcmUnitsContract();
+    const unitLabel = contract.subcatchment.unit;
+    const warningCount = model.source.parseWarnings.length;
+    const items = [
+      {
+        kind: "ok",
+        title: "Exportable DWF data found",
+        detail: `${dwfCount} node${dwfCount === 1 ? "" : "s"} ha${dwfCount === 1 ? "s" : "ve"} direct dry weather flow loading and will become ${dwfCount} subcatchment row${dwfCount === 1 ? "" : "s"}.`
+      },
+      {
+        kind: "ok",
+        title: "Profile ready",
+        detail: `${profileCount} referenced temporal variation${profileCount === 1 ? "" : "s"} will become ${profileCount} Waste Water event profile${profileCount === 1 ? "" : "s"}.`
+      },
+      {
+        kind: "info",
+        title: "Units handled",
+        detail: `XPX flow units are converted to ICM additional foul flow in ${unitLabel}.`
+      }
+    ];
+    if (warningCount > 0) {
+      const firstWarning = model.source.parseWarnings[0];
+      items.push({
+        kind: "warn",
+        title: "Non-critical parser note",
+        detail: firstWarning ? `Line ${firstWarning.line}: ${firstWarning.message}` : `${warningCount} parser note(s) \u2014 see Ready to export panel.`
+      });
+    }
+    validationList.innerHTML = items.map((item) => {
+      const dotClass = item.kind === "info" ? "info" : item.kind === "warn" ? "warn" : "";
+      const symbol = item.kind === "info" ? "i" : item.kind === "warn" ? "!" : "\u2713";
+      return `<div class="validation-item">
+        <span class="dot${dotClass ? ` ${dotClass}` : ""}">${symbol}</span>
+        <div><strong>${escapeHtml(item.title)}</strong><br><span class="muted small">${escapeHtml(item.detail)}</span></div>
+      </div>`;
+    }).join("");
+  }
+  function updateIcmExport(model) {
+    currentIcmExport = null;
+    icmUnitPanel.hidden = true;
+    if (icmAssumptionsPanel) {
+      icmAssumptionsPanel.hidden = true;
+    }
+    renderValidationSummary(model, null);
+    if (!wwgTemplateText) {
+      if (icmExportSection) {
+        icmExportSection.hidden = true;
+      }
+      setIcmExportEnabled(false);
+      showIcmTemplateWarning(
+        "WWG template not loaded. Run npm run build to rebuild the release bundle."
+      );
+      return;
+    }
+    hideIcmTemplateWarning();
+    currentIcmExport = exportIcmCsv(model, wwgTemplateText);
+    if (icmExportSection) {
+      icmExportSection.hidden = false;
+    }
+    icmSubcatchmentCount.textContent = String(
+      currentIcmExport.subcatchmentRows.length
+    );
+    icmProfileCount.textContent = String(currentIcmExport.wwgProfiles.length);
+    const contract = getIcmUnitsContract();
+    renderIcmUnitPanel(model, currentIcmExport);
+    renderIcmAssumptions(contract);
+    renderValidationSummary(model, currentIcmExport);
+    setIcmExportEnabled(true);
+  }
+  function icmExportBasename() {
+    return basenameFromFilename(currentModel?.source.filename || "export");
+  }
+  function exportIcmSubcatchmentCsv() {
+    if (!currentIcmExport) {
+      return;
+    }
+    const base = icmExportBasename();
+    downloadCsv(`${base}.subcatchment.CSV`, currentIcmExport.subcatchmentCsv);
+  }
+  function exportIcmWastewaterCsv() {
+    if (!currentIcmExport) {
+      return;
+    }
+    const base = icmExportBasename();
+    downloadCsv(`${base}.Waste water.csv`, currentIcmExport.wasteWaterCsv);
+  }
+  function exportIcmBothCsvs() {
+    exportIcmWastewaterCsv();
+    exportIcmSubcatchmentCsv();
+  }
+  function renderWarnings() {
+    warningsList.innerHTML = "";
+    if (!currentModel) {
+      warningsSection.hidden = true;
+      exportParserNotesCsvBtn.disabled = true;
+      return;
+    }
+    const items = [];
+    for (const w of currentModel.source.parseWarnings) {
+      items.push({ line: w.line, message: w.message, unresolved: false });
+    }
+    for (const r of currentModel.resolved) {
+      if (r.unresolvedRef) {
+        items.push({
+          line: 0,
+          message: `Node "${r.nodeName}" \u2192 unresolved temporal variation "${r.unresolvedRef.name}"`,
+          unresolved: true
+        });
+      }
+    }
+    warningsSection.hidden = items.length === 0;
+    updateParserNotesExport(currentModel);
+    for (const item of items) {
+      const li = document.createElement("li");
+      if (item.unresolved) {
+        li.className = "unresolved";
+      }
+      const prefix = item.line > 0 ? `Line ${item.line}: ` : "";
+      li.textContent = prefix + item.message;
+      warningsList.appendChild(li);
+    }
+  }
+  function scrollToResults() {
+    readyPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function renderModel(model) {
+    currentModel = model;
+    hideError();
+    const dwfCount = filterDwfNodes(model.nodes).length;
+    dwfFilterEnabled = model.nodes.length > DWF_FILTER_DEFAULT_THRESHOLD;
+    dwfFilterCheckbox.checked = dwfFilterEnabled;
+    setStatus(
+      `Parsed ${model.nodes.length} node(s), ${dwfCount} with DWF loadings, ${model.temporalVariations.length} temporal variation(s).`,
+      "ok"
+    );
+    readyPanel.hidden = false;
+    viewerSection.hidden = false;
+    csvExportSection.hidden = false;
+    updateIcmExport(model);
+    filenameLabel.textContent = model.source.filename || "(unnamed)";
+    dwfNodeCount.textContent = String(dwfCount);
+    const unresolved = model.resolved.filter((r) => r.unresolvedRef !== null).length;
+    unresolvedCount.textContent = String(unresolved);
+    buildTree(model);
+    updateCsvExportSection(model);
+    updateNetworkExport(model);
+    renderWarnings();
+    autoSelectFirst();
+    scrollToResults();
+  }
+  function applyDwfFilter() {
+    if (!currentModel) {
+      return;
+    }
+    dwfFilterEnabled = dwfFilterCheckbox.checked;
+    buildTree(currentModel);
+    ensureVisibleSelection();
+  }
+  function parseText(text, filename) {
+    setStatus(`Parsing ${filename}\u2026`, "busy");
+    try {
+      const model = parseXpxDwf(text, { filename });
+      renderModel(model);
+    } catch (error) {
+      currentModel = null;
+      currentIcmExport = null;
+      currentNetworkExport = null;
+      readyPanel.hidden = true;
+      if (icmExportSection) {
+        icmExportSection.hidden = true;
+      }
+      viewerSection.hidden = true;
+      csvExportSection.hidden = true;
+      if (validationList) {
+        validationList.innerHTML = '<p class="muted validation-empty">Load an XPX file to see export readiness checks.</p>';
+      }
+      warningsSection.hidden = true;
+      exportParserNotesCsvBtn.disabled = true;
+      setIcmExportEnabled(false);
+      setNetworkExportEnabled(false);
+      hideIcmTemplateWarning();
+      objectTree.innerHTML = "";
+      nodesDwfCount.textContent = "";
+      networkNodesCount.textContent = "";
+      networkLinksCount.textContent = "";
+      detailPanel.innerHTML = '<p class="detail-empty">Select a node or temporal variation in the tree.</p>';
+      setStatus("");
+      showError(error instanceof Error ? error.message : String(error));
+    }
+  }
+  function parseFile(file) {
+    const name = file.name.toLowerCase();
+    if (!name.endsWith(".xpx") && !name.endsWith(".txt")) {
+      showError("Please select an .xpx file.");
+      setStatus("");
+      return;
+    }
+    setStatus(`Reading ${file.name}\u2026`, "busy");
+    hideError();
+    const reader = new FileReader();
+    reader.onload = () => parseText(String(reader.result), file.name);
+    reader.onerror = () => {
+      setStatus("");
+      showError("Failed to read file.");
+    };
+    reader.readAsText(file);
+  }
+  function handleFiles(files) {
+    if (files.length === 0) {
+      return;
+    }
+    parseFile(files[0]);
+  }
+  fileInput.addEventListener("change", () => handleFiles(fileInput.files));
+  if (chooseBtn) {
+    chooseBtn.addEventListener("click", () => fileInput.click());
+  }
+  dropZone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    dropZone.classList.add("drag-over");
+  });
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("drag-over");
+  });
+  dropZone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    dropZone.classList.remove("drag-over");
+    handleFiles(event.dataTransfer.files);
+  });
+  objectTree.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    const item = target.closest(".tree-item");
+    if (item instanceof HTMLButtonElement && item.dataset.kind && item.dataset.key) {
+      selectTreeItem(item.dataset.kind, item.dataset.key);
+    }
+  });
+  detailPanel.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    const button = target.closest(".link-button");
+    if (button instanceof HTMLButtonElement && button.dataset.jumpKind && button.dataset.jumpKey) {
+      selectTreeItem(button.dataset.jumpKind, button.dataset.jumpKey);
+    }
+  });
+  dwfFilterCheckbox.addEventListener("change", applyDwfFilter);
+  exportNodesCsvBtn.addEventListener("click", exportNodesCsv);
+  exportParserNotesCsvBtn.addEventListener("click", exportParserNotesCsv);
+  exportNetworkNodesCsvBtn.addEventListener("click", exportNetworkNodesCsv);
+  exportNetworkLinksCsvBtn.addEventListener("click", exportNetworkLinksCsv);
+  exportIcmSubcatchmentBtn.addEventListener("click", exportIcmSubcatchmentCsv);
+  exportIcmWastewaterBtn.addEventListener("click", exportIcmWastewaterCsv);
+  exportIcmBothBtn.addEventListener("click", exportIcmBothCsvs);
+  function loadSample() {
+    if (!SINGLE_NODE_EMBEDDED) {
+      showError(
+        "Single-node sample not embedded. Run npm run build to rebuild the release bundle."
+      );
+      return;
+    }
+    hideError();
+    parseText(SINGLE_NODE_EMBEDDED, "single_node.xpx");
+  }
+  var MULTI_NODE_SAMPLE_SCRIPT_URLS = [
+    "sample/multi-node-sample.js",
+    "release/dwf-xpx-0.1.0/sample/multi-node-sample.js"
+  ];
+  function loadMultiNodeSampleText() {
+    if (typeof window.__MULTI_NODE_SAMPLE__ === "string") {
+      return Promise.resolve(window.__MULTI_NODE_SAMPLE__);
+    }
+    let index = 0;
+    function tryNextScript() {
+      if (index >= MULTI_NODE_SAMPLE_SCRIPT_URLS.length) {
+        return Promise.reject(
+          new Error(
+            "Could not load multi-node sample. Run npm run build, open release/dwf-xpx-0.1.0/index.html, or choose sample/multi_node.xpx manually."
+          )
+        );
+      }
+      const url = MULTI_NODE_SAMPLE_SCRIPT_URLS[index];
+      index += 1;
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = url;
+        script.onload = () => {
+          if (typeof window.__MULTI_NODE_SAMPLE__ !== "string") {
+            reject(new Error(`Multi-node sample script loaded from ${url} but data is missing.`));
+            return;
+          }
+          resolve(window.__MULTI_NODE_SAMPLE__);
+        };
+        script.onerror = () => {
+          script.remove();
+          tryNextScript().then(resolve, reject);
+        };
+        document.head.appendChild(script);
+      });
+    }
+    return tryNextScript();
+  }
+  async function loadMultiSample() {
+    hideError();
+    setStatus("Loading multi_node.xpx\u2026", "busy");
+    try {
+      const text = await loadMultiNodeSampleText();
+      parseText(text, "multi_node.xpx");
+    } catch (error) {
+      setStatus("");
+      showError(error instanceof Error ? error.message : String(error));
+    }
+  }
+  loadSampleBtn.addEventListener("click", loadSample);
+  loadMultiSampleBtn.addEventListener("click", loadMultiSample);
+  function initWwgTemplate() {
+    if (!wwgTemplateText) {
+      showIcmTemplateWarning(
+        "WWG template not embedded. Run npm run build to rebuild the release bundle."
+      );
+      return;
+    }
+    if (currentModel) {
+      updateIcmExport(currentModel);
+    }
+  }
+  initWwgTemplate();
+  setStatus("Ready \u2014 choose a file or load the sample.");
+  if (readyPanel) {
+    readyPanel.hidden = true;
+  }
+  if (csvExportSection) {
+    csvExportSection.hidden = true;
+  }
+})();
+
+</script>
+</body>
+</html>
