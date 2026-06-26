@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wallingford Routing: Two Reservoir Interactive Tool</title>
+<style>
+  :root{
+    --bg:#f5f8fb; --paper:#fff; --ink:#102338; --muted:#5e7186; --line:#d9e5ef;
+    --dark:#0d1d2d; --blue:#2563eb; --green:#15945b; --orange:#e58a18;
+    --purple:#7c3aed; --pink:#db2777; --red:#dc2626; --gray:#cbd5e1;
+    --cyan:#0796b8; --shadow:0 14px 36px rgba(18,40,75,.10); --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#f8fbff 0%,#f3f7fb 60%,#fff 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.42}
+  .wrap{max-width:1480px;margin:0 auto;padding:14px 16px 48px}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:0 0 10px}
+  h1{font-size:clamp(1.45rem,2.4vw,2.8rem);line-height:.98;letter-spacing:-.045em;margin:0 0 5px}
+  h2{font-size:clamp(1.35rem,2.2vw,2.25rem);line-height:1.04;letter-spacing:-.035em;margin:0 0 10px}
+  h3{font-size:1rem;margin:0 0 7px;letter-spacing:-.015em}
+  p{margin:0 0 10px}.lead{max-width:930px;color:#40566d;font-size:.98rem}.muted{color:var(--muted)}
+  .tagline{font-size:.86rem;color:#597087;max-width:420px;text-align:right}.tagline b{color:#102338}
+  .tool{display:grid;grid-template-columns:300px 1fr;gap:12px;align-items:start}
+  .controls{position:sticky;top:10px;background:#0d1d2d;color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:14px;box-shadow:0 18px 50px rgba(14,32,52,.22)}
+  .controls h3{color:#fff;margin:12px 0 7px}.controls h3:first-child{margin-top:0}.control{margin:0 0 11px}.control label{display:flex;justify-content:space-between;gap:10px;font-size:.86rem;font-weight:850;color:#f2f7ff;margin-bottom:5px}.control label span{color:#9dd7ff;white-space:nowrap}.control small{display:block;color:#9fb1c7;font-size:.74rem;line-height:1.28;margin-top:3px}.control input[type=range]{width:100%;accent-color:#67b7ff}.control.calibration{background:rgba(37,99,235,.18);border:1px solid rgba(103,183,255,.35);border-radius:14px;padding:10px;margin-bottom:12px}.control.calibration label{font-size:.9rem}.select{width:100%;border:1px solid rgba(255,255,255,.18);background:#102b46;color:#fff;border-radius:12px;padding:8px 10px;font-weight:850}
+  .buttons{display:flex;gap:8px;margin:4px 0 10px}.btn{appearance:none;border:1px solid rgba(255,255,255,.18);background:#173452;color:#fff;border-radius:12px;padding:8px 10px;font-weight:900;cursor:pointer}.btn.primary{background:linear-gradient(135deg,#2563eb,#0796b8);border-color:transparent}.btn:hover{filter:brightness(1.05)}
+  .main{min-width:0}.metrics{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:7px;margin-bottom:8px}.metric{background:#fff;border:1px solid var(--line);border-radius:13px;padding:8px 9px;min-width:0;box-shadow:0 6px 18px rgba(18,40,75,.05)}.metric .label{font-size:.63rem;font-weight:950;color:#66788b;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}.metric .value{font-size:1.05rem;font-weight:950;letter-spacing:-.035em;white-space:nowrap}.metric .unit{font-size:.66rem;color:#708197;white-space:nowrap}.metric.blue .value{color:var(--blue)}.metric.green .value{color:var(--green)}.metric.orange .value{color:var(--orange)}.metric.purple .value{color:var(--purple)}.metric.pink .value{color:var(--pink)}.metric.cyan .value{color:var(--cyan)}.metric.red .value{color:var(--red)}.metric.gray .value{color:#64748b}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 12px;margin-bottom:8px;box-shadow:var(--shadow)}.panel-title{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:4px}.panel-title b{font-size:.98rem}.panel-title span{font-size:.77rem;color:#66788b}.note{font-size:.78rem;color:#62758b;margin-top:4px}
+  svg{width:100%;height:auto;display:block}.axis{stroke:#b8c6d4;stroke-width:1}.gridline{stroke:#e8eff7;stroke-width:1}.axis-text{fill:#708197;font-size:12px}.chart-label{fill:#23364b;font-size:12px;font-weight:850}.dragline{stroke:#0f172a;stroke-width:3;cursor:ew-resize}.draghandle{fill:#0f172a;cursor:ew-resize}.rainbar{fill:#cbd5e1;opacity:.42}.legend{display:flex;flex-wrap:wrap;gap:7px 12px;margin-top:4px;font-size:.78rem;color:#53667d}.key{display:inline-flex;align-items:center;gap:5px}.sw{width:14px;height:4px;border-radius:999px;display:inline-block}.sw.bar{height:10px;width:10px;border-radius:3px;background:#cbd5e1;opacity:.65}.sw.qin{background:var(--blue)}.sw.q1{background:var(--orange)}.sw.q2{background:var(--green)}.sw.s1{background:var(--purple)}.sw.s2{background:var(--pink)}.sw.k{background:var(--red)}
+  .fixed-map{display:grid;grid-template-columns:1.05fr 1.1fr 1fr;gap:10px;margin:0 0 12px}.fixed-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px 14px;box-shadow:0 8px 22px rgba(18,40,75,.06)}.fixed-card h3{font-size:.95rem;margin-bottom:6px}.fixed-card p{font-size:.82rem;color:#4b6077;margin-bottom:7px}.fixed-card ul{margin:7px 0 0;padding-left:18px;color:#4b6077;font-size:.82rem}.fixed-card li{margin:3px 0}.fixed-card.calib{border-color:#93c5fd;background:linear-gradient(180deg,#fff,#eff6ff)}.fixed-card.dynamic{border-color:#fecaca;background:linear-gradient(180deg,#fff,#fff7ed)}.chipline{display:flex;flex-wrap:wrap;gap:6px}.chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:#f1f5f9;border:1px solid #dbe5ef;padding:4px 8px;font-size:.72rem;font-weight:850;color:#344a61}.chip.blue{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}.chip.red{background:#fff1f2;border-color:#fecdd3;color:#be123c}.calc-strip{display:grid;grid-template-columns:1fr 1fr;gap:8px}.calc-box{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#f7fbff;border:1px solid #dce8f4;border-radius:14px;padding:9px 10px;color:#263a52;font-size:.78rem;line-height:1.45;overflow:auto}.calc-box b{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#102338}
+  .explain{margin-top:16px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:20px}.explain-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:12px}.formula-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.formula-card{background:#f8fbff;border:1px solid #dce8f5;border-radius:14px;padding:10px}.formula-card b{display:block;font-size:.68rem;color:#53667d;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}.formula-card code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;font-weight:900;color:#152a42}
+  .insight-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:12px;margin-top:12px}.insight-card{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #dce8f5;border-radius:18px;padding:14px}.insight-card h3{font-size:1.05rem;margin-bottom:6px}.insight-card p{font-size:.9rem;color:#4b6077}.mini-curve{background:#fff;border:1px solid #dce8f5;border-radius:16px;padding:10px}.mini-curve svg{height:auto}.tiny-table{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}.tiny-cell{background:#f7fbff;border:1px solid #e0ebf5;border-radius:12px;padding:7px;text-align:center}.tiny-cell b{display:block;font-size:.75rem;color:#53667d}.tiny-cell span{font-weight:950;color:#102338;font-size:.9rem}.param-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.param{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px}.param h3{display:flex;align-items:center;gap:7px;margin-bottom:5px}.param p{font-size:.86rem;color:#4e6278}.dot{width:10px;height:10px;border-radius:50%;display:inline-block}.dot.blue{background:var(--blue)}.dot.green{background:var(--green)}.dot.orange{background:var(--orange)}.dot.purple{background:var(--purple)}.dot.pink{background:var(--pink)}.dot.red{background:var(--red)}.dot.gray{background:#64748b}.dot.cyan{background:var(--cyan)}
+  .footer-note{color:#687a90;font-size:.82rem;text-align:center;margin-top:16px}
+  @media(max-width:1120px){.tool,.explain-grid,.insight-grid,.fixed-map{grid-template-columns:1fr}.controls{position:relative;top:0}.metrics{grid-template-columns:repeat(4,1fr)}.param-grid{grid-template-columns:repeat(2,1fr)}.tagline{text-align:left}}
+  @media(max-width:720px){.wrap{padding:10px}.metrics{grid-template-columns:repeat(2,1fr)}.formula-strip,.param-grid,.calc-strip,.tiny-table{grid-template-columns:1fr}header{display:block}.tagline{text-align:left;margin-top:6px}.panel{padding:9px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Wallingford routing: two reservoirs in series</h1>
+      <p class="lead">At every timestep, rainfall excess enters Reservoir 1. The same timestep rainfall intensity changes <b>k</b>. The ICM <b>runoff routing value</b> is the main calibration knob because it scales the reservoir delay.</p>
+    </div>
+    <p class="tagline"><b>S is storage depth/head.</b> Volume is depth times surface area: <b>V = (S/1000) × A</b> when S is in mm.</p>
+  </header>
+
+  <section class="fixed-map" aria-label="Parameter grouping before animation">
+    <div class="fixed-card">
+      <h3>1. Collected or estimated first</h3>
+      <p>These define the surface and the water entering routing. Change them only when the input data or surface setup is wrong.</p>
+      <div class="chipline"><span class="chip">Area A</span><span class="chip">Slope S<sub>slope</sub></span><span class="chip">Rainfall</span><span class="chip">Runoff-volume/excess</span></div>
+    </div>
+    <div class="fixed-card calib">
+      <h3>2. Main routing calibration knob</h3>
+      <p><b>Runoff routing value R</b> changes the routing factor. In the common ICM <b>Rel</b> mode, <b>C<sub>used</sub> = R × C<sub>base</sub></b>.</p>
+      <ul><li>Increase R → larger k → slower, more attenuated response.</li><li>Decrease R → smaller k → faster, sharper response.</li></ul>
+    </div>
+    <div class="fixed-card dynamic">
+      <h3>3. Dynamic every timestep</h3>
+      <p>Once the fixed values and R are selected, these still change during the storm.</p>
+      <div class="chipline"><span class="chip red">i*</span><span class="chip red">k</span><span class="chip blue">S<sub>1</sub></span><span class="chip blue">S<sub>2</sub></span><span class="chip blue">q<sub>1</sub>, q<sub>2</sub></span></div>
+    </div>
+  </section>
+
+  <section class="tool" aria-label="Interactive Wallingford routing tool">
+    <aside class="controls">
+      <h3>Animation</h3>
+      <div class="buttons">
+        <button id="playBtn" class="btn primary">Play</button>
+        <button id="resetBtn" class="btn">Reset</button>
+      </div>
+      <div class="control">
+        <label for="timeSlider">Time <span id="timeReadout">0 min</span></label>
+        <input id="timeSlider" type="range" min="0" max="180" step="1" value="0">
+        <small>Drag this, or drag the vertical bar in either chart.</small>
+      </div>
+      <h3>Main calibration</h3>
+      <div class="control calibration">
+        <label for="routingSlider">Runoff routing value R <span id="routingReadout">1.00 ×</span></label>
+        <input id="routingSlider" type="range" min="0.20" max="5.00" step="0.05" value="1.00">
+        <small>ICM Rel mode: R multiplies the default Wallingford routing factor. This is the main timing/attenuation calibration value.</small>
+      </div>
+
+      <h3>Surface geometry</h3>
+      <div class="control">
+        <label for="areaSlider">Surface area A <span id="areaReadout">6,200 m²</span></label>
+        <input id="areaSlider" type="range" min="500" max="15000" step="100" value="6200">
+        <small>A affects C, and converts storage depth to volume.</small>
+      </div>
+      <div class="control">
+        <label for="slopeSlider">Slope S<sub>slope</sub> <span id="slopeReadout">0.020 m/m</span></label>
+        <input id="slopeSlider" type="range" min="0" max="0.08" step="0.001" value="0.020">
+        <small>Used in C. Minimum used in the equation is 0.002 m/m.</small>
+      </div>
+
+      <h3>Rainfall excess</h3>
+      <div class="control">
+        <label for="peakRainSlider">Peak rainfall <span id="peakRainReadout">40 mm/hr</span></label>
+        <input id="peakRainSlider" type="range" min="5" max="100" step="1" value="40">
+      </div>
+      <div class="control">
+        <label for="durationSlider">Storm duration <span id="durationReadout">80 min</span></label>
+        <input id="durationSlider" type="range" min="20" max="160" step="5" value="80">
+      </div>
+      <div class="control">
+        <label for="excessSlider">Excess factor <span id="excessReadout">0.70</span></label>
+        <input id="excessSlider" type="range" min="0.05" max="1" step="0.05" value="0.70">
+        <small>Teaching simplification: q<sub>in</sub> = rainfall × excess factor.</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="metrics" id="metrics"></div>
+
+      <div class="panel">
+        <div class="panel-title"><b>1. Two reservoirs in series</b><span>water level = S<sub>1</sub> and S<sub>2</sub> depth/head</span></div>
+        <svg id="reservoirSvg" viewBox="0 0 1000 300" role="img" aria-label="Two reservoirs in series"></svg>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title"><b>2. Flow hydrograph</b><span>rainfall is the light grey bar background; drag the time bar</span></div>
+        <svg id="hydroSvg" viewBox="0 0 1000 218" role="img" aria-label="Hydrograph with rainfall bars"></svg>
+        <div class="legend">
+          <span class="key"><span class="sw bar"></span>rainfall intensity</span>
+          <span class="key"><span class="sw qin"></span>q<sub>in</sub>: rainfall excess into Reservoir 1</span>
+          <span class="key"><span class="sw q1"></span>q<sub>1</sub>: Reservoir 1 outflow</span>
+          <span class="key"><span class="sw q2"></span>q<sub>2</sub>: Reservoir 2 outflow</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title"><b>3. Variable tracker</b><span>normalized timing only; fewer lines, less clutter</span></div>
+        <svg id="trackSvg" viewBox="0 0 1000 200" role="img" aria-label="Normalized variable tracker"></svg>
+        <div class="legend">
+          <span class="key"><span class="sw bar"></span>rainfall bars</span>
+          <span class="key"><span class="sw k"></span>k: release speed control</span>
+          <span class="key"><span class="sw s1"></span>S<sub>1</sub>: first storage depth</span>
+          <span class="key"><span class="sw s2"></span>S<sub>2</sub>: second storage depth</span>
+          <span class="key"><span class="sw q2"></span>q<sub>2</sub>: final routed outflow</span>
+        </div>
+      </div>
+
+      <div class="calc-strip">
+        <div class="calc-box" id="calcBox"></div>
+        <div class="calc-box" id="balanceBox"></div>
+      </div>
+    </main>
+  </section>
+
+  <section class="explain card">
+    <h2>What the tool is showing</h2>
+    <div class="explain-grid">
+      <div>
+        <p class="lead">The reservoirs receive <b>rainfall excess</b>, not raw rainfall. First, rainfall passes through initial losses and a runoff-volume model. The result is an effective runoff rate, <b>q<sub>in</sub></b>, that keeps falling into Reservoir 1 during the storm.</p>
+        <p class="lead">At the same timestep, the rainfall intensity also changes <b>k</b>. This is the key idea: <b>the inflow to the first reservoir changes with rainfall excess, and the release rate from both reservoirs changes with rainfall intensity.</b></p>
+      </div>
+      <div>
+        <p class="lead">Geometry is mostly fixed for a surface. Area and slope estimate <b>C<sub>base</sub></b>. The ICM runoff routing value <b>R</b> is the calibration multiplier that creates <b>C<sub>used</sub></b>. Rainfall intensity is dynamic. It sets <b>i*</b>, then <b>k</b>. Heavy rainfall makes k smaller, so the same storage depth releases more flow. Light rainfall makes k larger, so the reservoirs drain more slowly.</p>
+      </div>
+    </div>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <h3>The curve insight: small rain drains slowly; active rain drains faster.</h3>
+        <p>When rainfall intensity is very low, <b>k</b> is large, so the reservoirs release slowly. Once rainfall becomes meaningful, <b>k</b> drops quickly. That is the model's way of saying that shallow, disconnected trickles become connected overland/gully flow during active rainfall.</p>
+        <p>The curve then flattens at high intensity. Very heavy rain still makes <b>k</b> smaller, but not infinitely small, so the two reservoirs still provide attenuation and lag.</p>
+      </div>
+      <div class="mini-curve" aria-label="Mini curve of k over C versus rainfall intensity">
+        <svg viewBox="0 0 520 210" role="img" aria-label="k over C falls quickly at low rainfall intensity and flattens at high intensity">
+          <line x1="48" y1="172" x2="492" y2="172" class="axis"/>
+          <line x1="48" y1="20" x2="48" y2="172" class="axis"/>
+          <line x1="48" y1="126" x2="492" y2="126" class="gridline"/>
+          <line x1="48" y1="80" x2="492" y2="80" class="gridline"/>
+          <path d="M48,20 C55,53 62,78 75,96 C98,127 137,145 195,156 C276,170 382,174 492,178" fill="none" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="48" cy="20" r="5" fill="#dc2626"/><circle cx="92" cy="120" r="5" fill="#dc2626"/><circle cx="136" cy="145" r="5" fill="#dc2626"/><circle cx="225" cy="160" r="5" fill="#dc2626"/><circle cx="492" cy="178" r="5" fill="#dc2626"/>
+          <text x="260" y="204" text-anchor="middle" class="axis-text">rainfall intensity i<tspan baseline-shift="sub">10</tspan> increases →</text>
+          <text x="8" y="24" class="axis-text">k/C</text>
+          <text x="62" y="42" class="chart-label">slow drain</text>
+          <text x="230" y="142" class="chart-label">quick drop</text>
+          <text x="382" y="158" class="chart-label">flattens</text>
+        </svg>
+        <div class="tiny-table">
+          <div class="tiny-cell"><b>i10=0</b><span>k≈1.31C</span></div>
+          <div class="tiny-cell"><b>i10=5</b><span>k≈0.65C</span></div>
+          <div class="tiny-cell"><b>i10=20</b><span>k≈0.40C</span></div>
+          <div class="tiny-cell"><b>i10=100</b><span>k≈0.22C</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-strip">
+      <div class="formula-card"><b>Geometry estimate</b><code>C<sub>base</sub> = 0.117 S<sub>slope</sub><sup>-0.13</sup> A<sup>0.24</sup></code></div>
+      <div class="formula-card"><b>Intensity adjustment</b><code>i* = 0.5(1 + i<sub>10</sub>)</code></div>
+      <div class="formula-card"><b>Calibration + delay</b><code>C<sub>used</sub> = R C<sub>base</sub>; k = C<sub>used</sub> i*<sup>-0.39</sup></code></div>
+      <div class="formula-card"><b>Reservoir release</b><code>q = S / k</code></div>
+    </div>
+
+    <div class="param-grid">
+      <div class="param"><h3><span class="dot blue"></span>q<sub>in</sub></h3><p>Rainfall excess entering Reservoir 1. In the tool it is rainfall × excess factor; in ICM it comes from the selected runoff-volume method.</p></div>
+      <div class="param"><h3><span class="dot gray"></span>A</h3><p>Surface area. It affects the estimated geometry coefficient C<sub>base</sub> and converts depth storage to volume: V = (S/1000) × A when S is in mm.</p></div>
+      <div class="param"><h3><span class="dot cyan"></span>R</h3><p>ICM runoff routing value in Rel mode. This is the main calibration knob: C<sub>used</sub> = R × C<sub>base</sub>. Larger R gives more lag and attenuation.</p></div>
+      <div class="param"><h3><span class="dot gray"></span>S<sub>slope</sub></h3><p>Ground slope used in the C equation. This is not the same as S<sub>1</sub> or S<sub>2</sub>, which are storage depths.</p></div>
+      <div class="param"><h3><span class="dot red"></span>k</h3><p>The current storage/delay coefficient. Larger k means slower release. Smaller k means faster release.</p></div>
+      <div class="param"><h3><span class="dot purple"></span>S<sub>1</sub></h3><p>Storage depth/head in Reservoir 1. It fills from q<sub>in</sub> and drains as q<sub>1</sub> = S<sub>1</sub>/k.</p></div>
+      <div class="param"><h3><span class="dot pink"></span>S<sub>2</sub></h3><p>Storage depth/head in Reservoir 2. It fills from q<sub>1</sub> and drains as q<sub>2</sub> = S<sub>2</sub>/k.</p></div>
+      <div class="param"><h3><span class="dot orange"></span>q<sub>1</sub></h3><p>Outflow from Reservoir 1. This is also the inflow to Reservoir 2.</p></div>
+      <div class="param"><h3><span class="dot green"></span>q<sub>2</sub></h3><p>Final routed runoff leaving Reservoir 2. This is the smoothed and delayed response delivered to the node.</p></div>
+    </div>
+  </section>
+
+  <div class="footer-note">Teaching note: this is a simplified depth-rate simulator for explaining the Wallingford double-reservoir logic. It is not a replacement for the ICM hydraulic engine.</div>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const el = {
+    playBtn:$('playBtn'), resetBtn:$('resetBtn'), time:$('timeSlider'),
+    routing:$('routingSlider'), area:$('areaSlider'), slope:$('slopeSlider'), peak:$('peakRainSlider'), duration:$('durationSlider'), excess:$('excessSlider'),
+    timeReadout:$('timeReadout'), routingReadout:$('routingReadout'), areaReadout:$('areaReadout'), slopeReadout:$('slopeReadout'), peakRainReadout:$('peakRainReadout'), durationReadout:$('durationReadout'), excessReadout:$('excessReadout'),
+    metrics:$('metrics'), calcBox:$('calcBox'), balanceBox:$('balanceBox'), resSvg:$('reservoirSvg'), hydroSvg:$('hydroSvg'), trackSvg:$('trackSvg')
+  };
+  const colors = {rain:'#cbd5e1', qin:'#2563eb', k:'#dc2626', q1:'#e58a18', q2:'#15945b', s1:'#7c3aed', s2:'#db2777'};
+  let playing=false, timer=null, data=[], max={}, current=0;
+  const totalMin=180, dtMin=1, dtHr=dtMin/60;
+
+  function fmt(n,d=2){return Number(n).toLocaleString(undefined,{maximumFractionDigits:d,minimumFractionDigits:d});}
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+  function inputs(){
+    const Araw=+el.area.value, A=clamp(Araw,1000,10000);
+    const slopeRaw=+el.slope.value, slope=Math.max(slopeRaw,0.002);
+    return {Araw,A,slopeRaw,slope,R:+el.routing.value,peak:+el.peak.value,dur:+el.duration.value,excess:+el.excess.value};
+  }
+  function rainfallAt(t,inp){
+    const start=25, end=start+inp.dur;
+    if(t<start || t>end) return 0;
+    const x=(t-start)/inp.dur;
+    const main=Math.sin(Math.PI*x);
+    const skew=0.72+0.28*Math.sin(Math.PI*x*2+.5);
+    return Math.max(0, inp.peak*Math.pow(main,1.45)*skew);
+  }
+  function buildData(){
+    const inp=inputs();
+    const Cbase=0.117*Math.pow(inp.slope,-0.13)*Math.pow(inp.A,0.24);
+    const C=Cbase*inp.R;
+    let S1=0, S2=0;
+    const rows=[];
+    for(let t=0;t<=totalMin;t+=dtMin){
+      const rain=rainfallAt(t,inp);
+      const qin=rain*inp.excess;
+      const i10=rain;
+      const istar=0.5*(1+i10);
+      const k=C*Math.pow(istar,-0.39);
+      const q1=k>0?S1/k:0;
+      const q2=k>0?S2/k:0;
+      rows.push({t,rain,qin,i10,istar,k,Cbase,C,R:inp.R,S1,S2,q1,q2,V1:S1/1000*inp.A,V2:S2/1000*inp.A,inp});
+      S1=Math.max(0,S1+(qin-q1)*dtHr);
+      S2=Math.max(0,S2+(q1-q2)*dtHr);
+    }
+    data=rows; max={};
+    ['rain','qin','k','S1','S2','q1','q2','V1','V2'].forEach(key=>{max[key]=Math.max(1e-9,...rows.map(r=>r[key]));});
+    el.time.max=totalMin; current=clamp(current,0,totalMin); el.time.value=current;
+  }
+  function make(tag,attrs={}){const n=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,v));return n;}
+  function clear(svg){while(svg.firstChild)svg.removeChild(svg.firstChild);}
+  function text(svg,x,y,str,cls='axis-text',anchor='middle'){const n=make('text',{x,y,class:cls,'text-anchor':anchor});n.innerHTML=str;svg.appendChild(n);return n;}
+  function linePath(rows,key,cfg,yMax,normalized=false){return rows.map((r,i)=>{const x=cfg.left+(r.t/totalMin)*cfg.width;const val=normalized?(r[key]/max[key]):(r[key]/yMax);const y=cfg.top+cfg.height-clamp(val,0,1)*cfg.height;return `${i?'L':'M'}${x.toFixed(2)},${y.toFixed(2)}`;}).join(' ');}
+  function axes(svg,cfg,yTicks,yMax,label,showPct=false){
+    yTicks.forEach(v=>{const y=cfg.top+cfg.height-(v/yMax)*cfg.height;svg.appendChild(make('line',{x1:cfg.left,y1:y,x2:cfg.left+cfg.width,y2:y,class:'gridline'}));text(svg,cfg.left-8,y+4,showPct?(v*100).toFixed(0)+'%':fmt(v,v<10?1:0),'axis-text','end');});
+    svg.appendChild(make('line',{x1:cfg.left,y1:cfg.top+cfg.height,x2:cfg.left+cfg.width,y2:cfg.top+cfg.height,class:'axis'}));
+    svg.appendChild(make('line',{x1:cfg.left,y1:cfg.top,x2:cfg.left,y2:cfg.top+cfg.height,class:'axis'}));
+    [0,30,60,90,120,150,180].forEach(t=>{const x=cfg.left+(t/totalMin)*cfg.width;text(svg,x,cfg.top+cfg.height+19,String(t),'axis-text');});
+    text(svg,18,cfg.top+10,label,'axis-text','start');
+  }
+  function rainfallBars(svg,cfg,scaleMax,normalized=false){
+    const bw=cfg.width/data.length;
+    data.forEach(r=>{const h=(normalized?(r.rain/max.rain):(r.rain/scaleMax))*cfg.height;if(h<=0.2)return;const x=cfg.left+(r.t/totalMin)*cfg.width-bw/2;svg.appendChild(make('rect',{x,y:cfg.top+cfg.height-h,width:Math.max(1,bw*.8),height:h,class:'rainbar'}));});
+  }
+  function addTimeBar(svg,cfg){const x=cfg.left+(current/totalMin)*cfg.width;svg.appendChild(make('line',{x1:x,y1:cfg.top-5,x2:x,y2:cfg.top+cfg.height+5,class:'dragline'}));svg.appendChild(make('circle',{cx:x,cy:cfg.top-5,r:7,class:'draghandle'}));}
+  function makeDraggable(svg,cfg){let down=false;function set(evt){const rect=svg.getBoundingClientRect();const cx=(evt.touches?evt.touches[0].clientX:evt.clientX)-rect.left;const x=cx*(1000/rect.width);const tt=clamp(Math.round(((x-cfg.left)/cfg.width)*totalMin),0,totalMin);setTime(tt);}svg.onmousedown=e=>{down=true;set(e);};svg.onmousemove=e=>{if(down)set(e);};window.addEventListener('mouseup',()=>down=false);svg.ontouchstart=e=>{down=true;set(e);e.preventDefault();};svg.ontouchmove=e=>{if(down){set(e);e.preventDefault();}};window.addEventListener('touchend',()=>down=false);}
+
+  function drawHydro(){
+    const svg=el.hydroSvg; clear(svg);
+    const cfg={left:58,top:12,width:910,height:155};
+    const yMax=Math.max(5,Math.ceil(Math.max(max.rain,max.qin,max.q1,max.q2)*1.15/5)*5);
+    axes(svg,cfg,[0,yMax/2,yMax],yMax,'mm/hr');
+    rainfallBars(svg,cfg,yMax,false);
+    [['qin',colors.qin,3.0],['q1',colors.q1,2.7],['q2',colors.q2,3.1]].forEach(([key,color,w])=>svg.appendChild(make('path',{d:linePath(data,key,cfg,yMax,false),fill:'none',stroke:color,'stroke-width':w,'stroke-linejoin':'round','stroke-linecap':'round'})));
+    addTimeBar(svg,cfg); makeDraggable(svg,cfg);
+  }
+  function drawTracker(){
+    const svg=el.trackSvg; clear(svg);
+    const cfg={left:58,top:10,width:910,height:135};
+    axes(svg,cfg,[0,.5,1],1,'normalized',true);
+    rainfallBars(svg,cfg,1,true);
+    [['k',colors.k,2.5],['S1',colors.s1,3.0],['S2',colors.s2,3.0],['q2',colors.q2,2.8]].forEach(([key,color,w])=>svg.appendChild(make('path',{d:linePath(data,key,cfg,1,true),fill:'none',stroke:color,'stroke-width':w,'stroke-linejoin':'round','stroke-linecap':'round',opacity:key==='k'?0.82:0.94})));
+    addTimeBar(svg,cfg); makeDraggable(svg,cfg);
+  }
+  function drawReservoir(){
+    const svg=el.resSvg; clear(svg);
+    const r=data[current]||data[0];
+    const cfg={x1:220,y:66,w:150,h:154,x2:585};
+    const sMax=Math.max(max.S1,max.S2,1e-6);
+    const h1=clamp(r.S1/sMax,0,1)*cfg.h;
+    const h2=clamp(r.S2/sMax,0,1)*cfg.h;
+    const defs=make('defs');
+    const marker=make('marker',{id:'arrow',viewBox:'0 0 10 10',refX:'9',refY:'5',markerWidth:'7',markerHeight:'7',orient:'auto-start-reverse'});
+    marker.appendChild(make('path',{d:'M 0 0 L 10 5 L 0 10 z',fill:'#2563eb'}));defs.appendChild(marker);svg.appendChild(defs);
+    svg.appendChild(make('rect',{x:0,y:0,width:1000,height:300,rx:22,fill:'#f7fbff'}));
+    function arrow(x1,y1,x2,y2,color,w=7){svg.appendChild(make('path',{d:`M${x1},${y1} C${(x1+x2)/2},${y1} ${(x1+x2)/2},${y2} ${x2},${y2}`,fill:'none',stroke:color,'stroke-width':w,'stroke-linecap':'round','marker-end':'url(#arrow)'}));}
+    [['Reservoir 1','S₁',cfg.x1,h1,colors.s1,r.S1,r.q1,r.V1],['Reservoir 2','S₂',cfg.x2,h2,colors.s2,r.S2,r.q2,r.V2]].forEach(([title,slabel,x,h,color,S,q,V])=>{
+      svg.appendChild(make('rect',{x,y:cfg.y,width:cfg.w,height:cfg.h,rx:16,fill:'#fff',stroke:'#20384f','stroke-width':4}));
+      svg.appendChild(make('rect',{x:x+10,y:cfg.y+cfg.h-h+8,width:cfg.w-20,height:Math.max(0,h-16),rx:10,fill:color,opacity:.72}));
+      text(svg,x+cfg.w/2,cfg.y-16,title,'chart-label');
+      text(svg,x+cfg.w/2,cfg.y+cfg.h+24,`${slabel} = ${fmt(S,2)} mm`, 'chart-label');
+      text(svg,x+cfg.w/2,cfg.y+cfg.h+43,`V = ${fmt(V,2)} m³`, 'axis-text');
+      text(svg,x+cfg.w/2,cfg.y+cfg.h/2,`${slabel}`, 'chart-label');
+    });
+    const y=cfg.y+cfg.h/2;
+    arrow(72,y,cfg.x1-10,y,colors.qin,8);
+    arrow(cfg.x1+cfg.w+10,y,cfg.x2-10,y,colors.q1,8);
+    arrow(cfg.x2+cfg.w+10,y,930,y,colors.q2,8);
+    text(svg,82,y-34,`qᵢₙ`, 'chart-label'); text(svg,82,y+38,`${fmt(r.qin,1)} mm/hr`, 'axis-text');
+    text(svg,495,y-34,`q₁`, 'chart-label'); text(svg,495,y+38,`${fmt(r.q1,1)} mm/hr`, 'axis-text');
+    text(svg,910,y-34,`q₂`, 'chart-label'); text(svg,910,y+38,`${fmt(r.q2,1)} mm/hr`, 'axis-text');
+    svg.appendChild(make('rect',{x:376,y:12,width:248,height:36,rx:14,fill:'#fff',stroke:'#dbe7f2'}));
+    text(svg,500,35,`time ${r.t} min · R ${fmt(r.R,2)}× · rain ${fmt(r.rain,1)} mm/hr · k ${fmt(r.k,3)} hr`, 'chart-label');
+    svg.appendChild(make('rect',{x:365,y:247,width:270,height:34,rx:14,fill:'#fff',stroke:'#dbe7f2'}));
+    text(svg,500,269,`q₁ = S₁/k   ·   q₂ = S₂/k`, 'chart-label');
+  }
+  function updateMetrics(){
+    const r=data[current]||data[0];
+    const items=[['rain',r.rain.toFixed(1),'mm/hr','gray'],['q_in',r.qin.toFixed(1),'mm/hr','blue'],['R',r.R.toFixed(2),'routing value','cyan'],['k',r.k.toFixed(3),'hr','red'],['S1',r.S1.toFixed(2),'mm','purple'],['q1',r.q1.toFixed(1),'mm/hr','orange'],['S2',r.S2.toFixed(2),'mm','pink'],['q2',r.q2.toFixed(1),'mm/hr','green']];
+    el.metrics.innerHTML=items.map(([lab,val,unit,cls])=>`<div class="metric ${cls}"><div class="label">${lab}</div><div class="value">${val}</div><div class="unit">${unit}</div></div>`).join('');
+    el.calcBox.innerHTML=`<b>Current routing speed</b><br>A used = ${Math.round(r.inp.A).toLocaleString()} m²; S<sub>slope</sub> used = ${r.inp.slope.toFixed(3)} m/m<br>`+
+      `C<sub>base</sub> = 0.117 × S<sub>slope</sub><sup>-0.13</sup> × A<sup>0.24</sup> = ${r.Cbase.toFixed(3)}<br>`+
+      `ICM routing type = Rel; routing value R = ${r.R.toFixed(2)}<br>`+
+      `C<sub>used</sub> = R × C<sub>base</sub> = ${r.C.toFixed(3)}<br>`+
+      `i* = 0.5 × (1 + ${r.i10.toFixed(1)}) = ${r.istar.toFixed(2)}<br>`+
+      `k = C<sub>used</sub> × i*<sup>-0.39</sup> = ${r.k.toFixed(3)} hr`;
+    el.balanceBox.innerHTML=`<b>Current reservoir states</b><br>q<sub>1</sub> = S<sub>1</sub>/k = ${r.S1.toFixed(2)} / ${r.k.toFixed(3)} = ${r.q1.toFixed(2)} mm/hr<br>`+
+      `q<sub>2</sub> = S<sub>2</sub>/k = ${r.S2.toFixed(2)} / ${r.k.toFixed(3)} = ${r.q2.toFixed(2)} mm/hr<br>`+
+      `V<sub>1</sub> = (S<sub>1</sub>/1000)A = ${r.V1.toFixed(2)} m³; V<sub>2</sub> = ${r.V2.toFixed(2)} m³`;
+  }
+  function updateReadouts(){
+    el.timeReadout.textContent=`${current} min`;
+    el.routingReadout.textContent=`${(+el.routing.value).toFixed(2)} ×`;
+    el.areaReadout.textContent=`${(+el.area.value).toLocaleString()} m²`;
+    el.slopeReadout.textContent=`${(+el.slope.value).toFixed(3)} m/m`;
+    el.peakRainReadout.textContent=`${el.peak.value} mm/hr`;
+    el.durationReadout.textContent=`${el.duration.value} min`;
+    el.excessReadout.textContent=(+el.excess.value).toFixed(2);
+  }
+  function render(all=false){updateReadouts();if(all){drawHydro();drawTracker();}drawReservoir();updateMetrics();}
+  function recompute(){buildData();render(true);}
+  function setTime(t){current=clamp(+t,0,totalMin);el.time.value=current;render(true);}
+  function step(){if(!playing)return;current+=1;if(current>totalMin)current=0;el.time.value=current;render(true);}
+  function play(){playing=!playing;el.playBtn.textContent=playing?'Pause':'Play';if(playing){timer=setInterval(step,80);}else{clearInterval(timer);}}
+  el.playBtn.addEventListener('click',play);
+  el.resetBtn.addEventListener('click',()=>{current=0;el.time.value=0;if(playing)play();render(true);});
+  el.time.addEventListener('input',e=>setTime(e.target.value));
+  [el.routing,el.area,el.slope,el.peak,el.duration,el.excess].forEach(input=>input.addEventListener('input',recompute));
+  buildData();render(true);
+})();
+</script>
+</body>
+</html>

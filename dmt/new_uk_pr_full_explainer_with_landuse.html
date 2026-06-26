@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>New UK PR Explained: An Empirical Wetness-Response Model</title>
+<style>
+  :root{
+    --ink:#12303a;
+    --muted:#58717a;
+    --bg:#f6fbfc;
+    --card:#ffffff;
+    --blue:#1f8fb8;
+    --blue2:#dff4fb;
+    --green:#49a66a;
+    --green2:#e7f7ed;
+    --amber:#f3a536;
+    --amber2:#fff3df;
+    --red:#d95c5c;
+    --gray:#e7eef1;
+    --dark:#0c2530;
+    --shadow:0 18px 50px rgba(10,40,55,.12);
+    --radius:24px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 10% 0%, rgba(31,143,184,.12), transparent 34%),
+      radial-gradient(circle at 90% 8%, rgba(73,166,106,.14), transparent 30%),
+      linear-gradient(180deg,#f5fbff,#f8fcfa 45%,#fff);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    line-height:1.55;
+  }
+  header{
+    max-width:1180px;
+    margin:0 auto;
+    padding:56px 24px 24px;
+  }
+  .hero{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:28px;
+    align-items:center;
+  }
+  h1{
+    font-size:clamp(38px,6vw,76px);
+    line-height:.96;
+    letter-spacing:-.055em;
+    margin:0 0 18px;
+  }
+  .subtitle{
+    font-size:clamp(18px,2vw,24px);
+    color:var(--muted);
+    max-width:820px;
+  }
+  .pillbar{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0}
+  .pill{
+    border:1px solid rgba(18,48,58,.12);
+    background:rgba(255,255,255,.75);
+    border-radius:999px;
+    padding:8px 13px;
+    font-weight:700;
+    color:#2f5865;
+    backdrop-filter: blur(10px);
+  }
+  main{max-width:1180px;margin:0 auto;padding:0 24px 80px}
+  section{margin:34px 0}
+  .card{
+    background:rgba(255,255,255,.88);
+    border:1px solid rgba(18,48,58,.09);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .grid{display:grid;gap:22px}
+  .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+  @media(max-width:900px){.hero,.grid.two,.grid.three,.grid.four{grid-template-columns:1fr}.hide-sm{display:none}}
+  h2{font-size:clamp(28px,3.7vw,46px);line-height:1.05;letter-spacing:-.035em;margin:0 0 14px}
+  h3{font-size:24px;line-height:1.12;letter-spacing:-.02em;margin:0 0 10px}
+  h4{font-size:18px;margin:0 0 8px}
+  p{margin:0 0 14px}
+  .muted{color:var(--muted)}
+  .big{font-size:22px;color:#2a5663}
+  .callout{
+    border-left:6px solid var(--blue);
+    background:linear-gradient(90deg,var(--blue2),rgba(255,255,255,.65));
+    padding:18px 20px;
+    border-radius:18px;
+    font-weight:650;
+  }
+  .warning{
+    border-left-color:var(--amber);
+    background:linear-gradient(90deg,var(--amber2),rgba(255,255,255,.75));
+  }
+  .equation{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:clamp(20px,3vw,34px);
+    line-height:1.35;
+    background:#0e2c38;
+    color:#eafaff;
+    border-radius:22px;
+    padding:24px;
+    overflow-x:auto;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .eq-label{display:inline-block;padding:.12em .35em;border-radius:.35em;background:rgba(255,255,255,.16);margin:.05em}
+  .eq-blue{background:rgba(31,143,184,.35)}
+  .eq-green{background:rgba(73,166,106,.35)}
+  .eq-amber{background:rgba(243,165,54,.35)}
+  .mini-title{font-size:13px;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:#5d7881;margin-bottom:8px}
+  .stepnum{
+    width:38px;height:38px;border-radius:50%;display:inline-grid;place-items:center;
+    color:#fff;background:var(--blue);font-weight:900;margin-right:10px;box-shadow:0 8px 20px rgba(31,143,184,.24)
+  }
+  .row-title{display:flex;align-items:center;margin-bottom:12px}
+  .tag{display:inline-block;border-radius:12px;padding:5px 10px;font-weight:800;font-size:13px;margin:2px;background:var(--gray);color:#315864}
+  .tag.blue{background:var(--blue2);color:#0c7193}.tag.green{background:var(--green2);color:#267646}.tag.amber{background:var(--amber2);color:#9a610d}
+  .assumption{
+    padding:18px;border-radius:20px;background:linear-gradient(180deg,#fff,#f8fdff);border:1px solid rgba(18,48,58,.08)
+  }
+  .assumption strong{display:block;font-size:18px;margin-bottom:4px}
+  .landwrap{background:#cbead3;border-radius:24px;padding:18px;position:relative;overflow:hidden;min-height:380px;border:1px solid rgba(18,48,58,.1)}
+  .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:#45636c}
+  .swatch{width:14px;height:14px;border-radius:4px;display:inline-block;vertical-align:-2px;margin-right:5px}
+  .roof{fill:#d95c5c}.road{fill:#34444c}.grass{fill:#7bc87c}.water{fill:#2d9ccc}.hard{fill:#f7d37b}.pipe{stroke:#0c2530;stroke-width:6;fill:none;stroke-linecap:round}.dash{stroke-dasharray:8 8}
+  .svg-card{width:100%;height:auto;display:block}
+  .caption{font-size:13px;color:#5e7981;margin-top:8px}
+  .flowline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:stretch}
+  .flowbox{background:#fff;border:1px solid rgba(18,48,58,.1);border-radius:18px;padding:16px;text-align:center;font-weight:800;position:relative}
+  .flowbox:after{content:'→';position:absolute;right:-15px;top:50%;transform:translateY(-50%);color:#6a8790;font-size:26px}
+  .flowbox:last-child:after{display:none}
+  @media(max-width:900px){.flowline{grid-template-columns:1fr}.flowbox:after{content:'↓';right:50%;top:auto;bottom:-24px;transform:translateX(50%)}.flowbox:last-child:after{display:none}}
+  .model-card{position:relative;overflow:hidden;min-height:250px}
+  .model-card:before{content:'';position:absolute;inset:auto -20% -45% -20%;height:160px;background:radial-gradient(ellipse at center,rgba(31,143,184,.17),transparent 65%)}
+  .knob{display:flex;gap:12px;align-items:center;margin:12px 0}
+  input[type=range]{width:100%;accent-color:var(--blue)}
+  .meter{height:16px;border-radius:999px;background:#dfecef;overflow:hidden;border:1px solid rgba(18,48,58,.08)}
+  .meter>span{display:block;height:100%;background:linear-gradient(90deg,#8ccfe4,#1f8fb8);width:40%;transition:.2s}
+  .simbox{background:#f9feff;border:1px solid rgba(18,48,58,.08);border-radius:20px;padding:18px}
+  .splitbar{height:42px;border-radius:14px;overflow:hidden;display:flex;border:1px solid rgba(18,48,58,.12);box-shadow:inset 0 1px 3px rgba(0,0,0,.08)}
+  .splitbar div{display:grid;place-items:center;color:white;font-weight:900;font-size:13px;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+  .split-easy{background:#334b56}.split-hard{background:#61b879}.split-runoff{background:#1f8fb8}.split-loss{background:#b6c5ca;color:#25404a!important;text-shadow:none!important}
+  .note-list{display:grid;gap:10px;margin-top:14px}
+  .note-item{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid rgba(18,48,58,.08);border-radius:16px;padding:13px}
+  .dot{width:12px;height:12px;border-radius:50%;background:var(--blue);margin-top:6px;flex:0 0 auto}
+  .footer{font-size:14px;color:#5e7981;border-top:1px solid rgba(18,48,58,.1);padding-top:22px;margin-top:40px}
+  .source-list li{margin:8px 0}
+  a{color:#0d789d;font-weight:700;text-decoration:none} a:hover{text-decoration:underline}
+  .rain{animation:rain 1.4s linear infinite}.rain.d2{animation-delay:.35s}.rain.d3{animation-delay:.7s}.rain.d4{animation-delay:1.05s}
+  @keyframes rain{from{transform:translateY(-16px);opacity:.1}35%{opacity:1}to{transform:translateY(44px);opacity:0}}
+  .pulse{animation:pulse 2.2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+
+  /* Land-use-to-variable map: scoped so it does not disturb the rest of the explainer */
+  .landuse-map{padding:0;overflow:hidden}
+  .landuse-map .diagram-pad{padding:24px}
+  .landuse-map svg{width:100%;height:auto;display:block;background:#eaf6fc;border-radius:20px;border:1px solid rgba(18,48,58,.10)}
+  .landuse-map .svg-label{font:800 17px Inter, ui-sans-serif, system-ui, sans-serif;fill:#112333;paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+  .landuse-map .svg-small{font:750 13px Inter, ui-sans-serif, system-ui, sans-serif;fill:#112333;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+  .landuse-map .rainline{stroke:#2d8fd6;stroke-width:4;stroke-linecap:round;stroke-dasharray:10 11;opacity:.85}
+  .landuse-map .flowarrow{stroke:#1b83c3;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none;marker-end:url(#lu_arrow)}
+  .landuse-map .waterpipe{stroke:#2f78b7;stroke-width:11;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .landuse-map .thin-flow{stroke:#2d8fd6;stroke-width:5;fill:none;stroke-linecap:round;marker-end:url(#lu_smallArrow)}
+  .map-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:0 24px 24px}
+  .map-card{border:1px solid rgba(18,48,58,.10);border-radius:18px;background:#fff;padding:18px 18px 16px;box-shadow:0 8px 24px rgba(20,50,80,.06)}
+  .map-card h3{margin:0 0 10px;font-size:21px;letter-spacing:-.02em}
+  .formula{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:25px;font-weight:900;letter-spacing:-.02em;margin:8px 0 12px}
+  .easy{color:#b35d00}.hard{color:#5b39bf}.wet{color:#0b72b3}
+  .plain-list{margin:0;padding-left:20px;color:#243448}.plain-list li{margin:7px 0}
+  .chip{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:5px 10px;font-weight:850;background:#f0f4f8;border:1px solid #d4dde8}
+  .chipdot{width:10px;height:10px;border-radius:999px;display:inline-block}.chipdot.orange{background:#f39b37}.chipdot.purple{background:#8460d4}.chipdot.green{background:#78bd52}.chipdot.blue{background:#2d8fd6}
+  .var-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:20px;overflow:hidden;border:1px solid rgba(18,48,58,.10);border-radius:18px;background:#fff}
+  .var-table th,.var-table td{text-align:left;padding:14px 15px;border-bottom:1px solid rgba(18,48,58,.10);vertical-align:top}
+  .var-table th{background:#f1f7fb;color:#23364b;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+  .var-table tr:last-child td{border-bottom:0}
+  .tooltip-term{position:relative;cursor:help;border-bottom:2px dotted currentColor;font-weight:900;white-space:nowrap}
+  .tooltip-term::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%) translateY(4px);width:min(330px,80vw);background:#102033;color:#fff;border-radius:12px;padding:10px 12px;font-weight:650;font-size:13px;line-height:1.35;opacity:0;pointer-events:none;transition:.15s ease;box-shadow:0 12px 28px rgba(0,0,0,.22);z-index:20}
+  .tooltip-term::before{content:"";position:absolute;left:50%;bottom:calc(100% + 3px);transform:translateX(-50%);border:7px solid transparent;border-top-color:#102033;opacity:0;transition:.15s ease;z-index:20}
+  .tooltip-term:hover::after,.tooltip-term:hover::before{opacity:1;transform:translateX(-50%) translateY(0)}
+  .landuse-note{margin:22px 24px 24px;padding:16px 18px;border-radius:16px;background:#f7fbff;border:1px solid #d8e9f6;color:#263b52}
+  @media(max-width:900px){.map-grid{grid-template-columns:1fr;margin:0 18px 18px}.var-table{font-size:14px}.formula{font-size:20px}.landuse-map .svg-label{font-size:14px}.landuse-map .svg-small{font-size:11px}.landuse-map .diagram-pad{padding:18px}}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <div>
+      <div class="mini-title">InfoWorks ICM hydrology concept explainer</div>
+      <h1>New UK PR as a simple empirical model</h1>
+      <p class="subtitle">A visual way to understand the equation, the assumptions, and why <strong>NAPI/PF</strong> is a deliberately simple math device rather than a physical infiltration law.</p>
+      <div class="pillbar">
+        <span class="pill">Volume model</span>
+        <span class="pill">Empirical fitting</span>
+        <span class="pill">Connected imperviousness</span>
+        <span class="pill">Wetness response</span>
+      </div>
+    </div>
+    <div class="card">
+      <svg class="svg-card" viewBox="0 0 520 390" role="img" aria-label="Rainfall to observations to simple model diagram">
+        <defs>
+          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-opacity=".16"/></filter>
+          <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#dff4fb"/><stop offset="1" stop-color="#f6fbfc"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="520" height="390" rx="26" fill="url(#sky)" />
+        <g class="rain" fill="#1f8fb8"><path d="M75 40 q9 18 0 28 q-9-10 0-28"/><path d="M115 24 q9 18 0 28 q-9-10 0-28"/><path d="M395 38 q9 18 0 28 q-9-10 0-28"/></g>
+        <g class="rain d2" fill="#1f8fb8"><path d="M180 34 q9 18 0 28 q-9-10 0-28"/><path d="M250 18 q9 18 0 28 q-9-10 0-28"/><path d="M450 25 q9 18 0 28 q-9-10 0-28"/></g>
+        <g class="rain d3" fill="#1f8fb8"><path d="M55 18 q9 18 0 28 q-9-10 0-28"/><path d="M320 30 q9 18 0 28 q-9-10 0-28"/><path d="M365 20 q9 18 0 28 q-9-10 0-28"/></g>
+        <rect x="38" y="115" width="128" height="78" rx="16" fill="#fff" filter="url(#soft)"/>
+        <text x="102" y="146" text-anchor="middle" font-weight="800" font-size="17" fill="#12303a">Rainfall</text>
+        <text x="102" y="171" text-anchor="middle" font-size="13" fill="#58717a">what goes in</text>
+        <rect x="196" y="115" width="128" height="78" rx="16" fill="#fff" filter="url(#soft)"/>
+        <text x="260" y="146" text-anchor="middle" font-weight="800" font-size="17" fill="#12303a">Flow</text>
+        <text x="260" y="171" text-anchor="middle" font-size="13" fill="#58717a">what comes out</text>
+        <rect x="354" y="115" width="128" height="78" rx="16" fill="#fff" filter="url(#soft)"/>
+        <text x="418" y="146" text-anchor="middle" font-weight="800" font-size="17" fill="#12303a">Fit</text>
+        <text x="418" y="171" text-anchor="middle" font-size="13" fill="#58717a">simple equation</text>
+        <path d="M166 154 H196" stroke="#58717a" stroke-width="3" stroke-linecap="round"/><path d="M324 154 H354" stroke="#58717a" stroke-width="3" stroke-linecap="round"/>
+        <rect x="50" y="240" width="420" height="70" rx="22" fill="#0e2c38"/>
+        <text x="260" y="270" text-anchor="middle" font-weight="900" font-size="19" fill="#eafaff">Goal: mimic observed runoff volume</text>
+        <text x="260" y="294" text-anchor="middle" font-size="14" fill="#bfeaf6">not solve every infiltration, storage, and routing process</text>
+      </svg>
+      <p class="caption">Teaching principle used here: start with the modelling problem before showing the equation.</p>
+    </div>
+  </div>
+</header>
+<main>
+
+<section class="card">
+  <h2>The starting problem</h2>
+  <p class="big">We have rainfall data and sewer-flow observations. We need a model simple enough to use in a drainage network, but flexible enough to reproduce the observed runoff volume.</p>
+  <div class="flowline" style="margin-top:20px">
+    <div class="flowbox">Rainfall record</div>
+    <div class="flowbox">Land-use data</div>
+    <div class="flowbox">Simple assumptions</div>
+    <div class="flowbox">Parameter fitting</div>
+    <div class="flowbox">Runoff volume</div>
+  </div>
+  <div class="callout warning" style="margin-top:22px">
+    The model is not claiming to reproduce every raindrop's physical path. It is creating a useful empirical relationship between catchment condition and observed sewer response.
+  </div>
+</section>
+
+
+<section class="card landuse-map">
+  <div class="diagram-pad">
+    <div class="row-title"><span class="stepnum">1</span><h2 style="margin:0">Start with real land use</h2></div>
+    <p class="big">First name the physical objects. Do not put equation labels inside the picture. The model terms come afterward, when we decide how those objects behave hydrologically.</p>
+<svg viewBox="0 0 1500 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Clean numbered land-use diagram with labels in a separate legend panel">
+  <defs>
+    <style>
+      .bg { fill:#ffffff; }
+      .title { font-family: Arial, Helvetica, sans-serif; font-size:34px; font-weight:700; fill:#10263a; }
+      .subtitle { font-family: Arial, Helvetica, sans-serif; font-size:22px; fill:#516575; }
+      .lot { fill:#b9e58d; stroke:#1f2d3a; stroke-width:4; }
+      .house { fill:#f3cf9b; stroke:#1f2d3a; stroke-width:4; }
+      .roof { fill:#516372; stroke:#1f2d3a; stroke-width:4; }
+      .patio { fill:#d9dce1; stroke:#6f7d89; stroke-width:3; }
+      .drive { fill:#d9dce1; stroke:#1f2d3a; stroke-width:4; }
+      .road { fill:#404b55; stroke:#1f2d3a; stroke-width:4; }
+      .basin { fill:#202b33; stroke:#ffffff; stroke-width:4; }
+      .downspout { fill:none; stroke:#1f88c9; stroke-width:9; stroke-linecap:round; stroke-linejoin:round; }
+      .pipe { fill:none; stroke:#1f88c9; stroke-width:9; stroke-linecap:round; stroke-linejoin:round; }
+      .storm { fill:none; stroke:#4d5b66; stroke-width:7; stroke-linecap:round; }
+      .dash { stroke:#ffffff; stroke-width:9; stroke-dasharray:42 34; }
+      .pin { fill:#ffffff; stroke:#10263a; stroke-width:3; }
+      .pinText { font-family: Arial, Helvetica, sans-serif; font-size:20px; font-weight:700; fill:#10263a; text-anchor:middle; dominant-baseline:central; }
+      .legendBox { fill:#f6faff; stroke:#c8d9e6; stroke-width:2; }
+      .legendTitle { font-family: Arial, Helvetica, sans-serif; font-size:24px; font-weight:700; fill:#10263a; }
+      .legendText { font-family: Arial, Helvetica, sans-serif; font-size:20px; fill:#10263a; }
+      .legendSmall { font-family: Arial, Helvetica, sans-serif; font-size:17px; fill:#516575; }
+      .mapBox { fill:#f5f9fc; stroke:#c6d6e1; stroke-width:2; }
+      .mapText { font-family: Arial, Helvetica, sans-serif; font-size:20px; fill:#394b59; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1500" height="900"/>
+
+  <text x="55" y="58" class="title">Simple physical land-use diagram</text>
+  <text x="55" y="92" class="subtitle">Keep the picture clean: use numbered pins in the drawing, then define each object in a side legend.</text>
+
+  <!-- main lot -->
+  <rect class="lot" x="55" y="145" width="855" height="500" rx="18"/>
+
+  <!-- road -->
+  <rect class="road" x="960" y="110" width="180" height="600"/>
+  <line class="dash" x1="1050" y1="150" x2="1050" y2="670"/>
+
+  <!-- disconnected patio -->
+  <rect class="patio" x="150" y="295" width="160" height="105" rx="8"/>
+  <line x1="172" y1="323" x2="288" y2="323" stroke="#a6adb5" stroke-width="3"/>
+  <line x1="172" y1="350" x2="288" y2="350" stroke="#a6adb5" stroke-width="3"/>
+  <line x1="172" y1="377" x2="288" y2="377" stroke="#a6adb5" stroke-width="3"/>
+
+  <!-- house and roof -->
+  <rect class="house" x="510" y="315" width="210" height="205"/>
+  <polygon class="roof" points="465,315 615,190 765,315"/>
+  <rect x="565" y="430" width="48" height="90" fill="#a96738" stroke="#1f2d3a" stroke-width="3"/>
+  <rect x="650" y="405" width="58" height="58" fill="#c4ecff" stroke="#1f2d3a" stroke-width="3"/>
+
+  <!-- driveway -->
+  <polygon class="drive" points="720,440 910,440 910,545 720,545"/>
+
+  <!-- connected flow objects -->
+  <path class="downspout" d="M720,318 L720,440 L910,440"/>
+  <path class="pipe" d="M910,440 L910,560"/>
+
+  <!-- catch basin and storm drain -->
+  <rect class="basin" x="882" y="558" width="60" height="70" rx="7"/>
+  <line x1="894" y1="578" x2="930" y2="578" stroke="#ffffff" stroke-width="4"/>
+  <line x1="894" y1="596" x2="930" y2="596" stroke="#ffffff" stroke-width="4"/>
+  <line x1="894" y1="614" x2="930" y2="614" stroke="#ffffff" stroke-width="4"/>
+  <path class="storm" d="M942,593 L1050,593"/>
+
+  <!-- numbered pins: no leader lines crossing the drawing -->
+  <g>
+    <circle class="pin" cx="210" cy="145" r="17"/><text class="pinText" x="210" y="145">1</text>
+    <circle class="pin" cx="228" cy="348" r="17"/><text class="pinText" x="228" y="348">2</text>
+    <circle class="pin" cx="336" cy="595" r="17"/><text class="pinText" x="336" y="595">3</text>
+    <circle class="pin" cx="615" cy="196" r="17"/><text class="pinText" x="615" y="196">4</text>
+    <circle class="pin" cx="742" cy="418" r="17"/><text class="pinText" x="742" y="418">5</text>
+    <circle class="pin" cx="815" cy="493" r="17"/><text class="pinText" x="815" y="493">6</text>
+    <circle class="pin" cx="910" cy="593" r="17"/><text class="pinText" x="910" y="593">7</text>
+    <circle class="pin" cx="1050" cy="593" r="17"/><text class="pinText" x="1050" y="593">8</text>
+    <circle class="pin" cx="1050" cy="110" r="17"/><text class="pinText" x="1050" y="110">9</text>
+  </g>
+
+  <!-- legend panel -->
+  <rect class="legendBox" x="1185" y="110" width="270" height="600" rx="14"/>
+  <text x="1210" y="150" class="legendTitle">Physical objects</text>
+
+  <g class="legendText">
+    <text x="1210" y="195">1. Lot boundary</text>
+    <text x="1210" y="245">2. Disconnected patio</text>
+    <text x="1210" y="295">3. Grass / lawn</text>
+    <text x="1210" y="345">4. Roof</text>
+    <text x="1210" y="395">5. Connected downspout</text>
+    <text x="1210" y="420" class="legendSmall">    carries roof runoff</text>
+    <text x="1210" y="470">6. Connected driveway</text>
+    <text x="1210" y="520">7. Catch basin</text>
+    <text x="1210" y="570">8. Storm drain</text>
+    <text x="1210" y="620">9. Road</text>
+  </g>
+
+  <!-- mapping box -->
+  <rect class="mapBox" x="55" y="760" width="1400" height="100" rx="14"/>
+  <text x="85" y="794" class="mapText">Example mapping after the physical picture is understood:</text>
+  <text x="85" y="828" class="mapText">Connected objects: roof/downspout + driveway → catch basin/storm drain.</text>
+  <text x="745" y="828" class="mapText">Disconnected/wetness-controlled objects: grass/lawn + patio draining onto grass.</text>
+</svg>
+
+    <p class="caption">Numbered pins keep the drawing readable. First identify the real objects; then map them to New UK PR terms below.</p>
+  </div>
+
+  <div class="map-grid" aria-label="Mapping real land uses to New UK PR terms">
+    <div class="map-card">
+      <h3><span class="chip"><span class="chipdot orange"></span> Directly connected impervious area %</span></h3>
+      <div class="formula easy">IF × PIMP</div>
+      <p>This is the percentage of the catchment that is directly connected impervious area in the New UK PR equation.</p>
+      <ul class="plain-list">
+        <li><strong>In this picture:</strong> connected roof + driveway draining to street/catch basin.</li>
+        <li>Rain on this part has little chance to infiltrate before reaching the drainage system.</li>
+        <li>This part reaches the drainage system directly, so the equation treats it as the connected impervious contribution.</li>
+      </ul>
+    </div>
+    <div class="map-card">
+      <h3><span class="chip"><span class="chipdot purple"></span> Pervious + Non-effective Impervious %</span></h3>
+      <div class="formula hard">100 − IF × PIMP</div>
+      <p>This is the remainder: true pervious area plus impervious area that is not effectively connected.</p>
+      <ul class="plain-list">
+        <li><strong>In this picture:</strong> lawn + garden + disconnected backyard patio.</li>
+        <li>The backyard patio is impervious, but it drains across grass first, so it is counted with the non-effective impervious part.</li>
+        <li>For this remainder, the tricky part is estimating where water is lost when the loss process is not obvious.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="diagram-pad" style="padding-top:0">
+    <h2 style="margin-top:4px">Variable dictionary</h2>
+    <p class="muted">Hover on the variable names to see short tooltips. The table gives the official/common name, meaning, unit, and one concrete example.</p>
+    <table class="var-table">
+      <thead><tr><th>Variable</th><th>Official / common name</th><th>What it means here</th><th>Unit</th><th>Example in this picture</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tooltip-term" data-tip="Percentage runoff: the volume-model output. It is the percentage of rainfall, after initial losses, that becomes runoff volume.">PR</span></td><td>Percentage Runoff</td><td>Total runoff fraction predicted by the volume model.</td><td>%</td><td>“How much of this storm becomes runoff?”</td></tr>
+        <tr><td><span class="tooltip-term" data-tip="PIMP is the physical impervious percentage. It counts roofs, driveways, roads, patios, and other hard surfaces whether or not they are directly connected.">PIMP</span></td><td>Percentage Imperviousness</td><td>Physical hard-surface area in the catchment.</td><td>% of catchment area</td><td>Roof + driveway + road + backyard patio.</td></tr>
+        <tr><td><span class="tooltip-term" data-tip="IF is a connectivity factor, not a soil parameter. It says what fraction of the physical impervious area behaves as directly connected impervious area.">IF</span></td><td>Impervious Factor / Effective Imperviousness Factor</td><td>Fraction of PIMP that is effectively connected to the drainage system.</td><td>dimensionless</td><td>High for connected roof and driveway; lower if roof drains to lawn.</td></tr>
+        <tr><td><span class="tooltip-term" data-tip="IF times PIMP is the directly connected impervious contribution. It is the directly connected impervious area percentage in the New UK PR equation.">IF × PIMP</span></td><td>Effective connected impervious contribution</td><td>Impervious area that behaves like directly connected runoff area.</td><td>% of catchment area</td><td>Connected roof + driveway draining to the catch basin.</td></tr>
+        <tr><td><span class="tooltip-term" data-tip="This is the remainder after removing the directly connected impervious contribution. It includes true pervious area and disconnected impervious area.">100 − IF × PIMP</span></td><td>Wetness-controlled remainder</td><td>Pervious area plus impervious area not treated as directly connected runoff.</td><td>% of catchment area</td><td>Lawn + garden + disconnected backyard patio.</td></tr>
+        <tr><td><span class="tooltip-term" data-tip="NAPI is a wetness index calculated from antecedent rainfall and drying. Larger NAPI means the catchment is wetter.">NAPI</span></td><td>Net Antecedent Precipitation Index</td><td>Wetness index representing recent rainfall memory.</td><td>mm</td><td>After many wet days, NAPI is higher; after dry days, it is lower.</td></tr>
+        <tr><td><span class="tooltip-term" data-tip="PF is mainly a calibration scale. It represents an assumed depth capacity that withholds water in the pervious and non-effective impervious remainder.">PF</span></td><td>Moisture Depth Parameter</td><td>Assumed capacity depth controlling how strongly wetness produces runoff from the pervious and non-effective impervious remainder.</td><td>mm</td><td>A larger PF means the same NAPI produces less runoff response.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="landuse-note">
+    <strong>The modelling assumption:</strong> the model first separates <span class="tooltip-term easy" data-tip="Directly connected impervious contribution: connected roof, driveway, road, or paved area that quickly reaches the drainage system.">Directly connected impervious area %</span> from <span class="tooltip-term hard" data-tip="Everything else: pervious surfaces plus disconnected or indirectly connected impervious surfaces.">Pervious + Non-effective Impervious %</span>. The tricky part is figuring out where water gets lost when it is not obvious. New UK PR assumes this remainder has a capacity to withhold water, represented by <span class="tooltip-term wet" data-tip="PF is the assumed capacity depth; NAPI represents how wet recent weather has made the catchment.">PF</span>, and that recent wet weather, represented by NAPI, controls how much of that capacity is already used.
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>The equation terms</h2>
+  <div class="equation">
+    PR = <span class="eq-label eq-blue">IF · PIMP</span> + <span class="eq-label eq-green">(100 − IF · PIMP)</span> · <span class="eq-label eq-amber">NAPI / PF</span>
+  </div>
+  <div class="grid three" style="margin-top:22px">
+    <div class="assumption">
+      <strong><span class="tag blue">IF · PIMP</span> Directly connected impervious area %</strong>
+      Impervious area that is effectively connected to the drainage system.
+    </div>
+    <div class="assumption">
+      <strong><span class="tag green">100 − IF · PIMP</span> Pervious + Non-effective Impervious %</strong>
+      Everything not directly connected: pervious area plus non-effective impervious area. The model deliberately lumps these processes together.
+    </div>
+    <div class="assumption">
+      <strong><span class="tag amber">NAPI / PF</span> Wetness and capacity response</strong>
+      A simple ratio: wetter weather increases runoff response; larger assumed capacity depth reduces runoff response.
+    </div>
+  </div>
+</section>
+
+<section class="grid two">
+  <div class="card">
+    <div class="row-title"><span class="stepnum">2</span><h2 style="margin:0">The tricky loss part is not solved physically</h2></div>
+    <p class="big">For pervious and non-effective impervious areas, New UK PR does not explicitly simulate infiltration rates, soil suction, depression storage details, or disconnected surface routing.</p>
+    <p>Instead, it uses a simple assumption: these areas can withhold some water, and the amount of recent wet weather affects how much additional runoff they produce.</p>
+    <div class="note-list">
+      <div class="note-item"><span class="dot" style="background:#1f8fb8"></span><div><strong>More recent wetness</strong> should mean more runoff from the pervious and non-effective impervious remainder.</div></div>
+      <div class="note-item"><span class="dot" style="background:#49a66a"></span><div><strong>More assumed capacity depth</strong> should mean less runoff for the same wetness.</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <svg class="svg-card" viewBox="0 0 560 380" role="img" aria-label="Fake mathematical wetness gauge illustrating NAPI over PF">
+      <rect x="0" y="0" width="560" height="380" rx="24" fill="#f9feff"/>
+      <text x="280" y="40" text-anchor="middle" font-size="24" font-weight="900" fill="#12303a">Wetness and capacity idea</text>
+      <g transform="translate(90 78)">
+        <rect x="0" y="0" width="120" height="230" rx="26" fill="#fff" stroke="#244854" stroke-width="4"/>
+        <rect x="10" y="95" width="100" height="125" rx="18" fill="#2d9ccc" opacity=".84"/>
+        <line x1="132" y1="0" x2="162" y2="0" stroke="#244854" stroke-width="3"/>
+        <line x1="132" y1="115" x2="154" y2="115" stroke="#244854" stroke-width="2"/>
+        <line x1="132" y1="230" x2="162" y2="230" stroke="#244854" stroke-width="3"/>
+        <text x="174" y="7" font-size="16" font-weight="900" fill="#12303a">PF</text>
+        <text x="174" y="122" font-size="14" fill="#58717a">scale</text>
+        <text x="60" y="165" text-anchor="middle" font-size="18" font-weight="900" fill="#fff">NAPI</text>
+        <text x="60" y="188" text-anchor="middle" font-size="13" fill="#eafaff">wetness</text>
+      </g>
+      <g transform="translate(320 112)">
+        <rect x="0" y="0" width="174" height="48" rx="16" fill="#fff3df" stroke="#f3a536"/>
+        <text x="87" y="30" text-anchor="middle" font-size="17" font-weight="900" fill="#6f470b">NAPI / PF</text>
+        <path d="M87 55 V98" stroke="#f3a536" stroke-width="4" stroke-linecap="round"/>
+        <polygon points="87,112 76,94 98,94" fill="#f3a536"/>
+        <rect x="-30" y="118" width="234" height="78" rx="18" fill="#e7f7ed" stroke="#49a66a"/>
+        <text x="87" y="150" text-anchor="middle" font-size="17" font-weight="900" fill="#246640">runoff response</text>
+        <text x="87" y="174" text-anchor="middle" font-size="13" fill="#45636c">not soil physics</text>
+      </g>
+    </svg>
+    <p class="caption">Important: this is a teaching device, not a claim that PF is a measurable soil bucket.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>The assumptions, stated clearly</h2>
+  <div class="grid two">
+    <div class="assumption"><strong>Assumption 1 — directly connected impervious area is explicit.</strong> If pavement or roof area is effectively connected to the drainage system, it contributes runoff with relatively little delay or loss after initial losses.</div>
+    <div class="assumption"><strong>Assumption 2 — the remaining area can be lumped.</strong> Pervious land and non-effective impervious land are treated together, even though their real processes differ.</div>
+    <div class="assumption"><strong>Assumption 3 — the remainder responds to wetness.</strong> The wetter the weather has been, the more the remaining area behaves like runoff-producing area.</div>
+    <div class="assumption"><strong>Assumption 4 — one simple ratio is used.</strong> The model uses <code>NAPI/PF</code> as a practical wetness-and-capacity response. This is a fitting structure, not a law of infiltration.</div>
+    <div class="assumption"><strong>Assumption 5 — NAPI has weather memory.</strong> NAPI is an index derived from recent net rainfall, losses, drying, and decay. It has more physical connection than PF because it is driven by rainfall history.</div>
+    <div class="assumption"><strong>Assumption 6 — PF is mainly a calibration scale.</strong> PF is the assumed capacity depth that controls how strongly a given wetness index turns into runoff from the lumped remainder.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>A small visual simulator</h2>
+  <p class="muted">This is not a design calculator. It is a visual way to see the assumptions: IF changes the directly connected impervious area percentage; NAPI and PF control the response of the pervious and non-effective impervious remainder.</p>
+  <div class="grid two" style="margin-top:18px">
+    <div class="simbox">
+      <label class="knob"><strong>PIMP</strong><input id="pimp" type="range" min="0" max="80" value="40"><span id="pimpv">40%</span></label>
+      <label class="knob"><strong>IF</strong><input id="ifv" type="range" min="0.3" max="1" value="0.75" step="0.05"><span id="ifvv">0.75</span></label>
+      <label class="knob"><strong>NAPI</strong><input id="napi" type="range" min="0" max="220" value="80"><span id="napiv">80 mm</span></label>
+      <label class="knob"><strong>PF</strong><input id="pf" type="range" min="80" max="400" value="200"><span id="pfv">200 mm</span></label>
+      <div class="meter" title="NAPI over PF"><span id="wetbar"></span></div>
+      <p class="caption"><strong>Wetness response:</strong> <span id="wettext">0.40</span> = NAPI/PF, capped visually at 1.0.</p>
+    </div>
+    <div class="simbox">
+      <h3>Model split</h3>
+      <p class="caption">First split the catchment into directly connected impervious area and the pervious + non-effective impervious remainder.</p>
+      <div class="splitbar"><div id="easybar" class="split-easy" style="width:30%">DCIA</div><div id="hardbar" class="split-hard" style="width:70%">pervious + non-effective impervious</div></div>
+      <h3 style="margin-top:24px">Remainder behavior</h3>
+      <p class="caption">Then apply the simple wetness-and-capacity response to the pervious + non-effective impervious remainder.</p>
+      <div class="splitbar"><div id="runbar" class="split-runoff" style="width:40%">runoff</div><div id="lossbar" class="split-loss" style="width:60%">withheld / lost / delayed</div></div>
+      <div class="callout" style="margin-top:18px">The remainder bar is the key assumption: <strong>NAPI/PF</strong> is used as a simple wetness-and-capacity response factor.</div>
+    </div>
+  </div>
+</section>
+
+<section class="grid three">
+  <div class="card">
+    <h3>IF is a connectivity knob</h3>
+    <p>Use it to represent how much impervious land really behaves like directly connected impervious area.</p>
+    <p><span class="tag blue">higher IF</span> more directly connected impervious area</p>
+    <p><span class="tag blue">lower IF</span> more impervious area becomes non-effective impervious area</p>
+  </div>
+  <div class="card">
+    <h3>NAPI is the wetness memory</h3>
+    <p>It comes from recent net rainfall and drying. Bigger NAPI means the catchment is wetter and more responsive.</p>
+    <p><span class="tag amber">higher NAPI</span> more runoff from the pervious and non-effective impervious remainder</p>
+  </div>
+  <div class="card">
+    <h3>PF is the fitted scale</h3>
+    <p>PF should be understood as an assumed capacity depth, not a directly measured soil bucket. It scales how much response a given NAPI produces.</p>
+    <p><span class="tag green">higher PF</span> less runoff for same wetness</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>How this differs from physical methods</h2>
+  <div class="grid three">
+    <div class="assumption">
+      <strong>New UK PR</strong>
+      Empirical urban runoff-volume model. Splits catchment into directly connected impervious area plus pervious and non-effective impervious remainder.
+    </div>
+    <div class="assumption">
+      <strong>Curve Number</strong>
+      Event runoff method based around rainfall, abstraction, and potential retention. Useful but not the same as a dynamic urban wetness-response PR equation.
+    </div>
+    <div class="assumption">
+      <strong>SWMM runoff</strong>
+      More process-oriented surface hydrology: pervious/impervious subareas, infiltration/retention, and drainage-system applications.
+    </div>
+  </div>
+  <div class="callout" style="margin-top:20px">
+    The teaching distinction: New UK PR is mainly asking, “What percentage of rainfall volume should become sewer runoff?” SWMM-style runoff asks more directly, “How does water move through surface storage, infiltration, and drainage processes?”
+  </div>
+</section>
+
+<section class="card">
+  <h2>Why UKWIR appears later</h2>
+  <p>The weakness of New UK PR is also its teaching strength: it uses one simple wetness-and-capacity response for the pervious and non-effective impervious remainder. UKWIR was introduced to improve on that by separating paved and pervious response more explicitly.</p>
+  <svg class="svg-card" viewBox="0 0 900 260" role="img" aria-label="New UK single lumped remainder compared with UKWIR paved and pervious buckets">
+    <rect x="0" y="0" width="900" height="260" rx="24" fill="#f9feff"/>
+    <g transform="translate(60 45)">
+      <text x="135" y="0" text-anchor="middle" font-size="20" font-weight="900" fill="#12303a">New UK PR</text>
+      <rect x="0" y="28" width="270" height="145" rx="24" fill="#e7f7ed" stroke="#49a66a"/>
+      <text x="135" y="86" text-anchor="middle" font-size="20" font-weight="900" fill="#246640">one lumped remainder</text>
+      <text x="135" y="114" text-anchor="middle" font-size="15" fill="#45636c">wetness response</text>
+      <text x="135" y="143" text-anchor="middle" font-size="15" font-weight="900" fill="#9a610d">NAPI / PF</text>
+    </g>
+    <path d="M385 130 H515" stroke="#58717a" stroke-width="5" stroke-linecap="round"/><polygon points="525,130 505,118 505,142" fill="#58717a"/>
+    <g transform="translate(580 45)">
+      <text x="135" y="0" text-anchor="middle" font-size="20" font-weight="900" fill="#12303a">UKWIR idea</text>
+      <rect x="0" y="28" width="270" height="65" rx="18" fill="#fff3df" stroke="#f3a536"/>
+      <text x="135" y="68" text-anchor="middle" font-size="17" font-weight="900" fill="#7a4b07">paved response</text>
+      <rect x="0" y="108" width="270" height="65" rx="18" fill="#e7f7ed" stroke="#49a66a"/>
+      <text x="135" y="148" text-anchor="middle" font-size="17" font-weight="900" fill="#246640">pervious response</text>
+    </g>
+  </svg>
+</section>
+
+<section class="card">
+  <h2>What to calibrate against observations</h2>
+  <p class="big">The observations are rainfall in and sewer flow out. The model parameters are adjusted to mimic runoff volume and response behavior within defensible bounds.</p>
+  <div class="grid three" style="margin-top:18px">
+    <div class="assumption"><strong>IF</strong>If the model gets the fast connected impervious contribution wrong across events, check connectivity assumptions, PIMP, and IF.</div>
+    <div class="assumption"><strong>PF</strong>If wet-weather volume from the pervious and non-effective impervious remainder is consistently too high or too low, PF is the main wetness-and-capacity scaling parameter.</div>
+    <div class="assumption"><strong>Initial NAPI</strong>If one event looks wrong because the starting condition was wetter/drier than assumed, check initial wetness.</div>
+  </div>
+  <div class="callout warning" style="margin-top:22px">
+    Calibration warning: changing PF can hide errors in PIMP, IF, rainfall, flow monitoring, and initial losses. Treat PF as a powerful fitting knob, not proof of physical soil storage.
+  </div>
+</section>
+
+<section class="card">
+  <h2>One-sentence explanation</h2>
+  <p class="big"><strong>New UK PR is a calibrated wetness-response model: directly connected impervious area is handled explicitly, while pervious and non-effective impervious area is passed through NAPI/PF to mimic observed volume behavior.</strong></p>
+</section>
+
+<section class="footer">
+  <h3>Source notes used to build this explainer</h3>
+  <ul class="source-list">
+    <li>Autodesk / Innovyze InfoWorks ICM New UK PR help: describes the model as a replacement for the older PR equation, notes the old constant-PR limitation, defines IF, PF, and NAPI, and states that losses on pervious and non-effective impervious areas are represented by the second term of the equation.</li>
+    <li>Autodesk / Innovyze UKWIR help: describes UKWIR as a later replacement intended to address New UK limitations and separates paved and pervious parameters.</li>
+    <li>USGS Water Science School: used for the educational framing that impervious surfaces reduce infiltration and act as a fast pathway to storm drains, while soil saturation increases runoff.</li>
+    <li>EPA SWMM overview: used only for the contrast between New UK PR's empirical runoff-volume framing and SWMM's drainage-system runoff modelling context.</li>
+  </ul>
+</section>
+
+</main>
+<script>
+function update(){
+  const pimp = +document.getElementById('pimp').value;
+  const ifv = +document.getElementById('ifv').value;
+  const napi = +document.getElementById('napi').value;
+  const pf = +document.getElementById('pf').value;
+  const easy = Math.min(100, Math.max(0, pimp*ifv));
+  const hard = Math.max(0,100-easy);
+  const wet = Math.max(0, Math.min(1, napi/pf));
+  document.getElementById('pimpv').textContent = pimp.toFixed(0)+'%';
+  document.getElementById('ifvv').textContent = ifv.toFixed(2);
+  document.getElementById('napiv').textContent = napi.toFixed(0)+' mm';
+  document.getElementById('pfv').textContent = pf.toFixed(0)+' mm';
+  document.getElementById('wettext').textContent = (napi/pf).toFixed(2);
+  document.getElementById('wetbar').style.width = (wet*100).toFixed(0)+'%';
+  document.getElementById('easybar').style.width = easy.toFixed(0)+'%';
+  document.getElementById('hardbar').style.width = hard.toFixed(0)+'%';
+  document.getElementById('easybar').textContent = easy.toFixed(0)+'% DCIA';
+  document.getElementById('hardbar').textContent = hard.toFixed(0)+'% remainder';
+  document.getElementById('runbar').style.width = (wet*100).toFixed(0)+'%';
+  document.getElementById('lossbar').style.width = ((1-wet)*100).toFixed(0)+'%';
+  document.getElementById('runbar').textContent = (wet*100).toFixed(0)+'% runoff';
+  document.getElementById('lossbar').textContent = ((1-wet)*100).toFixed(0)+'% non-runoff';
+}
+document.querySelectorAll('input[type=range]').forEach(el=>el.addEventListener('input',update));
+update();
+</script>
+</body>
+</html>

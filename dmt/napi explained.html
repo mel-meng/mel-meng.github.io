@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NAPI Explainer - Weighted 30-day rainfall average</title>
+  <style>
+    :root{
+      --bg:#f6f9ff;
+      --paper:#ffffff;
+      --ink:#172033;
+      --muted:#5e6f86;
+      --line:#dce8f5;
+      --axis:#71839a;
+      --blue:#2878ff;
+      --blue2:#8fc1ff;
+      --green:#1dad75;
+      --green2:#a7e8cc;
+      --orange:#f2a23a;
+      --orange2:#ffd79c;
+      --purple:#7e60ff;
+      --dark:#101827;
+      --dark2:#172338;
+      --shadow:0 22px 70px rgba(30,55,95,.14);
+      --radius:26px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(40,120,255,.18), transparent 34%),
+        radial-gradient(circle at 100% 8%, rgba(29,173,117,.18), transparent 30%),
+        linear-gradient(180deg,#f8fbff 0%,#ffffff 58%);
+      line-height:1.5;
+    }
+    header{max-width:1180px;margin:0 auto;padding:54px 24px 24px;display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}
+    h1{font-size:clamp(2.2rem,5vw,4.9rem);line-height:.96;margin:0 0 18px;letter-spacing:-.06em;font-weight:890}
+    h2{font-size:clamp(1.55rem,3vw,2.85rem);line-height:1.04;margin:0 0 14px;letter-spacing:-.045em;font-weight:850}
+    h3{margin:0 0 8px;font-size:1.08rem;letter-spacing:-.02em}
+    p{margin:0 0 14px}.lead{font-size:1.18rem;color:#415269;max-width:780px}.muted{color:var(--muted)}
+    .badge{display:inline-flex;align-items:center;gap:9px;border:1px solid #d5e6f6;background:rgba(255,255,255,.78);padding:8px 12px;border-radius:999px;color:#1960b6;font-weight:850;margin-bottom:20px;box-shadow:0 10px 24px rgba(30,80,140,.08)}
+    .badge span{width:10px;height:10px;background:var(--green);border-radius:999px;box-shadow:0 0 16px rgba(31,173,117,.5)}
+    .formula-card{background:var(--dark);color:#fff;border-radius:30px;padding:26px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.1)}
+    .formula-card p{color:#bac8da}.eq{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.25rem,2.25vw,2rem);line-height:1.34;white-space:nowrap;overflow-x:auto;margin:10px 0 14px}.eq small{font-size:.68em;color:#c8d8ef}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 24px 70px}.section{margin:34px 0}.card{background:rgba(255,255,255,.94);border:1px solid #e3edf7;border-radius:var(--radius);box-shadow:var(--shadow);padding:28px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;color:#176dbc;font-weight:850;font-size:.76rem;margin-bottom:9px}.grid{display:grid;gap:18px}.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}
+    .story-card{border:1px solid #dfebf7;background:linear-gradient(180deg,#fff,#f8fbff);border-radius:22px;padding:20px;position:relative;overflow:hidden}.story-card:before{content:attr(data-step);position:absolute;right:18px;top:9px;font-size:4.5rem;line-height:1;color:#ecf4fb;font-weight:900}.story-card h3,.story-card p{position:relative}.story-card strong{color:#0f5fc6}
+    .tool{background:var(--dark);color:#fff;border-radius:32px;padding:24px;box-shadow:0 26px 80px rgba(15,24,39,.25);border:1px solid rgba(255,255,255,.09)}
+    .tool h2,.tool h3{color:#fff}.tool p,.tool .muted{color:#bdcce0}.tool-grid{display:grid;grid-template-columns:326px 1fr;gap:20px}.controls{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:18px;align-self:start;position:sticky;top:18px}.control{margin:0 0 16px}.control label{display:flex;justify-content:space-between;gap:12px;align-items:baseline;color:#ebf4ff;font-weight:820;font-size:.94rem;margin-bottom:8px}.control label span{color:#8ed0ff;font-weight:900;white-space:nowrap}.control small{display:block;margin-top:6px;color:#93a6bf}.control input[type="range"]{width:100%;accent-color:#6eb8ff}.control select{width:100%;border:1px solid #31465f;border-radius:13px;background:#111d31;color:#fff;padding:10px 11px;font-weight:700}
+    .preset-buttons{display:grid;gap:9px;margin-bottom:16px}.preset-buttons button{border:1px solid #324966;background:#14233a;color:#e7f3ff;border-radius:15px;padding:12px 12px;text-align:left;cursor:pointer;font-weight:850}.preset-buttons button span{display:block;color:#9fb2ca;font-weight:650;font-size:.86rem;margin-top:2px}.preset-buttons button.active{background:linear-gradient(135deg,#226fff,#24b97d);border-color:transparent;color:#fff;box-shadow:0 12px 24px rgba(40,120,255,.22)}.preset-buttons button.active span{color:#e8fff5}
+    .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.metric{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.065);border-radius:18px;padding:14px}.metric .label{color:#9db0c9;font-size:.8rem;font-weight:760}.metric .value{font-size:1.55rem;font-weight:900;letter-spacing:-.04em}.metric .unit{font-size:.82rem;color:#aac0d8}.story-box{background:#f7fbff;color:#183047;border:1px solid #dcebf8;border-radius:22px;padding:18px;margin-bottom:16px}.story-box b{color:#0a5dbc}.story-box p{color:#465a72}.story-box .mini-eq{background:#fff;border:1px solid #dce8f4;border-radius:14px;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88rem;color:#20354e;margin-top:10px;overflow:auto}.chart-panel{background:#fff;color:var(--ink);border:1px solid #dbe8f5;border-radius:24px;padding:18px;margin-bottom:14px}.chart-title{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:8px}.chart-title b{font-size:1.08rem}.chart-title span{color:#637389;font-size:.88rem}.chart-note{font-size:.9rem;color:#5a6c82;margin-top:9px}.legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px;color:#5a6c82;font-size:.89rem}.key{display:inline-flex;align-items:center;gap:7px}.swatch{width:14px;height:14px;border-radius:4px;background:var(--blue)}.swatch.green{background:var(--green)}.swatch.orange{background:var(--orange)}.swatch.gray{background:#aab8c9}.swatch.purple{background:var(--purple)}svg{width:100%;height:auto;display:block}.axis-text{font-size:12px;fill:var(--axis)}.label-text{font-size:12px;fill:#31435a;font-weight:750}.gridline{stroke:#e9f1f9;stroke-width:1}.axis-line{stroke:#b9c8d8;stroke-width:1}.param-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.param{border:1px solid #e2edf7;border-radius:20px;padding:18px;background:linear-gradient(180deg,#fff,#f8fbff)}.param b{display:block;margin:10px 0 5px}.param b:first-of-type{margin-top:0}.param .tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#edf6ff;color:#105fae;font-weight:850;font-size:.75rem;margin-bottom:10px}.callout{border-left:5px solid var(--blue);background:#eff7ff;border-radius:16px;padding:16px 18px}.callout.good{border-left-color:var(--green);background:#eefbf6}.callout.warn{border-left-color:var(--orange);background:#fff8ec}.pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.pill{display:inline-flex;gap:6px;align-items:center;background:#eef6ff;border:1px solid #dceaf8;border-radius:999px;padding:6px 9px;font-size:.84rem;color:#36536f}.pill b{margin:0;color:#0a5dbc}.footer{background:#0e1726;color:#c6d3e5;padding:30px 24px;margin-top:34px}.footer-inner{max-width:1180px;margin:auto;font-size:.92rem}
+    @media(max-width:980px){header,.grid.two,.grid.three,.tool-grid,.param-grid{grid-template-columns:1fr}.controls{position:relative;top:0}.metrics{grid-template-columns:1fr 1fr}.eq{white-space:normal}}
+    @media(max-width:620px){.metrics{grid-template-columns:1fr}.chart-title{display:block}.card,.tool{padding:18px}.wrap,header{padding-left:14px;padding-right:14px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="badge"><span></span>NAPI / API30 made simple</div>
+      <h1>NAPI is just a weighted 30-day rainfall average.</h1>
+      <p class="lead">The model looks back across recent days. Rain from today or yesterday counts a lot. Rain from three weeks ago counts less. That is the whole idea.</p>
+    </div>
+    <div class="formula-card">
+      <div class="eyebrow" style="color:#8ed0ff">The simple equation</div>
+      <div class="eq">Daily NAPI piece = max(P − E, 0) × weight</div>
+      <p>Then add the 30 pieces together. The weight is controlled by <b>k</b>: a high k remembers old rain longer; a low k forgets it quickly.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card section">
+      <div class="eyebrow">Tell the story first</div>
+      <h2>Do not start with the formula. Start with rainfall history.</h2>
+      <div class="grid three" style="margin-top:18px">
+        <div class="story-card" data-step="1">
+          <h3>Start with constant rain</h3>
+          <p>Put the same rain on every day. The rainfall bars are flat, but the NAPI pieces are not flat because the <strong>weights are larger for recent days</strong>.</p>
+        </div>
+        <div class="story-card" data-step="2">
+          <h3>Add a recent event</h3>
+          <p>Now put a storm in the last five days. Because it is recent, those bars sit under large weights, so they dominate the NAPI value.</p>
+        </div>
+        <div class="story-card" data-step="3">
+          <h3>Add older events too</h3>
+          <p>Keep the recent storm the same, then add a few rainy days around 20 days ago. NAPI increases, but not as much, because old rainfall is discounted.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="tool">
+        <div class="eyebrow" style="color:#8ed0ff">Interactive tool</div>
+        <h2>Rainfall, weight, then NAPI.</h2>
+        <p>The three charts use the same daily x-axis: <b>30 days ago</b> on the left, <b>today</b> on the right.</p>
+
+        <div class="tool-grid" style="margin-top:18px">
+          <aside class="controls">
+            <h3>1. Pick a preset</h3>
+            <div class="preset-buttons">
+              <button data-preset="constant" class="active">Constant rainfall <span>same rain every day</span></button>
+              <button data-preset="recent">Recent event only <span>rain in the last 5 days</span></button>
+              <button data-preset="history">Recent + past events <span>same recent event, plus older rain</span></button>
+            </div>
+
+            <h3>2. Adjust the story</h3>
+            <div class="control">
+              <label for="recentScale">Recent event scale <span id="recentScaleReadout">1.00×</span></label>
+              <input id="recentScale" type="range" min="0" max="2.5" step="0.05" value="0">
+              <small>Changes the storm in the last 5 days. This usually has the biggest effect.</small>
+            </div>
+            <div class="control">
+              <label for="pastScale">Past event scale <span id="pastScaleReadout">0.00×</span></label>
+              <input id="pastScale" type="range" min="0" max="2.5" step="0.05" value="0">
+              <small>Changes rain around 20 days ago. Same rainfall depth has less impact because the weight is smaller.</small>
+            </div>
+            <div class="control">
+              <label for="constantRain">Constant daily rain <span id="constantRainReadout">5.0 mm/d</span></label>
+              <input id="constantRain" type="range" min="0" max="15" step="0.5" value="5">
+              <small>Used mainly for the constant-rainfall preset.</small>
+            </div>
+            <div class="control">
+              <label for="evap">Daily evaporation/loss <span id="evapReadout">1.0 mm/d</span></label>
+              <input id="evap" type="range" min="0" max="8" step="0.1" value="1">
+              <small>Subtracted from total daily rainfall before the weight is applied.</small>
+            </div>
+            <div class="control">
+              <label for="soilClass">Soil class / k <span id="soilReadout">4 → k=0.90</span></label>
+              <select id="soilClass">
+                <option value="1">WRAP 1: k=0.10, very short memory</option>
+                <option value="2">WRAP 2: k=0.50, short memory</option>
+                <option value="3">WRAP 3: k=0.70, medium memory</option>
+                <option value="4" selected>WRAP 4: k=0.90, long memory</option>
+                <option value="5">WRAP 5: k=0.99, very long memory</option>
+              </select>
+              <small>k controls the weight chart below. Higher k means old rain still counts.</small>
+            </div>
+          </aside>
+
+          <section>
+            <div class="metrics">
+              <div class="metric"><div class="label">NAPI</div><div class="value" id="napiMetric">0.0</div><div class="unit">mm</div></div>
+              <div class="metric"><div class="label">Recent event contribution</div><div class="value" id="recentMetric">0.0</div><div class="unit">mm</div></div>
+              <div class="metric"><div class="label">Past event contribution</div><div class="value" id="pastMetric">0.0</div><div class="unit">mm</div></div>
+              <div class="metric"><div class="label">k</div><div class="value" id="kMetric">0.90</div><div class="unit">memory factor</div></div>
+            </div>
+
+            <div class="story-box">
+              <b id="storyTitle">Start with constant rainfall.</b>
+              <p id="storyText">Every day has the same rainfall. The rainfall chart is flat, so the only reason the NAPI pieces change is the weight by day.</p>
+              <div class="mini-eq" id="miniEq">NAPI = sum of daily [ max(rainfall - evaporation, 0) × weight ]</div>
+            </div>
+
+            <div class="chart-panel">
+              <div class="chart-title"><b>1. Rainfall history</b><span>stacked daily rainfall on the shared 30-day x-axis</span></div>
+              <svg id="rainChart" viewBox="0 0 1000 250" role="img" aria-label="Rainfall history bar chart"></svg>
+              <div class="legend">
+                <span class="key"><span class="swatch gray"></span>constant rain</span>
+                <span class="key"><span class="swatch orange"></span>past event around 20 days ago</span>
+                <span class="key"><span class="swatch green"></span>recent event in last 5 days</span>
+              </div>
+            </div>
+
+            <div class="chart-panel">
+              <div class="chart-title"><b>2. Weight by day</b><span>same x-axis; recent days have larger weights</span></div>
+              <svg id="weightChart" viewBox="0 0 1000 190" role="img" aria-label="Weight by day bar chart"></svg>
+              <p class="chart-note">The weight is what turns rainfall history into NAPI. With k = <span id="kInline">0.90</span>, rain from today has weight 1.00, while older rain is multiplied by smaller numbers.</p>
+            </div>
+
+            <div class="chart-panel">
+              <div class="chart-title"><b>3. NAPI value</b><span>one horizontal stacked bar; each segment is one day's contribution</span></div>
+              <svg id="napiBar" viewBox="0 0 1000 210" role="img" aria-label="Horizontal stacked NAPI contribution bar"></svg>
+              <div class="pillrow" id="topContributors"></div>
+              <p class="chart-note">This is the final NAPI: all daily components added together. The largest segment is usually today or one of the very recent rainy days.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <div class="eyebrow">Parameters without overthinking it</div>
+      <h2>Where the parameters come from.</h2>
+      <div class="param-grid" style="margin-top:18px">
+        <div class="param">
+          <span class="tag">Rainfall P</span>
+          <b>What it is</b>
+          <p>The rainfall on each of the 30 previous days.</p>
+          <b>Where it comes from</b>
+          <p>A rain gauge, a rainfall record, or a design assumption for antecedent rainfall.</p>
+          <b>Do you calibrate it?</b>
+          <p>No. Rainfall is input data. You can test sensitivity, but it should not be tuned to fit one storm.</p>
+        </div>
+        <div class="param">
+          <span class="tag">Evaporation / loss E</span>
+          <b>What it is</b>
+          <p>The daily amount subtracted before weighting: max(P − E, 0).</p>
+          <b>Where it comes from</b>
+          <p>Evaporation data, seasonal assumptions, or the model's event/profile evaporation setup.</p>
+          <b>Do you calibrate it?</b>
+          <p>Usually no. Use a defensible value and document it.</p>
+        </div>
+        <div class="param">
+          <span class="tag">Memory factor k</span>
+          <b>What it is</b>
+          <p>The decay factor that sets how quickly old rainfall loses influence.</p>
+          <b>Where it comes from</b>
+          <p>WRAP soil class lookup: class 1 → 0.10, class 2 → 0.50, class 3 → 0.70, class 4 → 0.90, class 5 → 0.99.</p>
+          <b>Do you calibrate it?</b>
+          <p>Not normally. Pick it from the soil class. Change it only if the soil classification is wrong or local evidence supports a different assignment.</p>
+        </div>
+      </div>
+      <div class="grid two" style="margin-top:18px">
+        <div class="callout good"><b>Good modeling practice:</b> NAPI changes because the preceding weather changes. It is not a separate catchment parameter you refit for every storm.</div>
+        <div class="callout warn"><b>Useful sensitivity test:</b> Compare a recent event scale versus a past event scale. Same rainfall depth near today usually moves NAPI more than the same rainfall depth three weeks ago.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner"><b>One-line version:</b> NAPI is a 30-day weighted rainfall average. Rainfall provides the daily bars, k provides the daily weights, and NAPI is the weighted sum.</div>
+  </footer>
+
+<script>
+(function(){
+  const soilK = {1:0.10, 2:0.50, 3:0.70, 4:0.90, 5:0.99};
+  const state = {preset:'constant'};
+  const ids = [
+    'recentScale','pastScale','constantRain','evap','soilClass','recentScaleReadout','pastScaleReadout','constantRainReadout','evapReadout','soilReadout','napiMetric','recentMetric','pastMetric','kMetric','storyTitle','storyText','miniEq','kInline','topContributors','rainChart','weightChart','napiBar'
+  ];
+  const el = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+  const presetButtons = Array.from(document.querySelectorAll('[data-preset]'));
+
+  // Shared x-axis: 30 days ago on the left, today on the right.
+  // age = 29 means 29 days ago; age = 0 means today.
+  const days = Array.from({length:30}, (_,i) => ({i, age:29-i, label: i===29 ? 'Today' : `${29-i}d ago`}));
+
+  function setPreset(name){
+    state.preset = name;
+    presetButtons.forEach(b => b.classList.toggle('active', b.dataset.preset === name));
+    if(name === 'constant'){
+      el.constantRain.value = 5;
+      el.recentScale.value = 0;
+      el.pastScale.value = 0;
+    } else if(name === 'recent'){
+      el.constantRain.value = 0;
+      el.recentScale.value = 1;
+      el.pastScale.value = 0;
+    } else if(name === 'history'){
+      el.constantRain.value = 0;
+      el.recentScale.value = 1;
+      el.pastScale.value = 1;
+    }
+    update();
+  }
+
+  presetButtons.forEach(btn => btn.addEventListener('click', () => setPreset(btn.dataset.preset)));
+  ['input','change'].forEach(evt => {
+    [el.recentScale, el.pastScale, el.constantRain, el.evap, el.soilClass].forEach(input => input.addEventListener(evt, () => {
+      presetButtons.forEach(b => b.classList.remove('active'));
+      update();
+    }));
+  });
+
+  function getInputs(){
+    return {
+      recentScale:+el.recentScale.value,
+      pastScale:+el.pastScale.value,
+      constantRain:+el.constantRain.value,
+      evap:+el.evap.value,
+      k:soilK[el.soilClass.value],
+      soilClass:el.soilClass.value
+    };
+  }
+
+  function basePatterns(age){
+    // Event shapes are in mm before scale factors.
+    // Past event: a few rainy days around 20 days ago.
+    const past = {
+      21:8,
+      20:18,
+      19:26,
+      18:17,
+      17:9,
+      14:10
+    }[age] || 0;
+    // Recent event: rain in the last five days, with today largest for the demonstration.
+    const recent = {
+      4:7,
+      3:14,
+      2:22,
+      1:26,
+      0:32
+    }[age] || 0;
+    return {past, recent};
+  }
+
+  function compute(){
+    const inp = getInputs();
+    const rows = days.map(d => {
+      const p = basePatterns(d.age);
+      const constant = inp.constantRain;
+      const past = p.past * inp.pastScale;
+      const recent = p.recent * inp.recentScale;
+      const rain = constant + past + recent;
+      const net = Math.max(rain - inp.evap, 0);
+      const weight = Math.pow(inp.k, d.age);
+      const contribution = net * weight;
+      const source = recent > 0 ? 'recent' : (past > 0 ? 'past' : (constant > 0 ? 'constant' : 'none'));
+      const recentShare = rain > 0 ? recent / rain : 0;
+      const pastShare = rain > 0 ? past / rain : 0;
+      const constantShare = rain > 0 ? constant / rain : 0;
+      return {...d, constant, past, recent, rain, net, weight, contribution, source, recentShare, pastShare, constantShare};
+    });
+    const napi = rows.reduce((s,r) => s + r.contribution, 0);
+    const recentContribution = rows.reduce((s,r) => s + r.contribution * r.recentShare, 0);
+    const pastContribution = rows.reduce((s,r) => s + r.contribution * r.pastShare, 0);
+    const constantContribution = rows.reduce((s,r) => s + r.contribution * r.constantShare, 0);
+    return {inp, rows, napi, recentContribution, pastContribution, constantContribution};
+  }
+
+  function svg(tag, attrs={}){
+    const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.entries(attrs).forEach(([k,v]) => node.setAttribute(k,v));
+    return node;
+  }
+  function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
+  function addText(g, text, x, y, cls='axis-text', anchor='middle'){
+    const t = svg('text',{x,y,class:cls,'text-anchor':anchor});
+    t.textContent = text;
+    g.appendChild(t);
+    return t;
+  }
+  function colorForRow(r){
+    if(r.recent > 0) return '#1dad75';
+    if(r.past > 0) return '#f2a23a';
+    if(r.constant > 0) return '#9eb0c4';
+    return '#d6e1ec';
+  }
+
+  function drawAxes(g, cfg, yTicks, yMax, showLabels=true){
+    const {left, top, width, height} = cfg;
+    for(const tick of yTicks){
+      const y = top + height - (tick / yMax) * height;
+      g.appendChild(svg('line',{x1:left,y1:y,x2:left+width,y2:y,class:'gridline'}));
+      addText(g, tick.toFixed(tick % 1 === 0 ? 0 : 1), left-8, y+4, 'axis-text', 'end');
+    }
+    g.appendChild(svg('line',{x1:left,y1:top+height,x2:left+width,y2:top+height,class:'axis-line'}));
+    g.appendChild(svg('line',{x1:left,y1:top,x2:left,y2:top+height,class:'axis-line'}));
+    if(showLabels){
+      const markers = [0,5,10,15,20,25,29];
+      markers.forEach(i => {
+        const d = days[i];
+        const x = left + (i + 0.5) * width / 30;
+        addText(g, d.age === 0 ? 'Today' : `${d.age}d`, x, top + height + 22, 'axis-text');
+      });
+    }
+  }
+
+  function drawRainChart(data){
+    const chart = el.rainChart; clear(chart);
+    const cfg = {left:58, top:22, width:900, height:170};
+    const maxRain = Math.max(10, ...data.rows.map(r => r.rain));
+    const yMax = Math.ceil((maxRain * 1.12)/10)*10;
+    drawAxes(chart, cfg, [0, yMax/2, yMax], yMax, true);
+    addText(chart, 'mm', 16, cfg.top+8, 'axis-text', 'start');
+    const gap = 3;
+    const bw = cfg.width / 30 - gap;
+    data.rows.forEach((r, i) => {
+      const x = cfg.left + i * cfg.width / 30 + gap/2;
+      let yBase = cfg.top + cfg.height;
+      const pieces = [
+        {name:'constant', val:r.constant, fill:'#9eb0c4'},
+        {name:'past event', val:r.past, fill:'#f2a23a'},
+        {name:'recent event', val:r.recent, fill:'#1dad75'}
+      ];
+      pieces.forEach(piece => {
+        const h = (piece.val / yMax) * cfg.height;
+        if(h > 0.5){
+          const rect = svg('rect',{x, y:yBase-h, width:bw, height:h, rx:3, fill:piece.fill});
+          const title = svg('title');
+          title.textContent = `${r.label}: ${piece.name} ${piece.val.toFixed(1)} mm; total ${r.rain.toFixed(1)} mm`;
+          rect.appendChild(title);
+          chart.appendChild(rect);
+        }
+        yBase -= h;
+      });
+      if(r.rain > 0){
+        chart.appendChild(svg('circle',{cx:x+bw/2, cy:cfg.top+cfg.height-(r.rain/yMax)*cfg.height-5, r:2.5, fill:'#172033', opacity:.36}));
+      }
+    });
+  }
+
+  function drawWeightChart(data){
+    const chart = el.weightChart; clear(chart);
+    const cfg = {left:58, top:16, width:900, height:112};
+    drawAxes(chart, cfg, [0, .5, 1], 1, true);
+    addText(chart, 'weight', 14, cfg.top+8, 'axis-text', 'start');
+    const gap = 3;
+    const bw = cfg.width / 30 - gap;
+    data.rows.forEach((r, i) => {
+      const x = cfg.left + i * cfg.width / 30 + gap/2;
+      const h = r.weight * cfg.height;
+      const rect = svg('rect',{x, y:cfg.top+cfg.height-h, width:bw, height:h, rx:3, fill:colorForRow(r), opacity:0.85});
+      const title = svg('title');
+      title.textContent = `${r.label}: weight ${r.weight.toFixed(3)}`;
+      rect.appendChild(title);
+      chart.appendChild(rect);
+    });
+  }
+
+  function drawNapiBar(data){
+    const chart = el.napiBar; clear(chart);
+    const left = 58, top = 68, width = 900, height = 48;
+    const napi = Math.max(data.napi, 0);
+    chart.appendChild(svg('rect',{x:left,y:top,width,height,rx:18,fill:'#eff5fb',stroke:'#dce8f5'}));
+    if(napi <= 0){
+      addText(chart, 'NAPI = 0 mm', left+width/2, top+height/2+5, 'label-text');
+      return;
+    }
+    let x = left;
+    data.rows.forEach(r => {
+      const w = (r.contribution / napi) * width;
+      if(w <= 0.08) return;
+      const rect = svg('rect',{x, y:top, width:w, height, fill:colorForRow(r), opacity:r.contribution>0 ? 0.94 : 0.1});
+      const title = svg('title');
+      title.textContent = `${r.label}: contribution ${r.contribution.toFixed(2)} mm = net rain ${r.net.toFixed(1)} mm × weight ${r.weight.toFixed(3)}`;
+      rect.appendChild(title);
+      chart.appendChild(rect);
+      if(w > 58){
+        const color = r.source === 'constant' ? '#172033' : '#ffffff';
+        const t = svg('text',{x:x+w/2,y:top+30,'text-anchor':'middle',style:`font-size:12px;font-weight:850;fill:${color}`});
+        t.textContent = r.age === 0 ? 'Today' : `${r.age}d`;
+        chart.appendChild(t);
+      }
+      x += w;
+    });
+    // Rounded outline mask impression
+    chart.appendChild(svg('rect',{x:left,y:top,width,height,rx:18,fill:'none',stroke:'#31435a','stroke-width':1.2,opacity:.28}));
+    addText(chart, `NAPI = ${napi.toFixed(1)} mm`, left, top-20, 'label-text', 'start');
+    addText(chart, 'older days', left, top+height+30, 'axis-text', 'start');
+    addText(chart, 'recent days', left+width, top+height+30, 'axis-text', 'end');
+  }
+
+  function updateStory(data){
+    const inp = data.inp;
+    const hasConstant = inp.constantRain > 0.05;
+    const hasRecent = inp.recentScale > 0.05;
+    const hasPast = inp.pastScale > 0.05;
+    if(hasConstant && !hasRecent && !hasPast){
+      el.storyTitle.textContent = 'Constant rainfall: the rainfall bars are flat, but NAPI is not.';
+      el.storyText.textContent = 'This is the cleanest way to see the weighting. Every day receives the same rainfall, but older days count less, so their NAPI pieces are smaller.';
+    } else if(hasRecent && !hasPast){
+      el.storyTitle.textContent = 'Recent event only: large rainfall under large weights.';
+      el.storyText.textContent = 'The recent storm is close to today, so it sits under the largest weights. That is why the recent event strongly controls NAPI.';
+    } else if(hasRecent && hasPast){
+      el.storyTitle.textContent = 'Same recent event, plus older events.';
+      el.storyText.textContent = 'The older rainfall still adds to NAPI, but it is discounted. Use the two event scale sliders to compare the impact of past rain versus recent rain.';
+    } else if(hasPast && !hasRecent){
+      el.storyTitle.textContent = 'Past event only: rainfall is visible, but its NAPI impact is discounted.';
+      el.storyText.textContent = 'The past event can have large rainfall bars, but the weight chart below it is smaller, so the final NAPI segments are smaller.';
+    } else {
+      el.storyTitle.textContent = 'No rainfall selected.';
+      el.storyText.textContent = 'Increase constant rainfall, recent event scale, or past event scale to build a NAPI value.';
+    }
+    const top = [...data.rows].sort((a,b) => b.contribution - a.contribution).slice(0,4).filter(r => r.contribution > 0.05);
+    el.topContributors.innerHTML = top.map(r => `<span class="pill"><b>${r.age===0?'Today':r.age+'d ago'}</b>${r.contribution.toFixed(1)} mm</span>`).join('');
+    el.miniEq.textContent = `NAPI ${data.napi.toFixed(1)} mm = Σ [ max(rainfall - ${inp.evap.toFixed(1)}, 0) × weight ];  weight = k^age, k = ${inp.k.toFixed(2)}`;
+  }
+
+  function updateReadouts(data){
+    const inp = data.inp;
+    el.recentScaleReadout.textContent = `${inp.recentScale.toFixed(2)}×`;
+    el.pastScaleReadout.textContent = `${inp.pastScale.toFixed(2)}×`;
+    el.constantRainReadout.textContent = `${inp.constantRain.toFixed(1)} mm/d`;
+    el.evapReadout.textContent = `${inp.evap.toFixed(1)} mm/d`;
+    el.soilReadout.textContent = `${inp.soilClass} → k=${inp.k.toFixed(2)}`;
+    el.napiMetric.textContent = data.napi.toFixed(1);
+    el.recentMetric.textContent = data.recentContribution.toFixed(1);
+    el.pastMetric.textContent = data.pastContribution.toFixed(1);
+    el.kMetric.textContent = inp.k.toFixed(2);
+    el.kInline.textContent = inp.k.toFixed(2);
+  }
+
+  function update(){
+    const data = compute();
+    updateReadouts(data);
+    updateStory(data);
+    drawRainChart(data);
+    drawWeightChart(data);
+    drawNapiBar(data);
+  }
+
+  setPreset('constant');
+})();
+</script>
+</body>
+</html>
