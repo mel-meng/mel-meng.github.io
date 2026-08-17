@@ -121,8 +121,9 @@
 
     <div class="group">Project Admin <span style="font-weight:400;text-transform:none;letter-spacing:0">(usually modeler)</span></div>
     <ul>
-      <li><a href="#modeler">Create the cloud database</a></li>
-      <li class="level2"><a href="#open-project">Open the Project</a></li>
+      <li><a href="#modeler">Project Admin workflow</a></li>
+      <li class="level2"><a href="#project-admin-landing">Start here: Projects landing page</a></li>
+      <li class="level2"><a href="#open-project">Open the Project / invitation</a></li>
       <li class="level2"><a href="#create-database">Create database / model</a></li>
       <li class="level2"><a href="#place-model">Build or place the model</a></li>
       <li><a href="#project-users">Add &amp; manage Project users</a></li>
@@ -289,7 +290,7 @@
       <li>Complete any other Project fields required by your organization.</li>
       <li>Select <strong>Create project</strong>.</li>
     </ol>
-    <p>If you are already a Project Admin and do not need to manage the Hub, you can open the <a href="https://acc.autodesk.com/projects" target="_blank" rel="noopener">Autodesk project administration page ↗</a> directly.</p>
+    <p><strong>Handoff to the Project Admin:</strong> after the Project is created and the modeler has Project Administrator access, their normal starting point is the <a href="https://acc.autodesk.com/projects" target="_blank" rel="noopener">Autodesk Projects landing page ↗</a>. They do not need to return to Autodesk Account &gt; Hubs for routine Project membership work.</p>
     <p class="official-note">Official reference: <a href="https://help.autodesk.com/view/INNCS/ENU/?guid=Common_Project_Administration" target="_blank" rel="noopener">Autodesk Project Administration ↗</a></p>
     <figure class="shot"><img src="assets/04-create-project.png" alt="Autodesk project administration Create project dialog"><figcaption>Create the Project within the correct Hub.</figcaption></figure>
     <div class="verify"><strong>VERIFY — Project creation fields</strong> Confirm which Project Type and other optional fields should be recommended for a standard ICM customer setup. The current source shows an example, but does not define a universal customer standard.</div>
@@ -320,13 +321,26 @@
   </section>
 
   <section id="modeler">
-    <h2>5. Modeler / Project Admin — create the cloud database</h2>
+    <h2>5. Modeler / Project Admin — start here and create the cloud database</h2>
 
-    <h3 id="open-project">5.1 Open the Project</h3>
-    <p>Use the Autodesk account that was added to the Project. If an invitation email was sent, open it and sign in with the same email address.</p>
+    <h3 id="project-admin-landing">5.1 Project Admin: start from the Projects landing page</h3>
+    <div class="help"><strong>Project Admin starting point:</strong> <a href="https://acc.autodesk.com/projects" target="_blank" rel="noopener">Open Autodesk Projects ↗</a></div>
+    <p>If you are the Project Admin, this is the normal web page to bookmark. It gives you a list of the Projects you can administer. You do not need Hub Admin access just to manage membership in a Project that has already been assigned to you.</p>
+    <ol class="steps">
+      <li>Open <a href="https://acc.autodesk.com/projects" target="_blank" rel="noopener">Autodesk Projects</a> and sign in with the Autodesk account that was added to the Project.</li>
+      <li>Open the <strong>Projects</strong> tab.</li>
+      <li>Find the Project you want to manage.</li>
+      <li>Use the <strong>Project Admin</strong> control for that Project when you need to add, remove, or update members.</li>
+      <li>For modeling work, use InfoWorks ICM and select the same Hub, Project, and cloud database as described below.</li>
+    </ol>
+    <p class="official-note">Official reference: <a href="https://help.autodesk.com/view/INNCS/ENU/?guid=Common_Project_Administration" target="_blank" rel="noopener">Autodesk Project Administration ↗</a></p>
+    <figure class="shot"><img src="assets/22-projects-page.png" alt="Autodesk Projects landing page showing Projects and Project Admin controls"><figcaption>Project Admin landing page. Find the Project, then use the Project Admin control to manage its membership.</figcaption></figure>
+
+    <h3 id="open-project">5.2 First-time access / invitation</h3>
+    <p>Use the Autodesk account that was added to the Project. If an invitation email was sent, open it and sign in with the same email address. After the first sign-in, bookmark the Projects landing page above for routine Project administration.</p>
     <figure class="shot small"><img src="assets/11-project-invitation-email.png" alt="Project invitation email with Info360 Model link"><figcaption>Example Project invitation. Use the same invited email address when signing in.</figcaption></figure>
 
-    <h3 id="create-database">5.2 Create a new cloud database</h3>
+    <h3 id="create-database">5.3 Create a new cloud database</h3>
     <ol class="steps">
       <li>Open InfoWorks ICM.</li>
       <li>Select <strong>File → Open → Open/Create database</strong>. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/2025/ENU/ICM-Help/files/GUID-12649EF9-D561-40B5-A8E3-218918F807D6.htm" target="_blank" rel="noopener">Autodesk ICM Help: Create a Database ↗</a></li>
@@ -342,7 +356,7 @@
     <figure class="shot small"><img src="assets/14-select-cloud-database.png" alt="Open Create dialog showing Cloud, Workgroup and Standalone database options"><figcaption>Select Cloud.</figcaption></figure>
     <figure class="shot small"><img src="assets/15-new-cloud-database.png" alt="Open Cloud Database and New Database dialogs with Hub, Project, name and version"><figcaption>Select the Hub and Project, create a new database, then enter its name and database version.</figcaption></figure>
 
-    <h3 id="place-model">5.3 Build or place the model in the database</h3>
+    <h3 id="place-model">5.4 Build or place the model in the database</h3>
     <p>For a new project, continue building the model in the cloud database using the normal InfoWorks ICM modeling workflow.</p>
     <div class="missing"><strong>MISSING — Existing model migration</strong> Add a verified procedure for a customer who already has an existing standalone, transportable, or workgroup database and needs to move or copy that model into the new cloud Project. Related official reference: <a href="https://help.autodesk.com/view/IWICMS/2027/ENU/" target="_blank" rel="noopener">InfoWorks ICM Help — Cloud Databases ↗</a></div>
   </section>
