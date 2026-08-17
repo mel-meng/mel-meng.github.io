@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InfoWorks ICM Cloud — New Customer Setup Manual</title>
+<style>
+  :root { --ink:#172033; --blue:#0b4a8b; --green:#26733b; --purple:#6a34a5; --orange:#c55211; --line:#d8dee8; --soft:#f5f7fa; --warn:#fff4cf; --verify:#fff1e8; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; color:var(--ink); font:16px/1.5 Arial, Helvetica, sans-serif; background:white; }
+  .sidebar { position:fixed; inset:0 auto 0 0; width:292px; background:#f8fafc; border-right:1px solid var(--line); padding:22px 16px 28px; overflow-y:auto; z-index:20; }
+  .sidebar .brand { font-weight:700; color:#102f5b; font-size:18px; line-height:1.2; margin:0 8px 18px; }
+  .sidebar .brand small { display:block; font-size:12px; font-weight:400; color:#667085; margin-top:5px; }
+  .sidebar nav { font-size:14px; }
+  .sidebar ul { list-style:none; padding:0; margin:0; }
+  .sidebar li { margin:0; }
+  .sidebar .group { margin:17px 8px 5px; color:#536174; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; }
+  .sidebar a { display:block; color:#2f3c4f; text-decoration:none; padding:6px 9px; border-radius:6px; line-height:1.3; }
+  .sidebar a:hover { background:#edf3f9; color:#0b4a8b; }
+  .sidebar a.active { background:#e4eef9; color:#0b4a8b; font-weight:700; }
+  .sidebar .level2 a { padding-left:21px; font-size:13px; }
+  .sidebar .level3 a { padding-left:34px; font-size:12px; color:#596273; }
+  .page { margin-left:292px; min-width:0; }
+  header { border-bottom:1px solid var(--line); padding:28px 28px 18px; }
+  header .inner, main, footer div { max-width:1100px; margin:0 auto; }
+  section, h3[id] { scroll-margin-top:20px; }
+  h1 { margin:0 0 8px; font-size:32px; line-height:1.15; color:#102f5b; }
+  h2 { margin:42px 0 14px; font-size:25px; color:#102f5b; border-bottom:1px solid var(--line); padding-bottom:6px; }
+  h3 { margin:30px 0 10px; font-size:20px; color:#173f70; }
+  h4 { margin:22px 0 8px; font-size:17px; }
+  p { margin:8px 0 12px; }
+  ul, ol { margin:8px 0 16px 24px; }
+  li { margin:5px 0; }
+  a { color:#075faa; }
+  main { padding:0 28px 60px; }
+  .lede { max-width:900px; font-size:17px; }
+  .concept { border-left:4px solid var(--blue); padding:10px 16px; background:#f4f8fc; margin:16px 0; }
+  .rules { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:18px 0; }
+  .rule { border:1px solid var(--line); padding:14px; background:#fff; }
+  .rule strong { display:block; color:#123f75; margin-bottom:4px; }
+  .roles { width:100%; border-collapse:collapse; margin:14px 0 20px; }
+  .roles th,.roles td { border:1px solid var(--line); padding:10px 12px; vertical-align:top; }
+  .roles th { text-align:left; background:var(--soft); }
+  .steps { counter-reset:step; padding:0; list-style:none; }
+  .steps > li { counter-increment:step; position:relative; padding-left:42px; margin:12px 0; }
+  .steps > li::before { content:counter(step); position:absolute; left:0; top:0; width:28px; height:28px; border-radius:50%; background:var(--blue); color:white; display:grid; place-items:center; font-weight:bold; }
+  .shot { margin:16px 0 28px; }
+  .shot img { display:block; max-width:100%; height:auto; border:1px solid #ccd4df; background:white; }
+  .shot figcaption { font-size:14px; color:#596273; margin-top:6px; }
+  .shot.small img { max-width:720px; }
+  .shot.tiny img { max-width:500px; }
+  .image-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; align-items:start; margin:14px 0 24px; }
+  .image-row figure { margin:0; }
+  .image-row img { max-width:100%; border:1px solid #ccd4df; }
+  .image-row figcaption { font-size:13px; color:#596273; }
+  .help { font-size:14px; margin:10px 0 18px; }
+  .help a { margin-right:14px; white-space:nowrap; }
+  .official-ref { font-size:13px; white-space:nowrap; margin-left:4px; font-weight:600; }
+  .official-note { font-size:13px; color:#596273; margin-top:4px; }
+  .missing,.verify { padding:10px 14px; margin:14px 0; border-left:4px solid #d19a00; background:var(--warn); }
+  .verify { border-left-color:#c66a23; background:var(--verify); }
+  .missing strong,.verify strong { display:block; margin-bottom:3px; }
+  .draft-note { font-size:14px; color:#5a4500; background:#fff9e9; border:1px solid #eadba3; padding:10px 12px; margin:16px 0; }
+  .workflow-wrap { border:1px solid var(--line); padding:10px; overflow-x:auto; background:#fff; margin:14px 0 10px; }
+  .workflow { width:100%; height:auto; display:block; }
+  .workflow .cell { fill:#fff; stroke:#d8dee8; }
+  .workflow .head { fill:#0b3f78; }
+  .workflow .headtext { fill:#fff; font-weight:700; font-size:15px; }
+  .workflow .label { font-weight:700; font-size:15px; }
+  .workflow .sub { font-size:12px; fill:#445063; }
+  .workflow .tick { font-size:20px; font-weight:700; }
+  .workflow .action { fill:#f5f8fc; stroke:#aac2df; stroke-width:1.2; rx:8; }
+  .workflow a:hover .action, .workflow a:focus .action { fill:#e7f2ff; stroke:#1565ad; stroke-width:2; }
+  .workflow .actiontext { font-size:13px; font-weight:700; fill:#173f70; pointer-events:none; }
+  .workflow .arrow { font-size:18px; fill:#7b8492; }
+  .workflow-note { font-size:14px; color:#596273; margin:6px 0 20px; }
+  .quickpath { font-weight:bold; color:#173f70; }
+  .checklist { columns:2; column-gap:40px; }
+  footer { border-top:1px solid var(--line); color:#667085; font-size:13px; padding:18px 24px 28px; }
+  @media (max-width:900px) {
+    .sidebar { position:static; width:auto; max-height:none; border-right:0; border-bottom:1px solid var(--line); padding:14px 18px 16px; }
+    .sidebar .brand { margin-bottom:10px; }
+    .sidebar nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 16px; }
+    .sidebar .group { grid-column:1 / -1; margin-top:12px; }
+    .page { margin-left:0; }
+  }
+  @media (max-width:760px) {
+    .sidebar nav { display:block; }
+    .rules,.image-row { grid-template-columns:1fr; }
+    .checklist { columns:1; }
+    h1 { font-size:27px; }
+  }
+  @media print {
+    .sidebar { display:none; }
+    .page { margin-left:0; }
+    .workflow-wrap { overflow:visible; }
+    a { color:inherit; text-decoration:none; }
+  }
+</style>
+</head>
+<body>
+<aside class="sidebar" aria-label="Manual navigation">
+  <div class="brand">ICM Cloud Setup Manual<small>New customer onboarding</small></div>
+  <nav id="sidebar-toc">
+    <div class="group">Overview</div>
+    <ul>
+      <li><a href="#purpose">What this setup is for</a></li>
+      <li><a href="#workflow">Workflow overview</a></li>
+      <li><a href="#before">Before you start</a></li>
+    </ul>
+
+    <div class="group">IT / Cloud Admin</div>
+    <ul>
+      <li><a href="#it-admin">Environment setup</a></li>
+      <li class="level2"><a href="#create-hub">Create Hub + Region</a></li>
+      <li class="level2"><a href="#create-project">Create Project</a></li>
+      <li class="level2"><a href="#add-modeler">Add modeler as Project Admin</a></li>
+      <li class="level2"><a href="#icm-license">Confirm ICM software + license</a></li>
+    </ul>
+
+    <div class="group">Project Admin <span style="font-weight:400;text-transform:none;letter-spacing:0">(usually modeler)</span></div>
+    <ul>
+      <li><a href="#modeler">Create the cloud database</a></li>
+      <li class="level2"><a href="#open-project">Open the Project</a></li>
+      <li class="level2"><a href="#create-database">Create database / model</a></li>
+      <li class="level2"><a href="#place-model">Build or place the model</a></li>
+      <li><a href="#project-users">Add &amp; manage Project users</a></li>
+      <li class="level2"><a href="#add-reviewer">Add review-only users</a></li>
+      <li class="level2"><a href="#manage-access">Change / remove access</a></li>
+    </ul>
+
+    <div class="group">Reviewer</div>
+    <ul>
+      <li><a href="#reviewer">Viewer setup &amp; access</a></li>
+      <li class="level2"><a href="#reviewer-account">Use invited Autodesk account</a></li>
+      <li class="level2"><a href="#install-viewer">Install free ICM Viewer</a></li>
+      <li class="level2"><a href="#viewer-signin">Sign in</a></li>
+      <li class="level2"><a href="#viewer-open-model">Open the cloud model</a></li>
+      <li class="level2"><a href="#viewer-validate">Confirm access</a></li>
+    </ul>
+
+    <div class="group">Project closeout</div>
+    <ul><li><a href="#closeout">Review and remove access</a></li></ul>
+
+    <div class="group">Additional help</div>
+    <ul>
+      <li><a href="#simulation">Cloud simulation usage</a></li>
+      <li><a href="#troubleshooting">Troubleshooting</a></li>
+      <li class="level2"><a href="#draft-gaps">Draft items to finish</a></li>
+    </ul>
+  </nav>
+</aside>
+<div class="page">
+<header>
+  <div class="inner">
+    <h1>InfoWorks ICM Cloud — New Customer Setup Manual</h1>
+    <p class="lede">A practical guide for small project teams that want one shared cloud model, full modeling access for the modeler, and simple review access for GIS, engineering, clients, and other stakeholders.</p>
+  </div>
+</header>
+<main>
+  <div class="draft-note"><strong>Working draft:</strong> Items marked <strong>MISSING</strong> or <strong>VERIFY</strong> still need to be confirmed before this manual is issued to customers.</div>
+
+  <section id="purpose">
+    <h2>1. What this setup is for</h2>
+    <p>A typical small ICM project may have only one or two people who build and run the model, while several other people need to see the model and results. Those reviewers may include GIS staff, engineering/design teams, clients, managers, or other project stakeholders.</p>
+    <p>ICM Cloud gives the project one shared source. Instead of repeatedly creating screenshots, PDFs, PowerPoints, or separate copies of the model just so other people can review the work, the model can be stored in the cloud and the right people can be given access when they need it.</p>
+
+    <div class="concept">
+      <strong>A familiar way to think about it:</strong> the Hub is similar to a shared workspace, and Projects are similar to shared folders used to control which groups can access different work. The cloud permission controls <em>what you can reach</em>; the software you use controls <em>what you can do with it</em>. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/2026/ENU/WSPro-Help/files/GUID-B7C36F38-4739-47D5-A54C-350AE215FE0F.htm" target="_blank" rel="noopener">Autodesk Help: cloud access basics ↗</a>
+    </div>
+
+    <div class="rules">
+      <div class="rule"><strong>One shared source</strong>Models and results live in the cloud, so authorized users see the same current project information.</div>
+      <div class="rule"><strong>Right tool for the role</strong>The modeler uses full InfoWorks ICM. Review-only users use the free InfoWorks ICM Viewer.</div>
+      <div class="rule"><strong>Project Admin controls access</strong>The Project Admin decides who is a member of the Project and updates membership as the project changes.</div>
+    </div>
+  </section>
+
+  <section id="workflow">
+    <h2>2. How the workflow works</h2>
+    <p>The top half of this diagram shows when different groups commonly need access. The lower half shows the setup actions performed by the two administration roles. In a small organization, the same person may perform both roles.</p>
+
+    <div class="workflow-wrap">
+      <svg class="workflow" viewBox="0 0 1200 520" role="img" aria-labelledby="wf-title wf-desc">
+        <title id="wf-title">ICM Cloud onboarding workflow</title>
+        <desc id="wf-desc">Project participation across six phases and clickable setup actions for IT Cloud Admin and Project Admin.</desc>
+
+        <text x="18" y="28" font-size="22" font-weight="700" fill="#102f5b">Project participation — who needs access and when</text>
+        <!-- headers -->
+        <rect x="18" y="45" width="230" height="48" fill="#0b3f78"/>
+        <text x="34" y="75" fill="#fff" font-weight="700" font-size="15">ROLE</text>
+        <g>
+          <rect x="248" y="45" width="155" height="48" fill="#0b3f78"/><text x="270" y="75" fill="#fff" font-weight="700" font-size="15">Project Start</text>
+          <rect x="403" y="45" width="155" height="48" fill="#0b3f78"/><text x="430" y="75" fill="#fff" font-weight="700" font-size="15">Data Review</text>
+          <rect x="558" y="45" width="155" height="48" fill="#0b3f78"/><text x="585" y="75" fill="#fff" font-weight="700" font-size="15">Model Build</text>
+          <rect x="713" y="45" width="155" height="48" fill="#0b3f78"/><text x="739" y="75" fill="#fff" font-weight="700" font-size="15">Calibration</text>
+          <rect x="868" y="45" width="155" height="48" fill="#0b3f78"/><text x="894" y="75" fill="#fff" font-weight="700" font-size="15">Alternatives</text>
+          <rect x="1023" y="45" width="159" height="48" fill="#0b3f78"/><text x="1039" y="75" fill="#fff" font-weight="700" font-size="15">Review / Delivery</text>
+        </g>
+        <!-- row cells -->
+        <g>
+          <!-- modeler -->
+          <rect x="18" y="93" width="230" height="58" fill="#fff" stroke="#d8dee8"/><text x="34" y="119" class="label" fill="#0b55ae">Modeler</text><text x="34" y="138" class="sub">Full ICM user</text>
+          <!-- GIS -->
+          <rect x="18" y="151" width="230" height="58" fill="#fff" stroke="#d8dee8"/><text x="34" y="178" class="label" fill="#6a34a5">GIS / Data Team</text><text x="34" y="197" class="sub">Review or data support</text>
+          <!-- Eng -->
+          <rect x="18" y="209" width="230" height="58" fill="#fff" stroke="#d8dee8"/><text x="34" y="236" class="label" fill="#26733b">Engineering Team</text><text x="34" y="255" class="sub">Design / analysis</text>
+          <!-- Client -->
+          <rect x="18" y="267" width="230" height="58" fill="#fff" stroke="#d8dee8"/><text x="34" y="294" class="label" fill="#c55211">Client / Stakeholders</text><text x="34" y="313" class="sub">Reviewers</text>
+          <!-- body grid -->
+          <g fill="#fff" stroke="#d8dee8">
+            <rect x="248" y="93" width="155" height="58"/><rect x="403" y="93" width="155" height="58"/><rect x="558" y="93" width="155" height="58"/><rect x="713" y="93" width="155" height="58"/><rect x="868" y="93" width="155" height="58"/><rect x="1023" y="93" width="159" height="58"/>
+            <rect x="248" y="151" width="155" height="58"/><rect x="403" y="151" width="155" height="58"/><rect x="558" y="151" width="155" height="58"/><rect x="713" y="151" width="155" height="58"/><rect x="868" y="151" width="155" height="58"/><rect x="1023" y="151" width="159" height="58"/>
+            <rect x="248" y="209" width="155" height="58"/><rect x="403" y="209" width="155" height="58"/><rect x="558" y="209" width="155" height="58"/><rect x="713" y="209" width="155" height="58"/><rect x="868" y="209" width="155" height="58"/><rect x="1023" y="209" width="159" height="58"/>
+            <rect x="248" y="267" width="155" height="58"/><rect x="403" y="267" width="155" height="58"/><rect x="558" y="267" width="155" height="58"/><rect x="713" y="267" width="155" height="58"/><rect x="868" y="267" width="155" height="58"/><rect x="1023" y="267" width="159" height="58"/>
+          </g>
+          <!-- check marks only; no repeated explanatory text -->
+          <g text-anchor="middle" dominant-baseline="middle">
+            <text x="325" y="122" class="tick" fill="#0b55ae">✓</text><text x="480" y="122" class="tick" fill="#0b55ae">✓</text><text x="635" y="122" class="tick" fill="#0b55ae">✓</text><text x="790" y="122" class="tick" fill="#0b55ae">✓</text><text x="945" y="122" class="tick" fill="#0b55ae">✓</text><text x="1102" y="122" class="tick" fill="#0b55ae">✓</text>
+            <text x="480" y="180" class="tick" fill="#6a34a5">✓</text><text x="635" y="180" class="tick" fill="#6a34a5">✓</text>
+            <text x="945" y="238" class="tick" fill="#26733b">✓</text><text x="1102" y="238" class="tick" fill="#26733b">✓</text>
+            <text x="945" y="296" class="tick" fill="#c55211">✓</text><text x="1102" y="296" class="tick" fill="#c55211">✓</text>
+          </g>
+        </g>
+
+        <text x="18" y="360" font-size="22" font-weight="700" fill="#102f5b">Setup, installation &amp; licensing — what needs to happen</text>
+        <rect x="18" y="378" width="230" height="62" fill="#f5f8fc" stroke="#aac2df"/>
+        <text x="34" y="404" class="label" fill="#0b55ae">IT / Cloud Admin</text><text x="34" y="425" class="sub">Environment setup</text>
+        <a href="#create-hub"><rect x="268" y="386" width="150" height="46" class="action" fill="#f5f8fc" stroke="#aac2df" stroke-width="1.2" rx="8"/><text x="343" y="414" text-anchor="middle" class="actiontext">Create Hub + Region</text><title>Jump to Create the Hub</title></a>
+        <text x="428" y="414" class="arrow">→</text>
+        <a href="#create-project"><rect x="458" y="386" width="140" height="46" class="action" fill="#f5f8fc" stroke="#aac2df" stroke-width="1.2" rx="8"/><text x="528" y="414" text-anchor="middle" class="actiontext">Create Project</text><title>Jump to Create the Project</title></a>
+        <text x="608" y="414" class="arrow">→</text>
+        <a href="#add-modeler"><rect x="638" y="386" width="175" height="46" class="action" fill="#f5f8fc" stroke="#aac2df" stroke-width="1.2" rx="8"/><text x="725" y="406" text-anchor="middle" class="actiontext"><tspan x="725" dy="0">Add modeler +</tspan><tspan x="725" dy="16">confirm ICM access</tspan></text><title>Jump to Add the Modeler</title></a>
+        <text x="823" y="414" class="arrow">→</text>
+        <a href="#install-viewer"><rect x="853" y="386" width="200" height="46" class="action" fill="#f5f8fc" stroke="#aac2df" stroke-width="1.2" rx="8"/><text x="953" y="406" text-anchor="middle" class="actiontext"><tspan x="953" dy="0">Make Viewer available</tspan><tspan x="953" dy="16">for reviewers</tspan></text><title>Jump to Install Viewer</title></a>
+
+        <rect x="18" y="440" width="230" height="62" fill="#f5fbf5" stroke="#b7d1b8"/>
+        <text x="34" y="466" class="label" fill="#26733b">Project Admin</text><text x="34" y="487" class="sub">Usually the modeler</text>
+        <a href="#create-database"><rect x="268" y="448" width="180" height="46" class="action" fill="#f5f8fc" stroke="#aac2df" stroke-width="1.2" rx="8"/><text x="358" y="476" text-anchor="middle" class="actiontext">Create database / model</text><title>Jump to Create a Cloud Database</title></a>
+        <text x="458" y="476" class="arrow">→</text>
+        <a href="#add-reviewer"><rect x="488" y="448" width="165" height="46" class="action" fill="#f5f8fc" stroke="#aac2df" stroke-width="1.2" rx="8"/><text x="570" y="476" text-anchor="middle" class="actiontext">Add Project users</text><title>Jump to Add a Reviewer</title></a>
+        <text x="663" y="476" class="arrow">→</text>
+        <a href="#manage-access"><rect x="693" y="448" width="185" height="46" class="action" fill="#f5f8fc" stroke="#aac2df" stroke-width="1.2" rx="8"/><text x="785" y="476" text-anchor="middle" class="actiontext">Manage access over time</text><title>Jump to Manage Access</title></a>
+        <text x="888" y="476" class="arrow">→</text>
+        <a href="#closeout"><rect x="918" y="448" width="175" height="46" class="action" fill="#f5f8fc" stroke="#aac2df" stroke-width="1.2" rx="8"/><text x="1005" y="476" text-anchor="middle" class="actiontext">Project closeout</text><title>Jump to Project Closeout</title></a>
+      </svg>
+    </div>
+    <p class="workflow-note">The setup boxes are clickable. They jump to the detailed instructions below. Official Autodesk help links are included inline beside the steps they support, so you can open the source guidance without leaving your place in the manual.</p>
+  </section>
+
+  <section id="before">
+    <h2>3. Before you start</h2>
+    <table class="roles">
+      <thead><tr><th>Role</th><th>What is needed</th></tr></thead>
+      <tbody>
+        <tr><td><strong>IT / Cloud Admin</strong></td><td>Autodesk account, appropriate administration permissions, the customer's chosen data region, and access to the Autodesk Account management pages.</td></tr>
+        <tr><td><strong>Project Admin</strong><br>Usually the modeler</td><td>Autodesk account and Project Administrator access. The modeler also needs the full InfoWorks ICM desktop application and appropriate license.</td></tr>
+        <tr><td><strong>Reviewer</strong></td><td>An email address, an Autodesk account using that same email address, Project access, and the free InfoWorks ICM Viewer.</td></tr>
+      </tbody>
+    </table>
+    <p><strong>For most small customers:</strong> keep the structure simple. Use the existing Autodesk Team, create one Hub in the appropriate region, and use Projects to separate jobs or groups that should have different access. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/2026/ENU/WSPro-Help/files/GUID-A9A087F1-5F27-49C0-9776-C8AAC7094DC4.htm" target="_blank" rel="noopener">Autodesk Help: Hubs and Regions ↗</a></p>
+  </section>
+
+  <section id="it-admin">
+    <h2>4. IT / Cloud Admin — set up the cloud environment</h2>
+    <p>The IT / Cloud Admin establishes the shared environment. After the Hub, Project, and initial modeler access are ready, most day-to-day membership work can be handled by the Project Admin.</p>
+
+    <h3 id="create-hub">4.1 Create the Hub and choose the Region</h3>
+    <ol class="steps">
+      <li>Sign in to <a href="https://manage.autodesk.com" target="_blank" rel="noopener">Autodesk Account</a>.</li>
+      <li>Open <strong>Products and Services</strong>, then open <strong>Hubs</strong>. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/2026/ENU/WSPro-Help/files/GUID-A9A087F1-5F27-49C0-9776-C8AAC7094DC4.htm" target="_blank" rel="noopener">Autodesk Help ↗</a></li>
+      <li>Confirm the correct Autodesk <strong>Team</strong> is selected. For a small customer, normally use the existing Team rather than creating additional Teams.</li>
+      <li>Select <strong>Create hub</strong>, then choose <strong>Info360</strong>.</li>
+      <li>Enter the Hub name.</li>
+      <li>Select the appropriate <strong>Data region</strong>.</li>
+      <li>Select <strong>Create &amp; Activate</strong>.</li>
+    </ol>
+    <div class="help"><strong>Official help:</strong> <a href="https://help.autodesk.com/cloudhelp/2026/ENU/WSPro-Help/files/GUID-A9A087F1-5F27-49C0-9776-C8AAC7094DC4.htm" target="_blank" rel="noopener">Create Hub and Activate Subscription ↗</a> <a href="https://help.autodesk.com/cloudhelp/2026/ENU/WSPro-Help/files/GUID-B7C36F38-4739-47D5-A54C-350AE215FE0F.htm" target="_blank" rel="noopener">Getting started with cloud access ↗</a></div>
+    <figure class="shot"><img src="assets/01-hubs-page.png" alt="Autodesk Account Hubs page showing Team selection and Create hub"><figcaption>Open Hubs under the correct Team, then create an Info360 Hub.</figcaption></figure>
+    <figure class="shot tiny"><img src="assets/02-create-hub.png" alt="Hub Setup dialog with Hub name, Data region, and Create and Activate"><figcaption>Enter the Hub name, choose the data region, and create the Hub.</figcaption></figure>
+    <figure class="shot small"><img src="assets/03-hub-administration.png" alt="Hub list showing Info360 and Administration links"><figcaption>After activation, the Hub appears with an Administration link. If it does not appear immediately, refresh the page.</figcaption></figure>
+
+    <h3 id="create-project">4.2 Create the Project</h3>
+    <ol class="steps">
+      <li>From the Hub, select <strong>Administration</strong>. This opens the Project administration environment.</li>
+      <li>Select <strong>Create project</strong>. <a class="official-ref" href="https://help.autodesk.com/view/INNCS/ENU/?guid=Common_Project_Administration" target="_blank" rel="noopener">Autodesk Help: Project Administration ↗</a></li>
+      <li>Enter a Project name and select the correct Hub.</li>
+      <li>Complete any other Project fields required by your organization.</li>
+      <li>Select <strong>Create project</strong>.</li>
+    </ol>
+    <p>If you are already a Project Admin and do not need to manage the Hub, you can open the <a href="https://acc.autodesk.com/projects" target="_blank" rel="noopener">Autodesk project administration page ↗</a> directly.</p>
+    <p class="official-note">Official reference: <a href="https://help.autodesk.com/view/INNCS/ENU/?guid=Common_Project_Administration" target="_blank" rel="noopener">Autodesk Project Administration ↗</a></p>
+    <figure class="shot"><img src="assets/04-create-project.png" alt="Autodesk project administration Create project dialog"><figcaption>Create the Project within the correct Hub.</figcaption></figure>
+    <div class="verify"><strong>VERIFY — Project creation fields</strong> Confirm which Project Type and other optional fields should be recommended for a standard ICM customer setup. The current source shows an example, but does not define a universal customer standard.</div>
+
+    <h3 id="add-modeler">4.3 Add the modeler as Project Admin</h3>
+    <ol class="steps">
+      <li>Open the new Project and go to <strong>Members</strong>.</li>
+      <li>Select <strong>Add members</strong>. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/ENU/Docs-Admin/files/project-administration/Manage_Project_Members.html" target="_blank" rel="noopener">Autodesk Help: Manage Project Members ↗</a></li>
+      <li>Enter the modeler's email address and continue.</li>
+      <li>Select the appropriate model role. For a modeler who needs to edit, use the editing role appropriate to your environment.</li>
+      <li>Set <strong>Access Level</strong> to <strong>Project administrator</strong>.</li>
+      <li>Enable <strong>Info360 Model</strong>.</li>
+      <li>Send the invitation.</li>
+    </ol>
+    <figure class="shot small"><img src="assets/05-project-members.png" alt="Project members page with Add members button"><figcaption>Open the Project membership page.</figcaption></figure>
+    <figure class="shot"><img src="assets/06-add-member-email.png" alt="Add project members page with email entry"><figcaption>Enter the modeler's email address.</figcaption></figure>
+    <div class="image-row">
+      <figure><img src="assets/07-model-reader-role.png" alt="Role menu showing Model Reader and Model Editor"><figcaption>Choose the model role.</figcaption></figure>
+      <figure><img src="assets/08-project-access-level.png" alt="Access Level menu showing Project administrator and Project member"><figcaption>For the person who will manage Project membership, choose Project administrator.</figcaption></figure>
+      <figure><img src="assets/09-info360-model-product.png" alt="Products menu showing Info360 Model"><figcaption>Enable Info360 Model.</figcaption></figure>
+    </div>
+    <figure class="shot"><img src="assets/10-send-invitation.png" alt="Add project members page ready to send invitation"><figcaption>Review the selections and send the invitation.</figcaption></figure>
+    <div class="verify"><strong>VERIFY — Modeler role label</strong> The current screenshots show both <em>Model Reader</em> and <em>Model Editor</em>. Confirm the exact recommended role for a full ICM modeler in the current production environment before customer release.</div>
+
+    <h3 id="icm-license">4.4 Confirm InfoWorks ICM software and licensing</h3>
+    <p>The modeler needs the full InfoWorks ICM desktop application and an appropriate license to edit models and run simulations. Autodesk Account administrators assign product access through User Management. <a class="official-ref" href="https://www.autodesk.com/support/account/admin/users/assign-access" target="_blank" rel="noopener">Autodesk Help: Assign product access ↗</a></p>
+    <div class="missing"><strong>MISSING — Full ICM setup</strong> Add the customer-facing steps for assigning/checking the modeler's InfoWorks ICM license and installing the desktop application on a new computer.</div>
+  </section>
+
+  <section id="modeler">
+    <h2>5. Modeler / Project Admin — create the cloud database</h2>
+
+    <h3 id="open-project">5.1 Open the Project</h3>
+    <p>Use the Autodesk account that was added to the Project. If an invitation email was sent, open it and sign in with the same email address.</p>
+    <figure class="shot small"><img src="assets/11-project-invitation-email.png" alt="Project invitation email with Info360 Model link"><figcaption>Example Project invitation. Use the same invited email address when signing in.</figcaption></figure>
+
+    <h3 id="create-database">5.2 Create a new cloud database</h3>
+    <ol class="steps">
+      <li>Open InfoWorks ICM.</li>
+      <li>Select <strong>File → Open → Open/Create database</strong>. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/2025/ENU/ICM-Help/files/GUID-12649EF9-D561-40B5-A8E3-218918F807D6.htm" target="_blank" rel="noopener">Autodesk ICM Help: Create a Database ↗</a></li>
+      <li>Select <strong>Cloud</strong>.</li>
+      <li>Select the correct <strong>Hub</strong> and <strong>Project</strong>.</li>
+      <li>Next to Database, select <strong>New</strong>.</li>
+      <li>Enter the database name.</li>
+      <li>Select the database version.</li>
+      <li>Select <strong>OK</strong> to create the database.</li>
+    </ol>
+    <div class="help"><strong>Official help:</strong> <a href="https://help.autodesk.com/cloudhelp/2025/ENU/ICM-Help/files/GUID-12649EF9-D561-40B5-A8E3-218918F807D6.htm" target="_blank" rel="noopener">Create a Database — InfoWorks ICM Help ↗</a> <a href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-Set-up-of-cloud-database-in-InfoWorks-ICM.html" target="_blank" rel="noopener">Cloud database setup support article ↗</a></div>
+    <figure class="shot small"><img src="assets/13-open-create-database-menu.png" alt="InfoWorks ICM File menu showing Open/Create database"><figcaption>Start from File → Open → Open/Create database.</figcaption></figure>
+    <figure class="shot small"><img src="assets/14-select-cloud-database.png" alt="Open Create dialog showing Cloud, Workgroup and Standalone database options"><figcaption>Select Cloud.</figcaption></figure>
+    <figure class="shot small"><img src="assets/15-new-cloud-database.png" alt="Open Cloud Database and New Database dialogs with Hub, Project, name and version"><figcaption>Select the Hub and Project, create a new database, then enter its name and database version.</figcaption></figure>
+
+    <h3 id="place-model">5.3 Build or place the model in the database</h3>
+    <p>For a new project, continue building the model in the cloud database using the normal InfoWorks ICM modeling workflow.</p>
+    <div class="missing"><strong>MISSING — Existing model migration</strong> Add a verified procedure for a customer who already has an existing standalone, transportable, or workgroup database and needs to move or copy that model into the new cloud Project. Related official reference: <a href="https://help.autodesk.com/view/IWICMS/2027/ENU/" target="_blank" rel="noopener">InfoWorks ICM Help — Cloud Databases ↗</a></div>
+  </section>
+
+  <section id="project-users">
+    <h2>6. Project Admin — add and manage Project users</h2>
+    <p>Project membership is the main control for sharing the cloud model. Add people when they need access, update their role if their responsibility changes, and remove them when access is no longer required.</p>
+
+    <h3 id="add-reviewer">6.1 Add a review-only user</h3>
+    <ol class="steps">
+      <li>Open the Project and go to <strong>Members</strong>.</li>
+      <li>Select <strong>Add members</strong>. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/ENU/Docs-Admin/files/project-administration/Manage_Project_Members.html" target="_blank" rel="noopener">Autodesk Help: Manage Project Members ↗</a></li>
+      <li>Enter the reviewer's email address.</li>
+      <li>Set <strong>Role</strong> to <strong>Model Reader</strong>.</li>
+      <li>Set <strong>Access Level</strong> to <strong>Project member</strong>.</li>
+      <li>Enable <strong>Info360 Model</strong>.</li>
+      <li>Send the invitation.</li>
+    </ol>
+    <p>This same review-only pattern can be used for GIS, engineering, client, or other stakeholders who need to inspect the model and results but do not need to edit the model.</p>
+    <div class="verify"><strong>VERIFY — Internal vs. external invitations</strong> Confirm whether users inside and outside the customer's organization follow the same invitation and acceptance sequence, including any additional external-user prompts.</div>
+
+    <h3 id="manage-access">6.2 Add, change, or remove access during the project</h3>
+    <ul>
+      <li>Add new members when another group needs access.</li>
+      <li>Change a member's role or access level when responsibilities change.</li>
+      <li>Remove members who no longer need the Project. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/ENU/Docs-Admin/files/project-administration/Manage_Project_Members.html" target="_blank" rel="noopener">Autodesk Help ↗</a></li>
+      <li>Keep Project Administrator access limited to the people who actually need to manage the Project.</li>
+    </ul>
+    <figure class="shot"><img src="assets/23-remove-project-member.png" alt="Project Members page with member list and removal controls"><figcaption>Project Admin can update membership as the team changes.</figcaption></figure>
+  </section>
+
+  <section id="reviewer">
+    <h2>7. Reviewer — install Viewer and open the model</h2>
+
+    <h3 id="reviewer-account">7.1 Use the same email address that was invited</h3>
+    <p>The reviewer should use an Autodesk account associated with the same email address that the Project Admin added to the Project. If the reviewer does not already have an Autodesk account, create one with that email address.</p>
+    <figure class="shot tiny"><img src="assets/12-autodesk-account-signin.png" alt="Autodesk sign in page with Create account link"><figcaption>Sign in or create an Autodesk account using the invited email address.</figcaption></figure>
+
+    <h3 id="install-viewer">7.2 Download and install the free InfoWorks ICM Viewer</h3>
+    <p>For a reviewer who does not need the full modeling application, use the free InfoWorks ICM Viewer.</p>
+    <ol class="steps">
+      <li>Open the <a href="https://www.autodesk.com/products/infoworks-icm/viewer" target="_blank" rel="noopener">InfoWorks ICM Viewer download page ↗</a>.</li>
+      <li>Download the Viewer installer. Autodesk's download page lists current available versions and notes that administrator rights are required for installation. <a class="official-ref" href="https://www.autodesk.com/products/infoworks-icm/viewer" target="_blank" rel="noopener">Official Viewer download &amp; install guidance ↗</a></li>
+      <li>Install the Viewer on the reviewer's computer.</li>
+      <li>At first launch, sign in with the Autodesk account that was invited to the Project.</li>
+    </ol>
+    <div class="help"><strong>Additional Autodesk references:</strong> <a href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/Does-Infoworks-ICM-have-a-viewer-version.html" target="_blank" rel="noopener">Viewer availability ↗</a> <a href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/Installing-Newer-Versions-of-InfoWorks-ICM-Viewer.html" target="_blank" rel="noopener">Installing newer Viewer versions ↗</a></div>
+    <div class="verify"><strong>VERIFY — Viewer versions and cloud access</strong> The working material includes version-specific notes about when the free Viewer became available and which versions can access cloud databases without an assigned ICM seat. Verify the current supported versions before publishing this section.</div>
+
+    <h3 id="viewer-signin">7.3 First sign-in</h3>
+    <ol class="steps">
+      <li>Start InfoWorks ICM Viewer.</li>
+      <li>When the Autodesk sign-in prompt appears, continue with browser sign-in. <a class="official-ref" href="https://www.autodesk.com/products/infoworks-icm/viewer" target="_blank" rel="noopener">Autodesk Viewer guidance ↗</a></li>
+      <li>Sign in with the invited Autodesk account.</li>
+      <li>When the browser confirms that sign-in is complete, return to the Viewer.</li>
+    </ol>
+    <div class="image-row">
+      <figure><img src="assets/17-viewer-signin.png" alt="Viewer prompt to sign in to Autodesk account"><figcaption>Viewer opens the Autodesk browser sign-in flow.</figcaption></figure>
+      <figure><img src="assets/18-viewer-signed-in.png" alt="Autodesk browser page confirming signed in"><figcaption>After sign-in, return to the product.</figcaption></figure>
+    </div>
+
+    <h3 id="viewer-open-model">7.4 Open the shared cloud database</h3>
+    <ol class="steps">
+      <li>In Viewer, select <strong>Open database</strong>. <a class="official-ref" href="https://help.autodesk.com/view/IWICMS/2027/ENU/" target="_blank" rel="noopener">InfoWorks ICM Help: Cloud Databases ↗</a></li>
+      <li>Select the cloud Hub.</li>
+      <li>Select the Project.</li>
+      <li>Select the database.</li>
+      <li>Select <strong>OK</strong>.</li>
+    </ol>
+    <figure class="shot"><img src="assets/19-viewer-open-database.png" alt="InfoWorks ICM Viewer open cloud database dialog"><figcaption>Choose the Hub, Project, and database that were shared with the reviewer.</figcaption></figure>
+
+    <h3 id="viewer-validate">7.5 Confirm the reviewer is ready</h3>
+    <p>At minimum, confirm that the reviewer can see the intended Project, open the intended database, and view the information needed for the project review.</p>
+    <div class="missing"><strong>MISSING — Standard Viewer validation checklist</strong> Define the exact two or three review actions that should be tested during onboarding, for example opening a network, inspecting an object, and displaying an existing result.</div>
+  </section>
+
+  <section id="closeout">
+    <h2>8. End of project</h2>
+    <p>At the end of the project, the Project Admin should review who still needs access.</p>
+    <ul class="checklist">
+      <li>Remove external reviewers who no longer need access. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/ENU/Docs-Admin/files/project-administration/Manage_Project_Members.html" target="_blank" rel="noopener">Autodesk Help: Manage Project Members ↗</a></li>
+      <li>Remove internal users who no longer need the Project.</li>
+      <li>Remove unnecessary Project Administrator rights.</li>
+      <li>Confirm who should retain long-term access.</li>
+      <li>Confirm the final database/model is stored in the intended Project.</li>
+    </ul>
+    <div class="verify"><strong>VERIFY — Project archival / closeout</strong> Decide whether the customer manual should include a formal Autodesk Project archival or long-term retention procedure beyond membership cleanup.</div>
+  </section>
+
+  <section id="simulation">
+    <h2>9. Optional — cloud simulation usage</h2>
+    <p>For a small team running a normal number of project simulations, cloud simulation capacity is generally a secondary consideration. If a workflow requires unusually large numbers of concurrent runs, optimization/automation, long-running simulations, or substantial 2D computation, review the expected capacity needs separately. Autodesk Help explains that cloud-simulation quota affects parallel processing behavior and that work can continue sequentially after the quota is exceeded. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/2027/ENU/ICM-Help/files/GUID-5576B0D6-277B-4DAB-8AC4-F45C16B69F67.htm" target="_blank" rel="noopener">InfoWorks ICM Help: Runs ↗</a></p>
+    <h3 id="check-usage">Check usage</h3>
+    <ol class="steps">
+      <li>Sign in to <a href="https://manage.autodesk.com" target="_blank" rel="noopener">Autodesk Account</a>.</li>
+      <li>Open <strong>Reporting</strong>.</li>
+      <li>Open <strong>Resource and API usage</strong>.</li>
+      <li>Review <strong>InfoWorks Cloud Simulation Hours</strong>.</li>
+    </ol>
+    <figure class="shot"><img src="assets/21-simulation-usage.png" alt="Autodesk Resource and API Usage page showing InfoWorks Cloud Simulation Hours"><figcaption>Example location for reviewing cloud simulation usage.</figcaption></figure>
+    <p class="official-note">Official references: <a href="https://help.autodesk.com/cloudhelp/2027/ENU/ICM-Help/files/GUID-5576B0D6-277B-4DAB-8AC4-F45C16B69F67.htm" target="_blank" rel="noopener">InfoWorks ICM Help — Runs ↗</a> · <a href="https://www.autodesk.com/products/infoworks-icm/buy" target="_blank" rel="noopener">InfoWorks ICM cloud capacity FAQ ↗</a></p>
+    <div class="verify"><strong>VERIFY — Current quota, capacity, and commercial rules</strong> Do not publish numeric quotas, pricing examples, or concurrency rules until the current Autodesk policy has been verified.</div>
+  </section>
+
+  <section id="troubleshooting">
+    <h2>10. Troubleshooting</h2>
+    <h3 id="trouble-admin">I cannot see the Administration link</h3>
+    <ul><li>Refresh the Hubs page.</li><li>Confirm the correct Team is selected.</li><li>Confirm that your Autodesk account has the required Hub administration rights. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/2026/ENU/WSPro-Help/files/GUID-A9A087F1-5F27-49C0-9776-C8AAC7094DC4.htm" target="_blank" rel="noopener">Autodesk Help ↗</a></li></ul>
+
+    <h3 id="trouble-project">I cannot see the Project</h3>
+    <ul><li>Confirm that the Project Admin added the same email address you are using to sign in.</li><li>Confirm the invitation was sent.</li><li>Confirm you are signed in with the correct Autodesk account.</li><li>Review the Project membership in Project Admin. <a class="official-ref" href="https://help.autodesk.com/cloudhelp/ENU/Docs-Admin/files/project-administration/Manage_Project_Members.html" target="_blank" rel="noopener">Autodesk Help ↗</a></li></ul>
+
+    <h3 id="trouble-viewer">Viewer signs in, but I cannot see the database</h3>
+    <ul><li>Confirm you are a member of the correct Project.</li><li>Confirm Info360 Model was enabled for your Project membership.</li><li>Confirm you are using the email address that was invited.</li><li>Ask the Project Admin to verify the Project membership and role.</li></ul>
+
+    <h3 id="trouble-edit">I need to edit or run simulations</h3>
+    <p>The free Viewer is for review-only workflows. Contact the Project Admin / IT Admin if you need the full InfoWorks ICM application and license.</p>
+  </section>
+
+  <section id="draft-gaps">
+    <h2>Draft completeness — items still to finish</h2>
+    <p>Before issuing this manual to customers, complete or verify these items:</p>
+    <ul>
+      <li><strong>MISSING:</strong> Full InfoWorks ICM desktop installation and license assignment/check procedure for a new modeler.</li>
+      <li><strong>MISSING:</strong> Existing local/workgroup/transportable model migration into a cloud Project.</li>
+      <li><strong>MISSING:</strong> Standard Viewer validation checklist.</li>
+      <li><strong>VERIFY:</strong> Standard Project creation fields / Project Type.</li>
+      <li><strong>VERIFY:</strong> Exact modeler role label and permission combination.</li>
+      <li><strong>VERIFY:</strong> Internal versus external invitation behavior.</li>
+      <li><strong>VERIFY:</strong> Current Viewer version / cloud-access requirements.</li>
+      <li><strong>VERIFY:</strong> Current cloud simulation quota/capacity rules if numeric information will be included.</li>
+      <li><strong>DECIDE:</strong> Whether a formal Project archive/retention procedure belongs in the core manual.</li>
+    </ul>
+  </section>
+</main>
+<footer><div>InfoWorks ICM Cloud new customer onboarding — working customer-facing draft.</div></footer>
+</div>
+<script>
+(function () {
+  const links = Array.from(document.querySelectorAll('#sidebar-toc a[href^="#"]'));
+  const pairs = links.map(a => [a, document.querySelector(a.getAttribute('href'))]).filter(p => p[1]);
+  function updateActive() {
+    const y = window.scrollY + 80;
+    let current = pairs[0];
+    for (const pair of pairs) {
+      if (pair[1].getBoundingClientRect().top + window.scrollY <= y) current = pair;
+    }
+    links.forEach(a => a.classList.remove('active'));
+    if (current) current[0].classList.add('active');
+  }
+  updateActive();
+  window.addEventListener('scroll', updateActive, {passive:true});
+  window.addEventListener('resize', updateActive);
+})();
+</script>
+</body>
+</html>
