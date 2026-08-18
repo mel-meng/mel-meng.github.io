@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InfoWorks ICM Viewer — Master Planning Review Workflow Guide</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="mobile-bar"><strong>ICM Viewer Workflow Guide</strong><button id="menuBtn">Contents</button></div>
+<aside class="sidebar">
+  <div class="brand">InfoWorks ICM Viewer<small>Master Planning Review Workflow Guide</small></div>
+  <div class="toc-label">Contents</div>
+  <nav>
+    <a href="#intro">1. Why Viewer</a>
+    <a class="sub" href="#workflow">Master planning workflow</a>
+    <a href="#getting-started">2. Getting Started</a>
+    <a class="sub" href="#install">Install & sign in</a>
+    <a class="sub" href="#open-database">Open shared database</a>
+    <a href="#gis">3. GIS Review</a>
+    <a class="sub" href="#gis-step1">Step 1 — Open review area</a>
+    <a class="sub" href="#gis-step2">Step 2 — See the pattern</a>
+    <a class="sub" href="#gis-step3">Step 3 — Investigate source</a>
+    <a class="sub" href="#gis-step4">Step 4 — Close the loop</a>
+    <a href="#engineering">4. Engineering Review</a>
+    <a class="sub" href="#eng-step1">Step 1 — See big picture</a>
+    <a class="sub" href="#eng-step2">Step 2 — Follow the system</a>
+    <a class="sub" href="#eng-step3">Step 3 — Follow through time</a>
+    <a class="sub" href="#eng-step4">Step 4 — Compare alternatives</a>
+    <a href="#stakeholders">5. Stakeholders & Clients</a>
+    <a class="sub" href="#client-step1">Step 1 — Read about it</a>
+    <a class="sub" href="#client-step2">Step 2 — Find it</a>
+    <a class="sub" href="#client-step3">Step 3 — Explore context</a>
+    <a class="sub" href="#client-step4">Step 4 — Understand recommendation</a>
+    <a href="#quick-reference">6. Quick Reference</a>
+  </nav>
+  <div class="side-actions"><button id="printBtn">Print / PDF</button></div>
+</aside>
+<main class="main">
+<div class="page">
+
+<section id="intro">
+  <div class="hero">
+    <div class="eyebrow">Companion to the demo</div>
+    <h1>Review the model together — without turning every reviewer into a modeler.</h1>
+    <p class="lead">A sewer master planning project brings GIS staff, modelers, engineers, project managers, clients, and stakeholders together. The model may be sophisticated, but review often still happens through static exports, spreadsheets, plots, PDFs, PowerPoint slides, and meeting notes.</p>
+    <p class="lead"><strong>ICM Viewer provides a read-only way for reviewers to explore the shared model from the perspective of their role.</strong></p>
+  </div>
+
+  <div class="three-col" style="margin-top:22px">
+    <div class="card quick-role"><div class="role">GIS Review</div><div class="role-line">See the profile, not just the numbers.</div><div class="out">Find patterns and locations where source data needs attention.</div></div>
+    <div class="card quick-role eng"><div class="role">Engineering Review</div><div class="role-line">Understand why it floods, not just where.</div><div class="out">Cast a wider net, diagnose the cause, and understand what works.</div></div>
+    <div class="card quick-role client"><div class="role">Stakeholders & Clients</div><div class="role-line">Read it in the report. Understand it with Viewer.</div><div class="out">Use the model as an interactive visual companion to reports and meetings.</div></div>
+  </div>
+
+  <div class="callout readonly"><strong>Viewer boundary.</strong> Viewer is for review and exploration. GIS corrections are made in the authoritative GIS; model changes, scenario creation, and simulation work are performed in the full ICM authoring environment.</div>
+  <div class="callout version"><strong>Use the right review version.</strong> ICM project data is versioned. For each review cycle, the project team should identify the version intended for review rather than treating every in-progress edit as a published deliverable.</div>
+</section>
+
+<section id="workflow">
+  <h2>1. Master planning workflow</h2>
+  <p class="section-intro">The Viewer does not replace the master planning workflow. It creates a shared review layer across it. The modeler continues to build and analyze the model; reviewers can inspect the appropriate shared version and reuse the artifacts already created during good modeling practice.</p>
+  <div class="workflow-overview" aria-label="Master planning swimlane workflow">
+    <div class="lanes">
+      <div class="lane-head"></div><div class="lane-head">Source data</div><div class="lane-head">Model development</div><div class="lane-head">Technical review</div><div class="lane-head">Planning communication</div>
+      <div class="lane-role">GIS</div>
+      <div class="lane-cell model">Maintain authoritative GIS<span class="mini">Assets, inverts, rims, diameters, source records</span></div>
+      <a class="lane-cell viewer" href="#gis">Review data in model context<span class="mini">Profile + queries + selection lists</span></a>
+      <div class="lane-cell">Investigate and correct source data<span class="mini">Outside Viewer</span></div>
+      <div class="lane-cell">Provide updated GIS to project team</div>
+
+      <div class="lane-role">Modeler</div>
+      <div class="lane-cell model">Import and assemble data</div>
+      <div class="lane-cell model">Build, QA/QC, version model<span class="mini">Flags, queries, selections, themes become reusable review artifacts</span></div>
+      <div class="lane-cell model">Run simulations and alternatives</div>
+      <div class="lane-cell model">Prepare report, views, and recommendations</div>
+
+      <div class="lane-role">Engineering</div>
+      <div class="lane-cell"></div><div class="lane-cell"></div>
+      <a class="lane-cell viewer" href="#engineering">Explore results and alternatives<span class="mini">System → profile/HGL → time → scenarios</span></a>
+      <div class="lane-cell">Provide technical findings and recommendations</div>
+
+      <div class="lane-role">Stakeholders</div>
+      <div class="lane-cell"></div><div class="lane-cell"></div><div class="lane-cell"></div>
+      <a class="lane-cell viewer" href="#stakeholders">Use Viewer as a visual companion<span class="mini">Report / meeting → location → context → recommendation</span></a>
+
+      <div class="viewer-band">ICM Viewer — shared, read-only review of the appropriate project version</div>
+    </div>
+  </div>
+</section>
+
+<section id="getting-started">
+  <h2>2. Getting Started</h2>
+  <p class="section-intro">This section covers only what a reviewer needs before using the role-based workflows: install the Viewer, sign in, and open the shared cloud database.</p>
+
+  <div id="install" class="detail-step">
+    <div class="step-kicker">Getting started</div><h3>Install and sign in</h3>
+    <ol>
+      <li>Open the official <a href="https://www.autodesk.com/products/infoworks-icm/viewer" target="_blank" rel="noopener">InfoWorks ICM Viewer download page ↗</a>.</li>
+      <li>Download and install the Viewer. If your project team uses a specific ICM release, confirm the Viewer version with the project team before installation.</li>
+      <li>Start InfoWorks ICM Viewer.</li>
+      <li>When prompted, continue with Autodesk browser sign-in and use the Autodesk account invited to the project.</li>
+      <li>Return to Viewer after the browser confirms sign-in.</li>
+    </ol>
+    <div class="screenshot-grid">
+      <figure class="figure"><img src="assets/images/image1.png" alt="Autodesk sign-in prompt in InfoWorks ICM Viewer"><figcaption>Viewer opens the Autodesk browser sign-in flow.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image2.png" alt="Autodesk sign-in complete message"><figcaption>After sign-in, return to the Viewer.</figcaption></figure>
+    </div>
+  </div>
+
+  <div id="open-database" class="detail-step">
+    <div class="step-kicker">Getting started</div><h3>Open the shared cloud database</h3>
+    <ol>
+      <li>In Viewer, select <strong>Open database</strong>.</li>
+      <li>Select the cloud Hub.</li>
+      <li>Select the Project.</li>
+      <li>Select the database and choose <strong>OK</strong>.</li>
+    </ol>
+    <p>The project administrator must grant access to the project before it appears for the reviewer.</p>
+    <div class="screenshot-grid one"><figure class="figure"><img src="assets/images/image3.png" alt="InfoWorks ICM open cloud database dialog"><figcaption>Choose the Hub, Project, and database shared with the reviewer.</figcaption></figure></div>
+    <div class="refs"><a class="ref" href="https://help.autodesk.com/cloudhelp/2025/ENU/ICM-Help/files/GUID-C1CC4F5C-5533-48D6-A0F0-0FEEF0135304.htm" target="_blank" rel="noopener">Autodesk Help — Open a Database ↗</a></div>
+  </div>
+</section>
+
+<section id="gis">
+  <div class="role-head gis">
+    <span class="badge">GIS Review Workflow</span>
+    <div class="tagline">See the profile, not just the numbers.</div>
+    <p class="purpose">GIS already gives you plan-view mapping and attributes. Viewer adds the vertical, connected-system context that makes patterns easier to see — and it lets the GIS reviewer reuse queries, flags, selection lists, themes, and saved views created naturally during model QA/QC.</p>
+    <div class="role-outcome">Outcome: <span>identify where authoritative GIS data needs investigation or correction.</span></div>
+  </div>
+
+  <div class="workflow gis" aria-label="GIS review workflow">
+    <div class="step-card"><div class="step-num">1</div><h3>Open the review area</h3><div class="what-label">What you do</div><p>Use a prepared query, selection list, flag, theme, or saved view from the modeler to locate the issue.</p><div class="outcome-label">Outcome</div><div class="outcome">You know where to look.</div></div>
+    <div class="step-card"><div class="step-num">2</div><h3>See the pattern</h3><div class="what-label">What you do</div><p>Open the GeoPlan and long section to review many connected pipes together in vertical context.</p><div class="outcome-label">Outcome</div><div class="outcome">You see relationships that are hard to spot from individual numbers.</div></div>
+    <div class="step-card"><div class="step-num">3</div><h3>Investigate the source</h3><div class="what-label">What you do</div><p>Inspect the suspicious records and compare them with the authoritative GIS, drawings, or other source information.</p><div class="outcome-label">Outcome</div><div class="outcome">You know what needs correction or further investigation.</div></div>
+    <div class="step-card"><div class="step-num">4</div><h3>Close the loop</h3><div class="what-label">What you do</div><p>Correct the authoritative GIS outside Viewer and return the update to the modeler/project team.</p><div class="outcome-label">Outcome</div><div class="outcome">Better source data flows back into the next model version.</div></div>
+  </div>
+
+  <div id="gis-step1" class="detail-step gis-detail">
+    <div class="step-kicker">Step 1</div><h3>Open the review area</h3>
+    <p><strong>What you do.</strong> Start from review aids already created by the modeler during QA/QC. This keeps the GIS reviewer focused on the places that need attention instead of recreating the modeler's analysis.</p>
+    <ul>
+      <li><strong>Stored query:</strong> drag the prepared query into the GeoPlan to identify objects that meet the review rule.</li>
+      <li><strong>Selection list:</strong> drag the saved selection list into the GeoPlan and zoom to the selected objects.</li>
+      <li><strong>Data flags / themes:</strong> use prepared flags and thematic displays to understand why a value is being highlighted.</li>
+    </ul>
+    <div class="screenshot-grid">
+      <figure class="figure"><img src="assets/images/image22.png" alt="InfoWorks ICM query and flag review example"><figcaption>Prepared queries and data flags can guide the reviewer directly to issues that need attention.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image23.png" alt="InfoWorks ICM saved selection list example"><figcaption>A saved selection list can preserve a problem area for review.</figcaption></figure>
+    </div>
+    <div class="outcome-box">Outcome — You know where to look.</div>
+    <div class="refs"><a class="ref" href="https://help.autodesk.com/cloudhelp/2027/ENU/ICM-Help/files/GUID-956725B0-838F-4C47-A7D3-E6E6A3261788.htm" target="_blank" rel="noopener">Autodesk Help — Selection Lists ↗</a><a class="ref" href="https://help.autodesk.com/cloudhelp/2027/ENU/ICM-Help/files/GUID-991BA6C1-C7BD-4061-A282-8BF6F0D8349B.htm" target="_blank" rel="noopener">Autodesk Help — SQL Queries ↗</a></div>
+  </div>
+
+  <div id="gis-step2" class="detail-step gis-detail">
+    <div class="step-kicker">Step 2</div><h3>See the pattern</h3>
+    <p><strong>What you do.</strong> Use the GeoPlan for spatial context, then use the long section to see how dozens of connected pipes fit together vertically.</p>
+    <ol>
+      <li>Open the network in the GeoPlan.</li>
+      <li>Optionally display the GIS basemap/layers and a prepared GIS review theme.</li>
+      <li>Select the <strong>Long Section Pick</strong> tool.</li>
+      <li>Click the starting node or link.</li>
+      <li>Continue the profile by clicking connected downstream links.</li>
+      <li>Review ground, inverts, pipe sizes, slopes, and any prepared data flags or profile table fields.</li>
+    </ol>
+    <div class="screenshot-grid">
+      <figure class="figure"><img src="assets/images/image15.png" alt="InfoWorks ICM GeoPlan with prepared review theme"><figcaption>Use a prepared theme to orient the review and show flow direction or other useful context.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image18.png" alt="InfoWorks ICM GeoPlan and long section profile"><figcaption>The long section turns many individual records into one connected vertical picture.</figcaption></figure>
+    </div>
+    <div class="outcome-box">Outcome — You see relationships and patterns that are hard to recognize from individual attribute values.</div>
+    <div class="refs"><a class="ref" href="https://help.autodesk.com/cloudhelp/2027/ENU/ICM-Help/files/GUID-79EFE732-FF89-4CE9-99F5-B0427A84CA7E.htm" target="_blank" rel="noopener">Autodesk Help — Long Section Window ↗</a><a class="ref" href="https://help.autodesk.com/cloudhelp/2025/ENU/ICM-Help/files/GUID-E95BB082-1CE8-4EE3-B5F4-33DFA16381E3.htm" target="_blank" rel="noopener">Autodesk Help — Layer Theme Editor ↗</a></div>
+  </div>
+
+  <div id="gis-step3" class="detail-step gis-detail">
+    <div class="step-kicker">Step 3</div><h3>Investigate the source</h3>
+    <p><strong>What you do.</strong> Once a pattern or suspicious value is visible, inspect the object values and determine what authoritative source should be used to resolve it.</p>
+    <ul>
+      <li>Check the selected object values in Viewer.</li>
+      <li>Compare the highlighted value with authoritative GIS, record drawings, survey, or other project records outside Viewer.</li>
+      <li>Distinguish between a source-data problem and a modeled/assumed value that simply needs documentation.</li>
+    </ul>
+    <div class="screenshot-grid">
+      <figure class="figure"><img src="assets/images/image14.png" alt="InfoWorks ICM selected GIS object value dialog"><figcaption>Inspect the values associated with the selected GIS/model object.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image19.png" alt="InfoWorks ICM long section profile table"><figcaption>Customize the long-section table when additional fields help explain the issue.</figcaption></figure>
+    </div>
+    <div class="outcome-box">Outcome — You know what needs correction or further investigation.</div>
+  </div>
+
+  <div id="gis-step4" class="detail-step gis-detail">
+    <div class="step-kicker">Step 4</div><h3>Close the loop</h3>
+    <p><strong>What you do.</strong> Viewer is read-only. The GIS team corrects the authoritative source in GIS, then provides the update back to the modeler/project team for the next review-ready model version.</p>
+    <div class="outcome-box">Outcome — Better source data flows back into the model without turning the Viewer into a second editing system.</div>
+  </div>
+
+  <div class="detail-step gis-detail">
+    <div class="step-kicker">Optional setup</div><h3>Bring GIS context into the GeoPlan</h3>
+    <p>If the project uses ArcGIS layers for context, configure the GeoPlan once and reuse the view during review.</p>
+    <ol><li>Open the network and confirm the coordinate system.</li><li>Add the basemap.</li><li>Add the GIS layers.</li><li>Adjust display settings for each layer.</li></ol>
+    <div class="screenshot-grid">
+      <figure class="figure"><img src="assets/images/image9.png" alt="InfoWorks ICM basemap setup"><figcaption>Add a basemap for orientation.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image11.png" alt="InfoWorks ICM add GIS layers"><figcaption>Add GIS layers used by the review team.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image12.png" alt="InfoWorks ICM GIS layer selection"><figcaption>Select the GIS data source/layer.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image13.png" alt="InfoWorks ICM GIS layer properties"><figcaption>Adjust layer display settings as needed.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="engineering">
+  <div class="role-head engineering">
+    <span class="badge">Engineering Review Workflow</span>
+    <div class="tagline">Understand why it floods, not just where.</div>
+    <p class="purpose">A flood or surcharge location is often the symptom, not the cause. Viewer lets an engineering reviewer cast a wider net across the network and through time instead of being limited to a handful of plots prepared in advance.</p>
+    <div class="role-outcome">Outcome: <span>understand the hydraulic mechanism behind the problem and determine which alternative actually improves system performance.</span></div>
+  </div>
+
+  <div class="workflow engineering" aria-label="Engineering review workflow">
+    <div class="step-card"><div class="step-num">1</div><h3>See the big picture</h3><div class="what-label">What you do</div><p>Open completed results and a prepared thematic map to see where the system is showing problems.</p><div class="outcome-label">Outcome</div><div class="outcome">You know where the problem is occurring.</div></div>
+    <div class="step-card"><div class="step-num">2</div><h3>Follow the problem through the system</h3><div class="what-label">What you do</div><p>Use the long section and HGL to look upstream and downstream from the visible symptom.</p><div class="outcome-label">Outcome</div><div class="outcome">You see how the problem is connected spatially.</div></div>
+    <div class="step-card"><div class="step-num">3</div><h3>Follow the problem through time</h3><div class="what-label">What you do</div><p>Replay results and review HGL, depth, flow, or velocity plots as conditions change.</p><div class="outcome-label">Outcome</div><div class="outcome">You see how the problem develops and propagates.</div></div>
+    <div class="step-card"><div class="step-num">4</div><h3>Compare alternatives</h3><div class="what-label">What you do</div><p>Open the base and alternative results together and compare the same locations and profiles.</p><div class="outcome-label">Outcome</div><div class="outcome">You understand what works, what does not, and whether the cause is being treated.</div></div>
+  </div>
+
+  <div id="eng-step1" class="detail-step eng-detail">
+    <div class="step-kicker">Step 1</div><h3>See the big picture</h3>
+    <p><strong>What you do.</strong> Start with the completed simulation results and a prepared result theme. Review maximum or summary conditions to identify where surcharge, flooding, depth, flow, or other key indicators are concentrated.</p>
+    <ol><li>Open the completed results.</li><li>Apply the prepared result theme to the GeoPlan.</li><li>Use maximum/summary values to locate the affected area.</li></ol>
+    <div class="screenshot-grid one"><figure class="figure"><img src="assets/images/image24.png" alt="InfoWorks ICM results map and long section HGL"><figcaption>Start from the system-level result, then move into the affected branch.</figcaption></figure></div>
+    <div class="outcome-box">Outcome — You know where the system is showing problems before you focus on any one location.</div>
+    <div class="refs"><a class="ref" href="https://help.autodesk.com/cloudhelp/2025/ENU/ICM-Help/files/GUID-4D6605FB-26B6-4CB4-AF14-4C681722DABF.htm" target="_blank" rel="noopener">Autodesk Help — Results ↗</a></div>
+  </div>
+
+  <div id="eng-step2" class="detail-step eng-detail">
+    <div class="step-kicker">Step 2</div><h3>Follow the problem through the system</h3>
+    <p><strong>What you do.</strong> Use the long section/HGL to move beyond the single flooded or surcharged location. Follow the branch upstream and downstream and look for restrictions, backwater, steep changes, storage effects, or other connected behavior.</p>
+    <ol><li>Select the affected branch with the Long Section Pick tool.</li><li>Display the profile and HGL/water level.</li><li>Extend the long section upstream or downstream as needed.</li><li>Ask: <em>Is this where the problem begins, or just where it becomes visible?</em></li></ol>
+    <div class="outcome-box">Outcome — You see how the visible problem fits into the connected hydraulic system.</div>
+    <div class="refs"><a class="ref" href="https://help.autodesk.com/cloudhelp/2027/ENU/ICM-Help/files/GUID-79EFE732-FF89-4CE9-99F5-B0427A84CA7E.htm" target="_blank" rel="noopener">Autodesk Help — Long Section Window ↗</a></div>
+  </div>
+
+  <div id="eng-step3" class="detail-step eng-detail">
+    <div class="step-kicker">Step 3</div><h3>Follow the problem through time</h3>
+    <p><strong>What you do.</strong> Sewer problems are not only spatial; timing matters. Replay the simulation while watching the profile/HGL and the relevant depth, flow, or velocity plots.</p>
+    <ul><li>Use the replay/time controls to move through the event.</li><li>Watch how HGL/water level changes through the long section.</li><li>Use plots to connect the timing of depth, flow, and velocity changes with what you see on the map/profile.</li><li>Ask: <em>What happens first, and how does the effect propagate?</em></li></ul>
+    <div class="outcome-box">Outcome — You see the sequence of events, which helps distinguish the true hydraulic cause from the location where the symptom appears.</div>
+    <div class="refs"><a class="ref" href="https://help.autodesk.com/cloudhelp/2025/ENU/ICM-Help/files/GUID-20E04D45-07AB-4819-B5D7-55BD2B81871E.htm" target="_blank" rel="noopener">Autodesk Help — Viewing Replays ↗</a></div>
+  </div>
+
+  <div id="eng-step4" class="detail-step eng-detail">
+    <div class="step-kicker">Step 4</div><h3>Compare alternatives</h3>
+    <p><strong>What you do.</strong> Compare the existing/base results with an alternative prepared by the modeling team. Keep the focus on the same problem area so the impact of the change is easy to see.</p>
+    <ol><li>Open the alternative results.</li><li>Open the base/existing results for comparison.</li><li>Display the same HGL/profile and plots for both results.</li><li>Ask: <em>What improved? What did not? Did the problem move somewhere else?</em></li></ol>
+    <div class="screenshot-grid">
+      <figure class="figure"><img src="assets/images/image25.png" alt="InfoWorks ICM open alternative results menu"><figcaption>Open the alternative results for comparison.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image27.png" alt="InfoWorks ICM HGL and result plot comparison"><figcaption>Compare the same profile/plots so the hydraulic effect of the alternative is visible.</figcaption></figure>
+    </div>
+    <div class="outcome-box">Outcome — You understand what works, what does not, and whether the proposed intervention treats the cause rather than only the symptom.</div>
+  </div>
+</section>
+
+<section id="stakeholders">
+  <div class="role-head stakeholder">
+    <span class="badge">Stakeholder & Client Workflow</span>
+    <div class="tagline">Read it in the report. Understand it with Viewer.</div>
+    <p class="purpose">The report, presentation, and meeting minutes remain the formal project communication. Viewer acts as an interactive visual companion: when something in those documents raises a question, the stakeholder can locate it in the model, see it in context, and better understand what the project team is describing.</p>
+    <div class="role-outcome">Outcome: <span>turn static project information into a clearer mental picture of the system and the recommendation.</span></div>
+  </div>
+
+  <div class="workflow stakeholder" aria-label="Stakeholder and client review workflow">
+    <div class="step-card"><div class="step-num">1</div><h3>Read about it</h3><div class="what-label">What you do</div><p>Identify the issue, location, figure, scenario, or recommendation you want to understand from the report or meeting notes.</p><div class="outcome-label">Outcome</div><div class="outcome">You know what you want to understand better.</div></div>
+    <div class="step-card"><div class="step-num">2</div><h3>Find it in Viewer</h3><div class="what-label">What you do</div><p>Open a prepared review view or navigate to the location, asset, or scenario referenced by the project team.</p><div class="outcome-label">Outcome</div><div class="outcome">You connect the report to the actual system.</div></div>
+    <div class="step-card"><div class="step-num">3</div><h3>Explore it in context</h3><div class="what-label">What you do</div><p>Zoom in, zoom out, pan to nearby areas, and open the relevant profile or result when more context helps.</p><div class="outcome-label">Outcome</div><div class="outcome">You understand how the location fits into the bigger system.</div></div>
+    <div class="step-card"><div class="step-num">4</div><h3>Understand the recommendation</h3><div class="what-label">What you do</div><p>Open the prepared proposed/alternative view and compare it with the existing condition.</p><div class="outcome-label">Outcome</div><div class="outcome">You understand what is being proposed and what changes.</div></div>
+  </div>
+
+  <div id="client-step1" class="detail-step client-detail">
+    <div class="step-kicker">Step 1</div><h3>Read about it</h3>
+    <p><strong>What you do.</strong> Start where stakeholders already work: the report, presentation, or meeting minutes. Note the location, issue, figure, scenario, or recommendation that you want to understand better.</p>
+    <div class="outcome-box">Outcome — You know what question you want Viewer to help answer.</div>
+  </div>
+
+  <div id="client-step2" class="detail-step client-detail">
+    <div class="step-kicker">Step 2</div><h3>Find it in Viewer</h3>
+    <p><strong>What you do.</strong> Use a prepared review view from the project team or navigate the GeoPlan to the referenced area. The goal is not to recreate the analysis — it is to connect a statement in the report or meeting to a real place in the modeled system.</p>
+    <div class="screenshot-grid">
+      <figure class="figure"><img src="assets/images/image28.png" alt="InfoWorks ICM prepared plan and profile review view"><figcaption>A prepared review view can open the relevant plan/profile arrangement in one step.</figcaption></figure>
+      <figure class="figure"><img src="assets/images/image29.png" alt="InfoWorks ICM prepared view configuration"><figcaption>Prepared views help the project team guide stakeholders to the right context.</figcaption></figure>
+    </div>
+    <div class="outcome-box">Outcome — You connect what you read to the actual place and system being discussed.</div>
+  </div>
+
+  <div id="client-step3" class="detail-step client-detail">
+    <div class="step-kicker">Step 3</div><h3>Explore it in context</h3>
+    <p><strong>What you do.</strong> Use Viewer like an interactive map for the master plan.</p>
+    <ul><li>Zoom out to understand the neighborhood, basin, or surrounding system.</li><li>Zoom in to look at the specific assets or location.</li><li>Pan upstream/downstream or to adjacent areas.</li><li>Open a prepared profile or result view when that makes the explanation clearer.</li></ul>
+    <div class="outcome-box">Outcome — You understand the bigger picture around what the report describes.</div>
+  </div>
+
+  <div id="client-step4" class="detail-step client-detail">
+    <div class="step-kicker">Step 4</div><h3>Understand the recommendation</h3>
+    <p><strong>What you do.</strong> When the report discusses a proposed improvement or alternative, open the prepared existing/proposed results or scenario view and look at the same area.</p>
+    <p>The stakeholder does not need to validate the hydraulic analysis. The goal is simply to answer: <strong>What is being proposed, where is it, and what changes?</strong></p>
+    <div class="outcome-box">Outcome — The report becomes easier to understand because the stakeholder can move from words and figures into an interactive view of the modeled system.</div>
+  </div>
+</section>
+
+<section id="quick-reference">
+  <h2>6. Quick Reference</h2>
+  <p class="section-intro">The three workflows use the same structure: <strong>Step → What you do → Outcome.</strong> The diagrams are the visual summary; the detailed sections tell you how to repeat the workflow.</p>
+  <table class="mini-table">
+    <thead><tr><th>Review workflow</th><th>Core question</th><th>Primary Viewer tools</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr><td><strong>GIS</strong><br>See the profile, not just the numbers.</td><td>Where does the source data need attention?</td><td>GeoPlan, long section, flags, queries, selection lists, themes</td><td>Identify where authoritative GIS needs investigation or correction.</td></tr>
+      <tr><td><strong>Engineering</strong><br>Understand why it floods, not just where.</td><td>What is actually causing the problem, and what works?</td><td>Thematic results, HGL/profile, replay, plots, scenario comparison</td><td>Treat the cause rather than only the visible symptom.</td></tr>
+      <tr><td><strong>Stakeholders & Clients</strong><br>Read it in the report. Understand it with Viewer.</td><td>What does this part of the report mean in the actual system?</td><td>Prepared views, GeoPlan navigation, profile/results, scenario view</td><td>Understand the planning story with less effort.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><strong>Adoption principle.</strong> Keep the workflow simple. Good modeling practice already creates many of the artifacts reviewers need — flags, queries, selection lists, themes, scenarios, and saved views. Reuse those artifacts rather than creating a second review process.</div>
+
+  <div class="refs"><a class="ref" href="https://www.autodesk.com/products/infoworks-icm/viewer" target="_blank" rel="noopener">Official Viewer download ↗</a><a class="ref" href="https://help.autodesk.com/view/IWICMS/2025/ENU/" target="_blank" rel="noopener">InfoWorks ICM Help ↗</a></div>
+</section>
+
+<div class="footer">This workflow guide accompanies the ICM Viewer demo. It intentionally focuses on repeatable review workflows rather than exhaustive product functionality. <button id="printBtn2">Print / Save as PDF</button></div>
+</div>
+</main>
+<div class="lightbox" id="lightbox" aria-hidden="true"><button aria-label="Close image">×</button><img alt="Expanded screenshot"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

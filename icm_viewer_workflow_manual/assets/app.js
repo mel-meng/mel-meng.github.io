@@ -1,0 +1,13 @@
+const sidebar=document.querySelector('.sidebar');
+document.getElementById('menuBtn')?.addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.querySelectorAll('.sidebar a').forEach(a=>a.addEventListener('click',()=>sidebar.classList.remove('open')));
+document.getElementById('printBtn')?.addEventListener('click',()=>window.print());
+document.getElementById('printBtn2')?.addEventListener('click',()=>window.print());
+const lb=document.getElementById('lightbox'), lbImg=lb?.querySelector('img');
+document.querySelectorAll('.figure img').forEach(img=>img.addEventListener('click',()=>{lbImg.src=img.src;lb.classList.add('open')}));
+lb?.addEventListener('click',e=>{if(e.target===lb||e.target.tagName==='BUTTON')lb.classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')lb?.classList.remove('open')});
+const sections=[...document.querySelectorAll('section[id]')];
+const links=[...document.querySelectorAll('.sidebar nav a[href^="#"]')];
+const onScroll=()=>{let current=sections[0]?.id;for(const s of sections){if(s.getBoundingClientRect().top<180)current=s.id;}links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${current}`));};
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
