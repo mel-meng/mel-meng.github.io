@@ -1,0 +1,5610 @@
+{
+  "schema_version": 2,
+  "product": "InfoWorks ICM",
+  "source_deck": "source/icm-tools-catalogue.pptx",
+  "toolbar": {
+    "image": "assets/toolbar.png",
+    "width": 1762,
+    "height": 125
+  },
+  "source_images": {
+    "image2.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image3.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image4.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image5.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image6.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image7.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image8.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image9.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image10.png": {
+      "width": 343,
+      "height": 118
+    },
+    "image11.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image12.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image13.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image14.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image15.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image16.png": {
+      "width": 370,
+      "height": 340
+    },
+    "image17.png": {
+      "width": 370,
+      "height": 340
+    }
+  },
+  "commands": [
+    {
+      "id": "open-create-database",
+      "name": "Open/create database",
+      "category": "File",
+      "path": "File > Open/create database",
+      "keywords": [
+        "open database",
+        "create database",
+        "new database",
+        "database",
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 37,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 25,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 24,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/open-create-database.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 6,
+          "y": 37,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9281
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-transportable-database",
+      "name": "New transportable database",
+      "category": "File",
+      "path": "File > New transportable database",
+      "keywords": [
+        "portable database",
+        "transportable db",
+        "new portable database",
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 59,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 47,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 46,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-transportable-database.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 40,
+          "y": 37,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9441
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "open-another-database",
+      "name": "Open another database",
+      "category": "File",
+      "path": "File > Open another database",
+      "keywords": [
+        "second database",
+        "additional database",
+        "open db",
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 81,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 69,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 68,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/open-another-database.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 73,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9654
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "open-transportable-database",
+      "name": "Open transportable database",
+      "category": "File",
+      "path": "File > Open transportable database",
+      "keywords": [
+        "open portable database",
+        "transportable db",
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 104,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 92,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 91,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/open-transportable-database.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 107,
+          "y": 37,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9347
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "print",
+      "name": "Print",
+      "category": "File",
+      "path": "File > Print",
+      "keywords": [
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/print.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 151,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9856
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "commit-changes-to-database",
+      "name": "Commit changes to database",
+      "category": "File",
+      "path": "File > Commit changes to database",
+      "keywords": [
+        "save database",
+        "save changes",
+        "commit",
+        "write changes",
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/commit-changes-to-database.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 195,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8618
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "update-from-database",
+      "name": "Update from database",
+      "category": "File",
+      "path": "File > Update from database",
+      "keywords": [
+        "refresh database",
+        "reload database",
+        "get latest",
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 170,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 158,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 157,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/update-from-database.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 228,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9353
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "revert-changes",
+      "name": "Revert changes",
+      "category": "File",
+      "path": "File > Revert changes",
+      "keywords": [
+        "discard changes",
+        "undo changes",
+        "rollback",
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 192,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 180,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 179,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/revert-changes.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 262,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9012
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "user-flags",
+      "name": "User Flags",
+      "category": "File",
+      "path": "File > User Flags",
+      "keywords": [
+        "flags",
+        "user flag",
+        "data flags",
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 215,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 203,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 202,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/user-flags.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 306,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9957
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "about",
+      "name": "About",
+      "category": "File",
+      "path": "File > About",
+      "keywords": [
+        "file"
+      ],
+      "source": {
+        "image": "assets/catalogue/image2.png",
+        "row_center_y": 237,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 225,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 224,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/about.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 340,
+          "y": 34,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9088
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "undo-transaction",
+      "name": "Undo transaction",
+      "category": "Edit",
+      "path": "Edit > Undo transaction",
+      "keywords": [
+        "undo",
+        "undo edit",
+        "edit"
+      ],
+      "source": {
+        "image": "assets/catalogue/image3.png",
+        "row_center_y": 59,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 47,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 46,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/undo-transaction.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 387,
+          "y": 37,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8064
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "redo-transaction",
+      "name": "Redo transaction",
+      "category": "Edit",
+      "path": "Edit > Redo transaction",
+      "keywords": [
+        "redo",
+        "redo edit",
+        "edit"
+      ],
+      "source": {
+        "image": "assets/catalogue/image3.png",
+        "row_center_y": 81,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 69,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 68,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/redo-transaction.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 421,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9246
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "list-undo-redo",
+      "name": "List Undo/Redo",
+      "category": "Edit",
+      "path": "Edit > List Undo/Redo",
+      "keywords": [
+        "undo history",
+        "redo history",
+        "history",
+        "edit"
+      ],
+      "source": {
+        "image": "assets/catalogue/image3.png",
+        "row_center_y": 104,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 92,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 91,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/list-undo-redo.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 451,
+          "y": 37,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9615
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "cut",
+      "name": "Cut",
+      "category": "Edit",
+      "path": "Edit > Cut",
+      "keywords": [
+        "edit"
+      ],
+      "source": {
+        "image": "assets/catalogue/image3.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/cut.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 510,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.891
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "copy",
+      "name": "Copy",
+      "category": "Edit",
+      "path": "Edit > Copy",
+      "keywords": [
+        "edit"
+      ],
+      "source": {
+        "image": "assets/catalogue/image3.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/copy.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 543,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8185
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "paste",
+      "name": "Paste",
+      "category": "Edit",
+      "path": "Edit > Paste",
+      "keywords": [
+        "edit"
+      ],
+      "source": {
+        "image": "assets/catalogue/image3.png",
+        "row_center_y": 170,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 158,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 157,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/paste.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 577,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8466
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "use-edit-flag",
+      "name": "Use edit flag",
+      "category": "Edit",
+      "path": "Edit > Use edit flag",
+      "keywords": [
+        "edit flag",
+        "flag edits",
+        "edit"
+      ],
+      "source": {
+        "image": "assets/catalogue/image3.png",
+        "row_center_y": 193,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 181,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 180,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/use-edit-flag.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 621,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9623
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-group-window",
+      "name": "New group window",
+      "category": "Docking windows",
+      "path": "Docking windows > New group window",
+      "keywords": [
+        "group window",
+        "groups",
+        "group",
+        "window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 81,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 69,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 68,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-group-window.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 751,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9808
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "thematic-key-window",
+      "name": "Thematic key window",
+      "category": "Docking windows",
+      "path": "Docking windows > Thematic key window",
+      "keywords": [
+        "legend",
+        "thematic legend",
+        "key window",
+        "thematic key",
+        "window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 103,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 91,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 90,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/thematic-key-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6794
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "data-flags-window",
+      "name": "Data flags window",
+      "category": "Docking windows",
+      "path": "Docking windows > Data flags window",
+      "keywords": [
+        "data flags",
+        "flags window",
+        "window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/data-flags-window.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 818,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9412
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "spatial-bookmarks-window",
+      "name": "Spatial bookmarks window",
+      "category": "Docking windows",
+      "path": "Docking windows > Spatial bookmarks window",
+      "keywords": [
+        "bookmarks",
+        "map bookmarks",
+        "spatial bookmarks",
+        "window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/spatial-bookmarks-window.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 852,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.967
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "object-properties-window",
+      "name": "Object properties window",
+      "category": "Docking windows",
+      "path": "Docking windows > Object properties window",
+      "keywords": [
+        "properties panel",
+        "object properties",
+        "window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 170,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 158,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 157,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/object-properties-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7735
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "job-control-window",
+      "name": "Job control window",
+      "category": "Docking windows",
+      "path": "Docking windows > Job control window",
+      "keywords": [
+        "jobs",
+        "job control",
+        "window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 192,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 180,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 179,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/job-control-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7635
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "job-progress-window",
+      "name": "Job progress window",
+      "category": "Docking windows",
+      "path": "Docking windows > Job progress window",
+      "keywords": [
+        "job progress",
+        "progress",
+        "window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 215,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 203,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 202,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/job-progress-window.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 953,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.913
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "output-window",
+      "name": "Output window",
+      "category": "Docking windows",
+      "path": "Docking windows > Output window",
+      "keywords": [
+        "output",
+        "console",
+        "window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 237,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 225,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 224,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/output-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6912
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "message-log",
+      "name": "Message log",
+      "category": "Docking windows",
+      "path": "Docking windows > Message log",
+      "keywords": [
+        "messages",
+        "log",
+        "message window",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 259,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 247,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 246,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/message-log.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1021,
+          "y": 34,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9002
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "autodesk-assistant",
+      "name": "Autodesk Assistant",
+      "category": "Docking windows",
+      "path": "Docking windows > Autodesk Assistant",
+      "keywords": [
+        "assistant",
+        "help assistant",
+        "ai assistant",
+        "docking windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image4.png",
+        "row_center_y": 282,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 270,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 269,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/autodesk-assistant.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1055,
+          "y": 34,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8272
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-geoplan",
+      "name": "New GeoPlan",
+      "category": "Windows",
+      "path": "Windows > New GeoPlan",
+      "keywords": [
+        "new map",
+        "map view",
+        "geoplan",
+        "windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image5.png",
+        "row_center_y": 103,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 91,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 90,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-geoplan.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1102,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9402
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-long-section",
+      "name": "New long section",
+      "category": "Windows",
+      "path": "Windows > New long section",
+      "keywords": [
+        "profile",
+        "profile view",
+        "pipe profile",
+        "long section",
+        "windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image5.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-long-section.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1136,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9768
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-3d-manhole",
+      "name": "New 3D manhole",
+      "category": "Windows",
+      "path": "Windows > New 3D manhole",
+      "keywords": [
+        "3d manhole",
+        "manhole 3d",
+        "windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image5.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-3d-manhole.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1170,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9012
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-3d-network-window",
+      "name": "New 3D network window",
+      "category": "Windows",
+      "path": "Windows > New 3D network window",
+      "keywords": [
+        "3d network",
+        "network 3d",
+        "window",
+        "windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image5.png",
+        "row_center_y": 170,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 158,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 157,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-3d-network-window.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1203,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9808
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "grid-windows",
+      "name": "Grid windows",
+      "category": "Windows",
+      "path": "Windows > Grid windows",
+      "keywords": [
+        "tables",
+        "grids",
+        "data grid",
+        "window",
+        "grid",
+        "table",
+        "windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image5.png",
+        "row_center_y": 193,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 181,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 180,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/grid-windows.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1233,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9233
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "create-scenario",
+      "name": "Create scenario",
+      "category": "Scenarios",
+      "path": "Scenarios > Create scenario",
+      "keywords": [
+        "new scenario",
+        "scenario",
+        "scenarios"
+      ],
+      "source": {
+        "image": "assets/catalogue/image6.png",
+        "row_center_y": 125,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 113,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 112,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/create-scenario.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1296,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9039
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "delete-scenario",
+      "name": "Delete scenario",
+      "category": "Scenarios",
+      "path": "Scenarios > Delete scenario",
+      "keywords": [
+        "remove scenario",
+        "scenarios"
+      ],
+      "source": {
+        "image": "assets/catalogue/image6.png",
+        "row_center_y": 147,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 135,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 134,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/delete-scenario.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1498,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8879
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "rename-scenario",
+      "name": "Rename scenario",
+      "category": "Scenarios",
+      "path": "Scenarios > Rename scenario",
+      "keywords": [
+        "scenarios"
+      ],
+      "source": {
+        "image": "assets/catalogue/image6.png",
+        "row_center_y": 170,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 158,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 157,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/rename-scenario.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1532,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9582
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "manage-scenarios",
+      "name": "Manage scenarios",
+      "category": "Scenarios",
+      "path": "Scenarios > Manage scenarios",
+      "keywords": [
+        "scenario manager",
+        "scenarios"
+      ],
+      "source": {
+        "image": "assets/catalogue/image6.png",
+        "row_center_y": 192,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 180,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 179,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/manage-scenarios.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1576,
+          "y": 34,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9438
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "excluded-objects-grid",
+      "name": "Excluded objects grid",
+      "category": "Scenarios",
+      "path": "Scenarios > Excluded objects grid",
+      "keywords": [
+        "excluded objects",
+        "excluded grid",
+        "grid",
+        "table",
+        "scenarios"
+      ],
+      "source": {
+        "image": "assets/catalogue/image6.png",
+        "row_center_y": 215,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 203,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 202,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/excluded-objects-grid.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1619,
+          "y": 35,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9353
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "restore-selected-excluded-objects",
+      "name": "Restore selected excluded objects",
+      "category": "Scenarios",
+      "path": "Scenarios > Restore selected excluded objects",
+      "keywords": [
+        "restore excluded",
+        "include selected objects",
+        "selection",
+        "scenarios"
+      ],
+      "source": {
+        "image": "assets/catalogue/image6.png",
+        "row_center_y": 237,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 225,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 224,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/restore-selected-excluded-objects.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1653,
+          "y": 34,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8988
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "restore-excluded-objects",
+      "name": "Restore excluded objects",
+      "category": "Scenarios",
+      "path": "Scenarios > Restore excluded objects",
+      "keywords": [
+        "restore all excluded",
+        "include objects",
+        "scenarios"
+      ],
+      "source": {
+        "image": "assets/catalogue/image6.png",
+        "row_center_y": 259,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 247,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 246,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/restore-excluded-objects.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1687,
+          "y": 34,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8887
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "validate",
+      "name": "Validate",
+      "category": "Validation",
+      "path": "Validation > Validate",
+      "keywords": [
+        "validation",
+        "check model",
+        "model check",
+        "errors"
+      ],
+      "source": {
+        "image": "assets/catalogue/image7.png",
+        "row_center_y": 149,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 137,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 136,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/validate.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 6,
+          "y": 68,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9734
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "sql-select",
+      "name": "SQL Select",
+      "category": "Selection",
+      "path": "Selection > SQL Select",
+      "keywords": [
+        "sql",
+        "query select",
+        "select query",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/sql-select.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 53,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8788
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "group-selections",
+      "name": "Group Selections",
+      "category": "Selection",
+      "path": "Selection > Group Selections",
+      "keywords": [
+        "selection group",
+        "saved selection",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/group-selections.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 87,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9067
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "select-all-objects",
+      "name": "Select all objects",
+      "category": "Selection",
+      "path": "Selection > Select all objects",
+      "keywords": [
+        "select everything",
+        "all objects",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 170,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 158,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 157,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/select-all-objects.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 121,
+          "y": 66,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.982
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "clear-selection",
+      "name": "Clear selection",
+      "category": "Selection",
+      "path": "Selection > Clear selection",
+      "keywords": [
+        "deselect",
+        "clear selected",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 193,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 181,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 180,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/clear-selection.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 155,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9692
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "invert-current-selection",
+      "name": "Invert current selection",
+      "category": "Selection",
+      "path": "Selection > Invert current selection",
+      "keywords": [
+        "invert selection",
+        "reverse selection",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 215,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 203,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 202,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/invert-current-selection.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 188,
+          "y": 66,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9565
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "select-all-objects-in-selected-polygons",
+      "name": "Select all objects in selected polygons",
+      "category": "Selection",
+      "path": "Selection > Select all objects in selected polygons",
+      "keywords": [
+        "select inside polygon",
+        "objects in polygon",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 237,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 225,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 224,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/select-all-objects-in-selected-polygons.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 222,
+          "y": 66,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9662
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "reverse-all-selected-links",
+      "name": "Reverse all selected links",
+      "category": "Selection",
+      "path": "Selection > Reverse all selected links",
+      "keywords": [
+        "reverse links",
+        "flip links",
+        "reverse direction",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 259,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 247,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 246,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/reverse-all-selected-links.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 266,
+          "y": 65,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9383
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "delete-selection",
+      "name": "Delete selection",
+      "category": "Selection",
+      "path": "Selection > Delete selection",
+      "keywords": [
+        "delete selected",
+        "remove selected",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 281,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 269,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 268,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/delete-selection.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 310,
+          "y": 65,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8855
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "excluded-object-select",
+      "name": "Excluded object select",
+      "category": "Selection",
+      "path": "Selection > Excluded object select",
+      "keywords": [
+        "select excluded",
+        "excluded selection",
+        "selection"
+      ],
+      "source": {
+        "image": "assets/catalogue/image8.png",
+        "row_center_y": 304,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 292,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 291,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/excluded-object-select.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 353,
+          "y": 65,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8348
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "select",
+      "name": "Select",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Select",
+      "keywords": [
+        "selection",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 37,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 25,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 24,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/select.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7046
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "polygon-select",
+      "name": "Polygon select",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Polygon select",
+      "keywords": [
+        "select polygon",
+        "polygon selection",
+        "lasso",
+        "selection",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 59,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 47,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 46,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/polygon-select.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 435,
+          "y": 68,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9504
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "trace-and-select-links-downstream",
+      "name": "Trace and select links downstream",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Trace and select links downstream",
+      "keywords": [
+        "downstream trace",
+        "select downstream",
+        "trace downstream",
+        "selection",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 81,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 69,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 68,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/trace-and-select-links-downstream.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 478,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8828
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "long-section-pick",
+      "name": "Long Section pick",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Long Section pick",
+      "keywords": [
+        "profile",
+        "profile view",
+        "pipe profile",
+        "long section",
+        "pick profile",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 103,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 91,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 90,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/long-section-pick.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 522,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9677
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "3d-manhole-pick",
+      "name": "3D manhole pick",
+      "category": "GeoPlan",
+      "path": "GeoPlan > 3D manhole pick",
+      "keywords": [
+        "pick manhole",
+        "3d manhole",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 125,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 113,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 112,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/3d-manhole-pick.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 556,
+          "y": 66,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9547
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "custom-label",
+      "name": "Custom label",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Custom label",
+      "keywords": [
+        "label",
+        "annotation",
+        "map label",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 146,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 134,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 133,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/custom-label.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 590,
+          "y": 65,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8578
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "measure-distance",
+      "name": "Measure distance",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Measure distance",
+      "keywords": [
+        "distance",
+        "measure",
+        "ruler",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 168,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 156,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 155,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/measure-distance.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 633,
+          "y": 64,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8011
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-object",
+      "name": "New object",
+      "category": "GeoPlan",
+      "path": "GeoPlan > New object",
+      "keywords": [
+        "create object",
+        "add object",
+        "draw object",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 190,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 178,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 177,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-object.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 677,
+          "y": 64,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8708
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "edit-object-geometry",
+      "name": "Edit object geometry",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Edit object geometry",
+      "keywords": [
+        "edit geometry",
+        "move vertices",
+        "reshape object",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 212,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 200,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 199,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/edit-object-geometry.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 880,
+          "y": 63,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8487
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "use-snap-mode",
+      "name": "Use snap mode",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Use snap mode",
+      "keywords": [
+        "snap",
+        "snapping",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 234,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 222,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 221,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/use-snap-mode.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7903
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "pan",
+      "name": "Pan",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Pan",
+      "keywords": [
+        "move map",
+        "drag map",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 256,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 244,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 243,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/pan.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.671
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "zoom-in",
+      "name": "Zoom in",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Zoom in",
+      "keywords": [
+        "magnify",
+        "zoom closer",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 278,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 266,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 265,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/zoom-in.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1001,
+          "y": 62,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8498
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "zoom-out",
+      "name": "Zoom out",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Zoom out",
+      "keywords": [
+        "zoom farther",
+        "zoom away",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 300,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 288,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 287,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/zoom-out.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7187
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "properties",
+      "name": "Properties",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Properties",
+      "keywords": [
+        "info",
+        "object info",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image9.png",
+        "row_center_y": 322,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 310,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 309,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/properties.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7627
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "find-in-geoplan",
+      "name": "Find in GeoPlan",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Find in GeoPlan",
+      "keywords": [
+        "find on map",
+        "locate object",
+        "search map",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image10.png",
+        "row_center_y": 58,
+        "image_width": 343,
+        "image_height": 118,
+        "icon_box": {
+          "x": 47,
+          "y": 46,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 45,
+          "w": 308,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/find-in-geoplan.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1122,
+          "y": 68,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.99
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "go-to-xy-coordinates",
+      "name": "Go to XY coordinates",
+      "category": "GeoPlan",
+      "path": "GeoPlan > Go to XY coordinates",
+      "keywords": [
+        "coordinates",
+        "go to coordinate",
+        "xy",
+        "location",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image10.png",
+        "row_center_y": 81,
+        "image_width": 343,
+        "image_height": 118,
+        "icon_box": {
+          "x": 47,
+          "y": 69,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 68,
+          "w": 308,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/go-to-xy-coordinates.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1156,
+          "y": 68,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9476
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "arcgis-maps-basemap",
+      "name": "ArcGIS Maps - Basemap",
+      "category": "GeoPlan",
+      "path": "GeoPlan > ArcGIS Maps - Basemap",
+      "keywords": [
+        "basemap",
+        "arcgis",
+        "map background",
+        "geoplan"
+      ],
+      "source": {
+        "image": "assets/catalogue/image10.png",
+        "row_center_y": 104,
+        "image_width": 343,
+        "image_height": 118,
+        "icon_box": {
+          "x": 47,
+          "y": 92,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 91,
+          "w": 308,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/arcgis-maps-basemap.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1200,
+          "y": 69,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8793
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "trace-and-select-links-upstream",
+      "name": "Trace and select links upstream",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > Trace and select links upstream",
+      "keywords": [
+        "upstream trace",
+        "select upstream",
+        "trace upstream",
+        "selection",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 37,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 25,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 24,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/trace-and-select-links-upstream.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1247,
+          "y": 68,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9301
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "pipe-direction",
+      "name": "Pipe direction",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > Pipe direction",
+      "keywords": [
+        "link direction",
+        "flow direction",
+        "pipe arrows",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 59,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 47,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 46,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/pipe-direction.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1281,
+          "y": 68,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9603
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "select-similar-links",
+      "name": "Select similar links",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > Select similar links",
+      "keywords": [
+        "similar links",
+        "same links",
+        "selection",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 82,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 70,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 69,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/select-similar-links.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1315,
+          "y": 68,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8679
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "select-river-reaches-mode",
+      "name": "Select river reaches mode",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > Select river reaches mode",
+      "keywords": [
+        "river reaches",
+        "select reaches",
+        "selection",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 104,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 92,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 91,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/select-river-reaches-mode.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1348,
+          "y": 68,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9418
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "section-pick",
+      "name": "Section pick",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > Section pick",
+      "keywords": [
+        "section",
+        "cross section",
+        "pick section",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/section-pick.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1382,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9682
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "conveyance-graph-pick",
+      "name": "Conveyance graph pick",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > Conveyance graph pick",
+      "keywords": [
+        "conveyance graph",
+        "pick graph",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/conveyance-graph-pick.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1416,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9571
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-section-view",
+      "name": "New section view",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > New section view",
+      "keywords": [
+        "section view",
+        "cross section view",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 171,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 159,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 158,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-section-view.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1449,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8807
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-interpolated-section",
+      "name": "New interpolated section",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > New interpolated section",
+      "keywords": [
+        "interpolated section",
+        "create section",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 193,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 181,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 180,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-interpolated-section.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1483,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9495
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "move-selection",
+      "name": "Move selection",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > Move selection",
+      "keywords": [
+        "move selected",
+        "translate selection",
+        "selection",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 215,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 203,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 202,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/move-selection.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1517,
+          "y": 66,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9106
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "make-measured-length",
+      "name": "Make measured length",
+      "category": "More GeoPlan tools",
+      "path": "More GeoPlan tools > Make measured length",
+      "keywords": [
+        "measured length",
+        "set measured length",
+        "more geoplan tools"
+      ],
+      "source": {
+        "image": "assets/catalogue/image11.png",
+        "row_center_y": 238,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 226,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 225,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/make-measured-length.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1551,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8312
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "rewind",
+      "name": "Rewind",
+      "category": "Replay",
+      "path": "Replay > Rewind",
+      "keywords": [
+        "replay rewind",
+        "go back",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 59,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 47,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 46,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/rewind.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 6,
+          "y": 99,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9881
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "backstep",
+      "name": "Backstep",
+      "category": "Replay",
+      "path": "Replay > Backstep",
+      "keywords": [
+        "previous timestep",
+        "step back",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 81,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 69,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 68,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/backstep.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 40,
+          "y": 99,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.941
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "pause",
+      "name": "Pause",
+      "category": "Replay",
+      "path": "Replay > Pause",
+      "keywords": [
+        "pause replay",
+        "stop animation",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 104,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 92,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 91,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/pause.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 107,
+          "y": 99,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9554
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "step-forward",
+      "name": "Step forward",
+      "category": "Replay",
+      "path": "Replay > Step forward",
+      "keywords": [
+        "next timestep",
+        "advance one step",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/step-forward.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 107,
+          "y": 99,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9441
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "play",
+      "name": "Play",
+      "category": "Replay",
+      "path": "Replay > Play",
+      "keywords": [
+        "play results",
+        "animate results",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/play.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 141,
+          "y": 98,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9915
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "record",
+      "name": "Record",
+      "category": "Replay",
+      "path": "Replay > Record",
+      "keywords": [
+        "record replay",
+        "capture animation",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 170,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 158,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 157,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/record.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 175,
+          "y": 98,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9653
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "loop",
+      "name": "Loop",
+      "category": "Replay",
+      "path": "Replay > Loop",
+      "keywords": [
+        "repeat replay",
+        "loop animation",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 193,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 181,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 180,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/loop.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 208,
+          "y": 98,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9562
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "fast-forward",
+      "name": "Fast-forward",
+      "category": "Replay",
+      "path": "Replay > Fast-forward",
+      "keywords": [
+        "fast forward",
+        "skip ahead",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 215,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 203,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 202,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/fast-forward.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 242,
+          "y": 97,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9611
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "jump-to-replay-options",
+      "name": "Jump to/replay options",
+      "category": "Replay",
+      "path": "Replay > Jump to/replay options",
+      "keywords": [
+        "replay options",
+        "jump to time",
+        "animation options",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 237,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 225,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 224,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/jump-to-replay-options.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 286,
+          "y": 97,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9854
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "show-maxima",
+      "name": "Show maxima",
+      "category": "Replay",
+      "path": "Replay > Show maxima",
+      "keywords": [
+        "maximum",
+        "max results",
+        "peak values",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 260,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 248,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 247,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/show-maxima.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 320,
+          "y": 97,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9345
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "download-full-results",
+      "name": "Download full results",
+      "category": "Replay",
+      "path": "Replay > Download full results",
+      "keywords": [
+        "download results",
+        "full results",
+        "results",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 282,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 270,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 269,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/download-full-results.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 353,
+          "y": 97,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9276
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "clear-results",
+      "name": "Clear results",
+      "category": "Replay",
+      "path": "Replay > Clear results",
+      "keywords": [
+        "remove results",
+        "clear simulation results",
+        "results",
+        "replay"
+      ],
+      "source": {
+        "image": "assets/catalogue/image12.png",
+        "row_center_y": 304,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 292,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 291,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/clear-results.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 387,
+          "y": 96,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9544
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "link-geoexplorer-zone",
+      "name": "Link GeoExplorer zone",
+      "category": "Geo Explorer",
+      "path": "Geo Explorer > Link GeoExplorer zone",
+      "keywords": [
+        "geoexplorer link",
+        "link zone",
+        "geo explorer"
+      ],
+      "source": {
+        "image": "assets/catalogue/image13.png",
+        "row_center_y": 103,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 91,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 90,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/link-geoexplorer-zone.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.5843
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "open-associated-item",
+      "name": "Open associated item",
+      "category": "Geo Explorer",
+      "path": "Geo Explorer > Open associated item",
+      "keywords": [
+        "open linked item",
+        "associated item",
+        "geo explorer"
+      ],
+      "source": {
+        "image": "assets/catalogue/image13.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/open-associated-item.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.708
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-geoexplorer-zones-window",
+      "name": "New GeoExplorer zones window",
+      "category": "Geo Explorer",
+      "path": "Geo Explorer > New GeoExplorer zones window",
+      "keywords": [
+        "geoexplorer zones",
+        "zones window",
+        "window",
+        "geo explorer"
+      ],
+      "source": {
+        "image": "assets/catalogue/image13.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-geoexplorer-zones-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7601
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "graph",
+      "name": "Graph",
+      "category": "Results",
+      "path": "Results > Graph",
+      "keywords": [
+        "chart",
+        "plot",
+        "results graph",
+        "time series",
+        "results"
+      ],
+      "source": {
+        "image": "assets/catalogue/image14.png",
+        "row_center_y": 194,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 182,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 181,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/graph.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 485,
+          "y": 99,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9335
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "grid",
+      "name": "Grid",
+      "category": "Results",
+      "path": "Results > Grid",
+      "keywords": [
+        "table",
+        "results table",
+        "spreadsheet",
+        "grid results",
+        "results"
+      ],
+      "source": {
+        "image": "assets/catalogue/image14.png",
+        "row_center_y": 216,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 204,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 203,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/grid.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 518,
+          "y": 98,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8829
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "graph-selected-objects",
+      "name": "Graph selected objects",
+      "category": "Results",
+      "path": "Results > Graph selected objects",
+      "keywords": [
+        "chart selected",
+        "plot selected",
+        "selected results graph",
+        "selection",
+        "results"
+      ],
+      "source": {
+        "image": "assets/catalogue/image14.png",
+        "row_center_y": 238,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 226,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 225,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/graph-selected-objects.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 562,
+          "y": 98,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8844
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "grid-selected-objects",
+      "name": "Grid selected objects",
+      "category": "Results",
+      "path": "Results > Grid selected objects",
+      "keywords": [
+        "table selected",
+        "selected results table",
+        "grid",
+        "table",
+        "selection",
+        "results"
+      ],
+      "source": {
+        "image": "assets/catalogue/image14.png",
+        "row_center_y": 261,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 249,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 248,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/grid-selected-objects.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 596,
+          "y": 98,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8596
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "rotate",
+      "name": "Rotate",
+      "category": "3D navigation",
+      "path": "3D navigation > Rotate",
+      "keywords": [
+        "rotate 3d",
+        "orbit",
+        "3d navigation"
+      ],
+      "source": {
+        "image": "assets/catalogue/image15.png",
+        "row_center_y": 171,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 159,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 158,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/rotate.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.589
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "zoom-in-or-out",
+      "name": "Zoom in or out",
+      "category": "3D navigation",
+      "path": "3D navigation > Zoom in or out",
+      "keywords": [
+        "3d zoom",
+        "zoom",
+        "3d navigation"
+      ],
+      "source": {
+        "image": "assets/catalogue/image15.png",
+        "row_center_y": 193,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 181,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 180,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/zoom-in-or-out.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7446
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "recenter-on-target",
+      "name": "Recenter on target",
+      "category": "3D navigation",
+      "path": "3D navigation > Recenter on target",
+      "keywords": [
+        "center target",
+        "recenter",
+        "3d navigation"
+      ],
+      "source": {
+        "image": "assets/catalogue/image15.png",
+        "row_center_y": 216,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 204,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 203,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/recenter-on-target.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.5169
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "zoom-to-target",
+      "name": "Zoom to target",
+      "category": "3D navigation",
+      "path": "3D navigation > Zoom to target",
+      "keywords": [
+        "target zoom",
+        "focus target",
+        "3d navigation"
+      ],
+      "source": {
+        "image": "assets/catalogue/image15.png",
+        "row_center_y": 238,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 226,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 225,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/zoom-to-target.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6554
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "set-observer",
+      "name": "Set observer",
+      "category": "3D navigation",
+      "path": "3D navigation > Set observer",
+      "keywords": [
+        "camera",
+        "observer",
+        "viewpoint",
+        "3d navigation"
+      ],
+      "source": {
+        "image": "assets/catalogue/image15.png",
+        "row_center_y": 261,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 249,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 248,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/set-observer.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.5755
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "pan-2",
+      "name": "Pan",
+      "category": "3D navigation",
+      "path": "3D navigation > Pan",
+      "keywords": [
+        "move map",
+        "drag map",
+        "3d navigation"
+      ],
+      "source": {
+        "image": "assets/catalogue/image15.png",
+        "row_center_y": 283,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 271,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 270,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/pan-2.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 967,
+          "y": 67,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9371
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "full-extent",
+      "name": "Full extent",
+      "category": "3D navigation",
+      "path": "3D navigation > Full extent",
+      "keywords": [
+        "fit all",
+        "zoom extents",
+        "show whole model",
+        "3d navigation"
+      ],
+      "source": {
+        "image": "assets/catalogue/image15.png",
+        "row_center_y": 305,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 293,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 292,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/full-extent.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.773
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-nodes-window",
+      "name": "New nodes window",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > New nodes window",
+      "keywords": [
+        "nodes table",
+        "node grid",
+        "node window",
+        "nodes",
+        "window",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 37,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 25,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 24,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-nodes-window.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1233,
+          "y": 37,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.9718
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-links-window",
+      "name": "New links window",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > New links window",
+      "keywords": [
+        "links table",
+        "link grid",
+        "pipe table",
+        "links",
+        "window",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 59,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 47,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 46,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-links-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.723
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-subcatchments-window",
+      "name": "New subcatchments window",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > New subcatchments window",
+      "keywords": [
+        "subcatchments table",
+        "subcatchment grid",
+        "subcatchments",
+        "window",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 82,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 70,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 69,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-subcatchments-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7016
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-polygons-window",
+      "name": "New polygons window",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > New polygons window",
+      "keywords": [
+        "polygons table",
+        "polygon grid",
+        "polygons",
+        "window",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 104,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 92,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 91,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-polygons-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7653
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-lines-window",
+      "name": "New lines window",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > New lines window",
+      "keywords": [
+        "lines table",
+        "line grid",
+        "lines",
+        "window",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 126,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 114,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 113,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-lines-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7975
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-points-window",
+      "name": "New points window",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > New points window",
+      "keywords": [
+        "points table",
+        "point grid",
+        "points",
+        "window",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 148,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 136,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 135,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-points-window.png"
+      },
+      "toolbar": {
+        "rect": {
+          "x": 1233,
+          "y": 36,
+          "w": 30,
+          "h": 25
+        },
+        "mapping_method": "legacy-template-candidate",
+        "candidate_score": 0.8435
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-results-analysis-window",
+      "name": "New results analysis window",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > New results analysis window",
+      "keywords": [
+        "results analysis",
+        "analysis window",
+        "window",
+        "results",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 171,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 159,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 158,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-results-analysis-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7721
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "node-results-grid",
+      "name": "Node results grid",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > Node results grid",
+      "keywords": [
+        "node results",
+        "node results table",
+        "grid",
+        "table",
+        "results",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 193,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 181,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 180,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/node-results-grid.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6782
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "link-results-grid",
+      "name": "Link results grid",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > Link results grid",
+      "keywords": [
+        "link results",
+        "pipe results",
+        "link results table",
+        "grid",
+        "table",
+        "results",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 215,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 203,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 202,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/link-results-grid.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6953
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "subcatchment-results-grid",
+      "name": "Subcatchment results grid",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > Subcatchment results grid",
+      "keywords": [
+        "subcatchment results",
+        "subcatchment results table",
+        "grid",
+        "table",
+        "results",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 238,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 226,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 225,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/subcatchment-results-grid.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6911
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "point-results-grid",
+      "name": "Point results grid",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > Point results grid",
+      "keywords": [
+        "point results",
+        "point results table",
+        "grid",
+        "table",
+        "results",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 260,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 248,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 247,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/point-results-grid.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6696
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "line-results-grid",
+      "name": "Line results grid",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > Line results grid",
+      "keywords": [
+        "line results",
+        "line results table",
+        "grid",
+        "table",
+        "results",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 282,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 270,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 269,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/line-results-grid.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6549
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "polygon-results-grid",
+      "name": "Polygon results grid",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > Polygon results grid",
+      "keywords": [
+        "polygon results",
+        "polygon results table",
+        "grid",
+        "table",
+        "results",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 305,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 293,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 292,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/polygon-results-grid.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.694
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "surface-pollutant-editor",
+      "name": "Surface pollutant editor",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > Surface pollutant editor",
+      "keywords": [
+        "pollutant editor",
+        "surface pollutant",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image16.png",
+        "row_center_y": 327,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 315,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 314,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/surface-pollutant-editor.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6546
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "rtc-editor",
+      "name": "RTC editor",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > RTC editor",
+      "keywords": [
+        "rtc",
+        "real time control",
+        "control editor",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image17.png",
+        "row_center_y": 171,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 159,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 158,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/rtc-editor.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.6793
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "new-asset-window",
+      "name": "New asset window",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > New asset window",
+      "keywords": [
+        "asset window",
+        "assets",
+        "asset",
+        "window",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image17.png",
+        "row_center_y": 194,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 182,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 181,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/new-asset-window.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.7931
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    },
+    {
+      "id": "autosum",
+      "name": "Autosum",
+      "category": "Modeling grid windows",
+      "path": "Modeling grid windows > Autosum",
+      "keywords": [
+        "sum",
+        "automatic sum",
+        "total",
+        "modeling grid windows"
+      ],
+      "source": {
+        "image": "assets/catalogue/image17.png",
+        "row_center_y": 216,
+        "image_width": 370,
+        "image_height": 340,
+        "icon_box": {
+          "x": 47,
+          "y": 204,
+          "w": 30,
+          "h": 25
+        },
+        "extraction_method": "vision-assisted seed",
+        "row_box": {
+          "x": 35,
+          "y": 203,
+          "w": 325,
+          "h": 26
+        },
+        "extraction_confidence": null,
+        "icon_file": "assets/icons/autosum.png"
+      },
+      "toolbar": {
+        "rect": null,
+        "mapping_method": "unmapped",
+        "candidate_score": 0.5974
+      },
+      "review": {
+        "status": "needs_review",
+        "notes": "",
+        "last_edited_by": "seed"
+      }
+    }
+  ],
+  "extraction": {
+    "method": "vision-assisted-seed",
+    "note": "Seed records were derived from the supplied catalogue screenshots and must be reviewed; toolbar image matches are candidates, not authoritative."
+  }
+}

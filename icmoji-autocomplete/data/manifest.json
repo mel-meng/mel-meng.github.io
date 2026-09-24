@@ -1,0 +1,8 @@
+{
+  "schema_version": 2,
+  "source": "source/icm-tools-catalogue.pptx",
+  "command_count": 119,
+  "note": "Seed catalogue extracted from the supplied screenshots. Every command starts as needs_review. Existing toolbar rectangles are candidates and should be verified in Review mode.",
+  "primary_extraction": "AI vision proposes command names and source bounding boxes; Python validates and crops exact rectangles.",
+  "toolbar_mapping": "Manual review is authoritative. Optional image matching can propose candidates only."
+}

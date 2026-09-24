@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ICMoji AutoComplete</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-lockup">
+      <img class="brand-logo" src="./assets/logo.png" alt="">
+      <div class="brand-text">
+        <h1><span class="brand-icmoji">ICMoji</span> AutoComplete</h1>
+        <p class="brand-tagline">Type what you mean, get the ICM button.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="search-row">
+      <input id="search" type="search" placeholder="Try: profile, save database, downstream, results table..." autofocus>
+      <select id="reviewFilter" class="hidden" aria-label="Review status filter">
+        <option value="all">All review states</option>
+        <option value="needs_review">Needs review</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="rejected">Rejected</option>
+      </select>
+      <button id="clearSearch" class="secondary">Clear</button>
+    </section>
+
+    <section class="card toolbar-card">
+      <div class="card-head">
+        <div>
+          <strong>Main toolbar</strong>
+        </div>
+        <span id="mappingBadge" class="badge hidden">Drawing toolbar box</span>
+      </div>
+      <div class="toolbar-scroller">
+        <div class="toolbar-stage">
+          <img id="toolbarImage" alt="InfoWorks ICM toolbar">
+          <div id="toolbarHighlight" class="toolbar-highlight"></div>
+          <div id="drawRect" class="draw-rect hidden"></div>
+          <div id="toolbarCapture" class="capture-layer"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <section class="card results-card">
+        <div class="card-head">
+          <div class="head-stack">
+            <strong>Commands</strong>
+          </div>
+          <span id="resultCount" class="muted"></span>
+        </div>
+        <div id="results" class="results"></div>
+      </section>
+
+      <aside id="reviewPanel" class="card review-panel hidden">
+        <div class="card-head">
+          <strong>Review extraction</strong>
+          <span id="reviewStatusBadge" class="badge">needs review</span>
+        </div>
+
+        <div class="review-toolbar">
+          <button id="addCommand" class="secondary">+ Add command</button>
+          <button id="duplicateCommand" class="secondary" disabled>Duplicate</button>
+          <button id="deleteCommand" class="danger" disabled>Delete</button>
+        </div>
+
+        <div id="noSelection" class="empty hidden"></div>
+        <div id="editor" class="hidden">
+          <div class="field-grid">
+            <label>Official command name<input id="editName"></label>
+            <label>Category<input id="editCategory"></label>
+          </div>
+          <label>Menu / group path<input id="editPath"></label>
+          <label>Search keywords<textarea id="editKeywords" rows="4" placeholder="one per line"></textarea></label>
+          <div class="field-grid">
+            <label>Review status
+              <select id="editStatus">
+                <option value="needs_review">Needs review</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </label>
+            <label>Source image<select id="editSourceImage"></select></label>
+          </div>
+          <label>Reviewer notes<textarea id="editNotes" rows="3"></textarea></label>
+
+          <div class="section-heading">Toolbar location</div>
+          <div class="button-row">
+            <button id="mapToolbar">Map toolbar</button>
+            <button id="clearMapping" class="secondary">Clear mapping</button>
+          </div>
+          <div id="matchInfo" class="small muted"></div>
+
+          <div class="section-heading">Source catalogue evidence</div>
+          <div class="button-row">
+            <button id="fixRowBox" class="secondary">Fix row box</button>
+            <button id="fixIconBox" class="secondary">Fix icon box</button>
+          </div>
+          <div id="sourceHint" class="small muted hidden"></div>
+          <div id="sourceStage" class="source-stage">
+            <img id="sourceImage" alt="Catalogue source screenshot">
+            <div id="sourceRow" class="source-box row-box"></div>
+            <div id="sourceIcon" class="source-box icon-box"></div>
+            <div id="sourceDrawRect" class="draw-rect source-draw hidden"></div>
+            <div id="sourceCapture" class="capture-layer"></div>
+          </div>
+          <div id="sourceBoxInfo" class="box-info"></div>
+          <div id="provenanceInfo" class="small muted provenance"></div>
+        </div>
+
+        <div class="static-save-note hidden"></div>
+        <div class="review-footer">
+          <button id="exportJson">Download commands.json</button>
+          <label class="import-label secondary">Import JSON<input id="importJson" type="file" accept="application/json,.json"></label>
+          <button id="resetData" class="danger">Reset local edits</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
