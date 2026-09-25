@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Houston-Style ICM Data Flag Cheat Sheet</title>
+<style>
+  @page { size: Letter landscape; margin: 0.34in; }
+  :root{
+    --ink:#14212b;
+    --muted:#5f6b75;
+    --line:#d8dee4;
+    --soft:#f5f7f9;
+    --blue:#173f63;
+
+    /* Houston user-defined flag colors */
+    --ASM:#ffff00;
+    --INF:#ffc184;
+    --LP:#009300;
+    --GLNK:#a9b8fe;
+    --PD:#8b8b00;
+    --SRV:#00ffff;
+    --FFE:#ff8080;
+    --LMAX:#8080ff;
+    --FCID:#f5fca3;
+    --PLNM:#ff80c0;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:#eef1f3;
+    color:var(--ink);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height:1.25;
+  }
+
+  .page{
+    width:11in;
+    min-height:8.5in;
+    margin:18px auto;
+    padding:.34in;
+    background:#fff;
+    box-shadow:0 10px 34px rgba(20,33,43,.12);
+  }
+
+  header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:22px;
+    border-bottom:3px solid var(--blue);
+    padding-bottom:10px;
+    margin-bottom:10px;
+  }
+
+  h1{
+    margin:0;
+    font-size:25px;
+    line-height:1.02;
+    letter-spacing:-.35px;
+    color:#102e49;
+  }
+
+  .subtitle{
+    margin:4px 0 0;
+    color:var(--muted);
+    font-size:11px;
+  }
+
+  .rule{
+    font-size:11px;
+    color:#33434f;
+    text-align:right;
+    max-width:330px;
+  }
+
+  .rule strong{ color:#102e49; }
+
+  .legend{
+    display:grid;
+    grid-template-columns: 1fr 1.55fr;
+    gap:9px;
+    margin-bottom:10px;
+  }
+
+  .legend-box{
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:9px 11px;
+  }
+
+  .legend-title{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:baseline;
+    margin-bottom:6px;
+  }
+
+  .legend-title h2{
+    margin:0;
+    font-size:13px;
+    color:#102e49;
+  }
+
+  .legend-title span{
+    font-size:9.5px;
+    color:var(--muted);
+  }
+
+  .chips{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+  }
+
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:3px 7px 3px 4px;
+    border:1px solid rgba(0,0,0,.2);
+    border-radius:5px;
+    font-size:9.5px;
+    font-weight:700;
+    white-space:nowrap;
+    background:white;
+  }
+
+  .swatch{
+    width:15px;
+    height:15px;
+    border:1px solid rgba(0,0,0,.18);
+    border-radius:3px;
+  }
+
+  .refs{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:9px;
+  }
+
+  .workflows{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
+
+  .card{
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:9px 11px 8px;
+    break-inside:avoid;
+  }
+
+  .card-head{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:baseline;
+    border-bottom:1px solid #e6eaee;
+    padding-bottom:5px;
+    margin-bottom:6px;
+  }
+
+  .card h3{
+    margin:0;
+    font-size:13.5px;
+    color:#102e49;
+  }
+
+  .type{
+    color:var(--muted);
+    font-size:9px;
+    white-space:nowrap;
+  }
+
+  .flow{
+    display:flex;
+    align-items:stretch;
+    justify-content:center;
+    gap:3px;
+    min-height:66px;
+  }
+
+  .step{
+    min-width:0;
+    flex:1 1 0;
+    border:1px solid #d9dfe5;
+    background:#fafbfc;
+    border-radius:6px;
+    padding:6px 6px;
+    text-align:center;
+    font-size:9px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+
+  .step strong{
+    display:block;
+    font-size:9.5px;
+  }
+
+  .arrow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 15px;
+    color:#84909a;
+    font-size:14px;
+    font-weight:700;
+  }
+
+  .branch{
+    flex:2.1 1 0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4px;
+  }
+
+  .mini-tag{
+    display:inline-block;
+    margin:3px auto 0;
+    border:1px solid rgba(0,0,0,.18);
+    border-radius:4px;
+    padding:1px 4px;
+    font-weight:800;
+    font-size:8.5px;
+    color:#101820;
+  }
+  .dark{ color:white; }
+
+  .example{
+    margin-top:6px;
+    padding:6px 7px;
+    background:var(--soft);
+    border-radius:6px;
+    font-size:9.3px;
+    color:#33434f;
+  }
+
+  .example strong{ color:#102e49; }
+
+  .takeaway{
+    margin-top:9px;
+    padding:7px 10px;
+    border-left:4px solid var(--blue);
+    background:#f3f6f8;
+    font-size:10px;
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+  }
+
+  .takeaway b{ color:#102e49; }
+
+  .foot{
+    margin-top:6px;
+    color:#737e87;
+    font-size:7.8px;
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .page{
+      width:auto;
+      min-height:auto;
+      margin:0;
+      padding:0;
+      box-shadow:none;
+    }
+  }
+
+  @media(max-width:900px){
+    .page{ width:auto; min-height:0; margin:0; padding:16px; }
+    .legend,.workflows{ grid-template-columns:1fr; }
+    .flow{ flex-wrap:wrap; }
+  }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<header>
+  <div>
+    <h1>Houston-Style ICM Data Flag Cheat Sheet</h1>
+    <p class="subtitle">Use flags to show where model data came from — and where it is in the model-building workflow.</p>
+  </div>
+  <div class="rule">
+    <strong>Source tags</strong> answer “where did this come from?”<br>
+    <strong>Workflow tags</strong> answer “what did we do, and what may happen next?”
+  </div>
+</header>
+
+<section class="legend">
+  <div class="legend-box">
+    <div class="legend-title">
+      <h2>Workflow tags</h2>
+      <span>status / modeling action</span>
+    </div>
+    <div class="chips">
+      <span class="chip"><span class="swatch" style="background:var(--ASM)"></span>ASM · Assumed</span>
+      <span class="chip"><span class="swatch" style="background:var(--INF)"></span>INF · Inferred</span>
+      <span class="chip"><span class="swatch" style="background:var(--LP)"></span>LP · Low Point</span>
+    </div>
+  </div>
+
+  <div class="legend-box">
+    <div class="legend-title">
+      <h2>Data-source / processing-source tags</h2>
+      <span>origin or method used</span>
+    </div>
+    <div class="chips">
+      <span class="chip"><span class="swatch" style="background:var(--GLNK)"></span>GLNK · GeoLink</span>
+      <span class="chip"><span class="swatch" style="background:var(--PD)"></span>PD · Plan Drawing</span>
+      <span class="chip"><span class="swatch" style="background:var(--SRV)"></span>SRV · Survey</span>
+      <span class="chip"><span class="swatch" style="background:var(--FFE)"></span>FFE · Finished Floor</span>
+      <span class="chip"><span class="swatch" style="background:var(--LMAX)"></span>LMAX · LiDAR Max</span>
+    </div>
+    <div class="refs">
+      Reference fields:
+      <span class="mini-tag" style="background:var(--FCID)">FCID</span> Facility ID
+      &nbsp;·&nbsp;
+      <span class="mini-tag" style="background:var(--PLNM)">PLNM</span> Plan Number
+    </div>
+  </div>
+</section>
+
+<section class="workflows">
+
+  <article class="card">
+    <div class="card-head">
+      <h3>1 · Pipe Diameter</h3>
+      <span class="type">Review → resolve → improve</span>
+    </div>
+    <div class="flow">
+      <div class="step"><strong>Imported value</strong><span class="mini-tag" style="background:var(--GLNK)">GLNK</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><strong>Review</strong>usable?</div>
+      <div class="arrow">→</div>
+      <div class="branch">
+        <div class="step"><strong>Yes</strong>use as-is</div>
+        <div class="step"><strong>No / missing</strong>assume for now<span class="mini-tag" style="background:var(--ASM)">ASM</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step"><strong>Better source</strong><span>
+        <span class="mini-tag dark" style="background:var(--PD)">PD</span>
+        <span class="mini-tag" style="background:var(--SRV)">SRV</span>
+      </span></div>
+    </div>
+    <div class="example"><strong>Example:</strong> pipe imported with no diameter → assume <b>15 in</b> (ASM) → record says <b>8 in</b> (PD) → model shows unexpected flooding → survey confirms <b>15 in</b> (SRV).</div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h3>2 · Pipe Invert</h3>
+      <span class="type">Missing value → working value → replace</span>
+    </div>
+    <div class="flow">
+      <div class="step"><strong>Imported invert</strong></div>
+      <div class="arrow">→</div>
+      <div class="step"><strong>Review</strong>missing / questionable?</div>
+      <div class="arrow">→</div>
+      <div class="branch">
+        <div class="step"><strong>Can derive</strong>infer<span class="mini-tag" style="background:var(--INF)">INF</span></div>
+        <div class="step"><strong>Need a value</strong>assume<span class="mini-tag" style="background:var(--ASM)">ASM</span></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step"><strong>Replace when available</strong><span>
+        <span class="mini-tag dark" style="background:var(--PD)">PD</span>
+        <span class="mini-tag" style="background:var(--SRV)">SRV</span>
+      </span></div>
+    </div>
+    <div class="example"><strong>Example:</strong> downstream invert is missing → infer it from neighboring geometry (INF) so the model can run → later replace it with a plan or surveyed value.</div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h3>3 · Building Level</h3>
+      <span class="type">Source data → processing method → model value</span>
+    </div>
+    <div class="flow">
+      <div class="step"><strong>Building footprint</strong></div>
+      <div class="arrow">→</div>
+      <div class="step"><strong>Need model level</strong></div>
+      <div class="arrow">→</div>
+      <div class="step"><strong>FFE available?</strong></div>
+      <div class="arrow">→</div>
+      <div class="branch">
+        <div class="step"><strong>Yes</strong>use finished-floor data<span class="mini-tag" style="background:var(--FFE)">FFE</span></div>
+        <div class="step"><strong>No</strong>use max LiDAR elevation<span class="mini-tag dark" style="background:var(--LMAX)">LMAX</span></div>
+      </div>
+    </div>
+    <div class="example"><strong>Example:</strong> every building needs a model level. Use the preferred finished-floor source where available; otherwise use the approved LiDAR fallback. The tag records which path created the value.</div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h3>4 · Stormwater Inlet Location</h3>
+      <span class="type">Imported object → required modeling action</span>
+    </div>
+    <div class="flow">
+      <div class="step"><strong>Imported inlet</strong></div>
+      <div class="arrow">→</div>
+      <div class="step"><strong>Review against terrain</strong></div>
+      <div class="arrow">→</div>
+      <div class="step"><strong>At local low point?</strong></div>
+      <div class="arrow">→</div>
+      <div class="branch">
+        <div class="step"><strong>Yes</strong>keep location</div>
+        <div class="step"><strong>No</strong>move node<span class="mini-tag dark" style="background:var(--LP)">LP</span></div>
+      </div>
+    </div>
+    <div class="example"><strong>Example:</strong> an inlet is offset from the roadway low point → move the node to the low point and flag it LP. LP records the modeling action, not the original data source.</div>
+  </article>
+
+</section>
+
+<div class="takeaway">
+  <span><b>Source tag:</b> What information supports this value?</span>
+  <span><b>Workflow tag:</b> What happened to this item, and what may need to happen next?</span>
+  <span><b>Key idea:</b> Keep the model moving without losing track of unfinished work.</span>
+</div>
+
+<div class="foot" style="align-items:flex-end;">
+  <span>
+    Houston-style examples and colors; “workflow tag vs. source tag” is a teaching framework.<br>
+    Reference:
+    <a href="https://www.houstonpublicworks.org/sites/g/files/nwywnm456/files/coh_swmp_naming_conventions_white_paper.pdf"
+       target="_blank" rel="noopener noreferrer"
+       style="color:#173f63; text-decoration:none; font-weight:700;">
+      City of Houston SWMP Naming Conventions White Paper
+    </a>
+  </span>
+  <span>One-page quick reference · printable in landscape</span>
+</div>
+
+</div>
+</body>
+</html>
