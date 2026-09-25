@@ -14,7 +14,8 @@ function siteUrl(value) {
 
 const els = Object.fromEntries([
   "search", "clearSearch", "reviewFilter", "results", "resultCount",
-  "toolbarImage", "toolbarHighlight", "toolbarCapture", "drawRect", "mappingBadge",
+  "toolbarImage", "toolbarHighlight", "toolbarTooltip", "toolbarTooltipName", "toolbarTooltipPath",
+  "toolbarCapture", "drawRect", "mappingBadge",
   "reviewToggle", "reviewPanel", "noSelection", "editor", "reviewStatusBadge",
   "editName", "editCategory", "editPath", "editKeywords", "editStatus", "editNotes", "editSourceImage",
   "matchInfo", "sourceImage", "sourceRow", "sourceIcon", "sourceDrawRect", "sourceCapture",
@@ -22,6 +23,11 @@ const els = Object.fromEntries([
   "addCommand", "duplicateCommand", "deleteCommand", "exportJson", "importJson", "resetData", "toast"
 ].map(id => [id, document.querySelector(`#${id}`)]));
 els.layout = document.querySelector(".layout");
+els.toolbarStage = document.querySelector(".toolbar-stage");
+els.toolbarScroller = document.querySelector(".toolbar-scroller");
+
+const TOOLTIP_GAP = 8;
+const TOOLTIP_VIEW_MARGIN = 8;
 
 let shippedData = null;
 let data = null;
@@ -31,6 +37,11 @@ let toolbarDrawMode = false;
 let sourceDrawMode = null; // "row" | "icon"
 let dragStart = null;
 let toastTimer = null;
+let toolbarHitTargets = [];
+let toolbarHoverRaf = null;
+let pendingToolbarHoverEvt = null;
+let toolbarPointerInside = false;
+let toolbarTooltipPreviewCmd = null;
 
 function deepClone(v) { return JSON.parse(JSON.stringify(v)); }
 function currentCommand() { return data?.commands.find(c => c.id === selectedId) || null; }
@@ -106,6 +117,146 @@ function normalizeData(input) {
 
 function persist() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  rebuildToolbarHitTargets();
+}
+
+function getToolbarMappedCommands() {
+  if (!data) return [];
+  return data.commands.filter(cmd => {
+    if (!cmd.toolbar?.rect) return false;
+    if (!reviewMode && cmd.review?.status === "rejected") return false;
+    return true;
+  });
+}
+
+function rebuildToolbarHitTargets() {
+  toolbarHitTargets = getToolbarMappedCommands().map(cmd => ({cmd, rect: cmd.toolbar.rect}));
+}
+
+function commandAtToolbarPoint(px, py) {
+  let best = null;
+  let bestArea = Infinity;
+  for (const {cmd, rect} of toolbarHitTargets) {
+    if (px >= rect.x && px <= rect.x + rect.w && py >= rect.y && py <= rect.y + rect.h) {
+      const area = rect.w * rect.h;
+      if (area < bestArea) {
+        bestArea = area;
+        best = cmd;
+      }
+    }
+  }
+  return best;
+}
+
+function pointerToToolbarImageCoords(evt) {
+  const p = pointOn(els.toolbarCapture, evt);
+  const tw = data.toolbar.width || 1;
+  const th = data.toolbar.height || 1;
+  return {
+    px: p.x / p.box.width * tw,
+    py: p.y / p.box.height * th
+  };
+}
+
+function positionToolbarTooltip(rect) {
+  const capture = els.toolbarCapture;
+  if (!capture || !rect) return;
+  const box = capture.getBoundingClientRect();
+  const tw = data.toolbar.width || 1;
+  const th = data.toolbar.height || 1;
+  const scaleX = box.width / tw;
+  const scaleY = box.height / th;
+  const rectLeft = box.left + rect.x * scaleX;
+  const rectTop = box.top + rect.y * scaleY;
+  const rectRight = rectLeft + rect.w * scaleX;
+  const rectBottom = rectTop + rect.h * scaleY;
+  const centerX = (rectLeft + rectRight) / 2;
+
+  const tip = els.toolbarTooltip;
+  tip.style.visibility = "hidden";
+  tip.style.left = "0";
+  tip.style.top = "0";
+  const tipBox = tip.getBoundingClientRect();
+  tip.style.visibility = "";
+
+  let placeBelow = rect.y < th * 0.22;
+  let top = placeBelow ? rectBottom + TOOLTIP_GAP : rectTop - tipBox.height - TOOLTIP_GAP;
+  if (top < TOOLTIP_VIEW_MARGIN && !placeBelow) {
+    placeBelow = true;
+    top = rectBottom + TOOLTIP_GAP;
+  }
+  if (top + tipBox.height > window.innerHeight - TOOLTIP_VIEW_MARGIN && placeBelow) {
+    placeBelow = false;
+    top = rectTop - tipBox.height - TOOLTIP_GAP;
+  }
+  top = Math.max(TOOLTIP_VIEW_MARGIN, Math.min(top, window.innerHeight - tipBox.height - TOOLTIP_VIEW_MARGIN));
+
+  let left = centerX - tipBox.width / 2;
+  left = Math.max(TOOLTIP_VIEW_MARGIN, Math.min(left, window.innerWidth - tipBox.width - TOOLTIP_VIEW_MARGIN));
+
+  tip.style.left = `${Math.round(left)}px`;
+  tip.style.top = `${Math.round(top)}px`;
+}
+
+function hideToolbarTooltip() {
+  toolbarTooltipPreviewCmd = null;
+  els.toolbarTooltip.classList.add("hidden");
+  els.toolbarTooltip.setAttribute("aria-hidden", "true");
+  els.toolbarStage?.classList.remove("toolbar-hovering");
+}
+
+function repositionToolbarTooltipIfVisible() {
+  const rect = toolbarTooltipPreviewCmd?.toolbar?.rect;
+  if (!rect || els.toolbarTooltip.classList.contains("hidden")) return;
+  positionToolbarTooltip(rect);
+}
+
+function restoreToolbarSelectionHighlight() {
+  const cmd = currentCommand();
+  if (cmd?.toolbar?.rect) showToolbarRect(cmd.toolbar.rect);
+  else els.toolbarHighlight.classList.remove("show");
+}
+
+function previewToolbarCommand(cmd) {
+  if (!cmd?.toolbar?.rect || toolbarDrawMode) {
+    hideToolbarTooltip();
+    restoreToolbarSelectionHighlight();
+    return;
+  }
+  toolbarTooltipPreviewCmd = cmd;
+  showToolbarRect(cmd.toolbar.rect);
+  els.toolbarTooltipName.textContent = cmd.name || "";
+  els.toolbarTooltipPath.textContent = cmd.path || "";
+  els.toolbarTooltip.classList.remove("hidden");
+  els.toolbarTooltip.setAttribute("aria-hidden", "false");
+  positionToolbarTooltip(cmd.toolbar.rect);
+  els.toolbarStage?.classList.add("toolbar-hovering");
+}
+
+function scheduleToolbarHover(evt) {
+  pendingToolbarHoverEvt = evt;
+  if (toolbarHoverRaf !== null) return;
+  toolbarHoverRaf = requestAnimationFrame(() => {
+    toolbarHoverRaf = null;
+    const e = pendingToolbarHoverEvt;
+    pendingToolbarHoverEvt = null;
+    if (!e || toolbarDrawMode) return;
+    toolbarPointerInside = true;
+    const {px, py} = pointerToToolbarImageCoords(e);
+    const cmd = commandAtToolbarPoint(px, py);
+    if (cmd) previewToolbarCommand(cmd);
+    else {
+      hideToolbarTooltip();
+      restoreToolbarSelectionHighlight();
+    }
+  });
+}
+
+function handleToolbarPointerLeave() {
+  toolbarPointerInside = false;
+  if (toolbarDrawMode) return;
+  hideToolbarTooltip();
+  restoreToolbarSelectionHighlight();
 }
 
 function markHumanEdit(cmd) {
@@ -203,7 +354,12 @@ function renderResults() {
     row.addEventListener("click", () => selectCommand(row.dataset.id));
     row.addEventListener("mouseenter", () => {
       const cmd = data.commands.find(c => c.id === row.dataset.id);
-      if (cmd?.toolbar?.rect && !toolbarDrawMode) showToolbarRect(cmd.toolbar.rect);
+      if (cmd?.toolbar?.rect && !toolbarDrawMode) previewToolbarCommand(cmd);
+    });
+    row.addEventListener("mouseleave", () => {
+      if (toolbarDrawMode || toolbarPointerInside) return;
+      hideToolbarTooltip();
+      restoreToolbarSelectionHighlight();
     });
   });
 }
@@ -233,6 +389,7 @@ function selectCommand(id) {
   stopToolbarMapping();
   stopSourceMapping();
   selectedId = id;
+  hideToolbarTooltip();
   const cmd = currentCommand();
   if (cmd?.toolbar?.rect) showToolbarRect(cmd.toolbar.rect);
   else els.toolbarHighlight.classList.remove("show");
@@ -314,6 +471,7 @@ function setReviewMode(enabled) {
   if (!enabled && els.reviewFilter.value === "rejected") els.reviewFilter.value = "all";
   stopToolbarMapping();
   stopSourceMapping();
+  rebuildToolbarHitTargets();
   renderResults();
   renderEditor();
 }
@@ -340,6 +498,7 @@ function startToolbarMapping() {
   if (!currentCommand()) return;
   toolbarDrawMode = true;
   dragStart = null;
+  hideToolbarTooltip();
   els.toolbarCapture.classList.add("active");
   els.mappingBadge.classList.remove("hidden");
   els.drawRect.classList.add("hidden");
@@ -352,6 +511,7 @@ function stopToolbarMapping() {
   els.toolbarCapture.classList.remove("active");
   els.mappingBadge.classList.add("hidden");
   els.drawRect.classList.add("hidden");
+  hideToolbarTooltip();
   if (els.toolbarHint) els.toolbarHint.textContent = "Click a mapped result to highlight its button.";
 }
 
@@ -394,6 +554,20 @@ function installDrawHandlers(capture, preview, modeGetter, finish) {
     if (w >= 4 && h >= 4) finish({x, y, w, h, displayW: p.box.width, displayH: p.box.height});
   });
 }
+
+els.toolbarScroller?.addEventListener("scroll", repositionToolbarTooltipIfVisible, {passive: true});
+window.addEventListener("resize", repositionToolbarTooltipIfVisible, {passive: true});
+
+els.toolbarCapture.addEventListener("pointermove", evt => {
+  if (!toolbarDrawMode) scheduleToolbarHover(evt);
+});
+els.toolbarCapture.addEventListener("pointerleave", handleToolbarPointerLeave);
+els.toolbarCapture.addEventListener("click", evt => {
+  if (toolbarDrawMode) return;
+  const {px, py} = pointerToToolbarImageCoords(evt);
+  const cmd = commandAtToolbarPoint(px, py);
+  if (cmd) selectCommand(cmd.id);
+});
 
 installDrawHandlers(els.toolbarCapture, els.drawRect, () => toolbarDrawMode, r => {
   const cmd = currentCommand();
@@ -533,6 +707,7 @@ els.clearMapping.addEventListener("click", () => {
   delete cmd.toolbar.candidate_score;
   markHumanEdit(cmd);
   persist();
+  hideToolbarTooltip();
   els.toolbarHighlight.classList.remove("show");
   renderResults();
   renderEditor();
@@ -571,6 +746,8 @@ els.resetData.addEventListener("click", () => {
   selectedId = null;
   stopToolbarMapping();
   stopSourceMapping();
+  hideToolbarTooltip();
+  rebuildToolbarHitTargets();
   els.toolbarHighlight.classList.remove("show");
   renderResults();
   renderEditor();
@@ -592,6 +769,7 @@ async function init() {
     data = deepClone(shippedData);
   }
   els.toolbarImage.src = siteUrl(data.toolbar.image);
+  rebuildToolbarHitTargets();
   renderResults();
   setReviewMode(false);
 }
