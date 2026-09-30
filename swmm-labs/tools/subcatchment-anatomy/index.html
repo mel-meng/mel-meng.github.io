@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Interactive visualization of SWMM A1, A2, and A3 subcatchment anatomy." />
+  <title>Subcatchment Anatomy</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <header class="page-header">
+      <div>
+        <h1>Subcatchment Anatomy</h1>
+        <p>Watch how SWMM divides one fixed area into A1, A2, and A3.</p>
+      </div>
+      <div class="fixed-area" aria-label="Fixed total area">
+        <span>Total area</span>
+        <strong>1.00 ac</strong>
+        <small>fixed</small>
+      </div>
+    </header>
+
+    <section class="controls" aria-label="Subcatchment controls">
+      <label class="control control-impervious">
+        <span class="control-title">% Impervious</span>
+        <input id="impervious" type="range" min="0" max="100" step="1" value="50" />
+        <output id="impervious-value" for="impervious">50%</output>
+      </label>
+
+      <label class="control control-zero">
+        <span class="control-title">% Zero-Impervious</span>
+        <input id="zero" type="range" min="0" max="100" step="1" value="20" />
+        <output id="zero-value" for="zero">20%</output>
+      </label>
+
+      <label class="control control-width">
+        <span class="control-title">Width (W)</span>
+        <input id="width" type="range" min="150" max="1200" step="10" value="600" />
+        <output id="width-value" for="width">600 ft</output>
+      </label>
+    </section>
+
+    <section class="diagram-wrap" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <h2 id="diagram-title">Equivalent SWMM surfaces</h2>
+        <div class="legend" aria-label="Geometry legend">
+          <span><i class="legend-previous"></i>previous</span>
+          <span><i class="legend-current"></i>current</span>
+        </div>
+      </div>
+
+      <svg id="anatomy" viewBox="0 0 1120 360" role="img" aria-labelledby="svg-title svg-desc">
+        <title id="svg-title">A1, A2, A3 equivalent rectangles</title>
+        <desc id="svg-desc">Three tightly aligned rows compare the previous dashed geometry to the current solid geometry.</desc>
+
+        <g id="row-guides" aria-hidden="true">
+          <line x1="16" y1="113" x2="1080" y2="113" class="row-guide" />
+          <line x1="16" y1="215" x2="1080" y2="215" class="row-guide" />
+        </g>
+
+        <g class="surface-row" data-surface="A1">
+          <rect class="previous-shape previous-a1" />
+          <rect class="current-shape current-a1" />
+          <text class="dim-label dim-l" aria-hidden="true">L</text>
+          <text class="dim-label dim-w" aria-hidden="true">W</text>
+          <line class="outlet-line" />
+          <g class="row-label" transform="translate(746 33)">
+            <text class="badge badge-a1">A1</text>
+            <text x="0" y="37" class="surface-name">Pervious</text>
+          </g>
+          <g class="values values-a1"></g>
+        </g>
+
+        <g class="surface-row" data-surface="A2">
+          <rect class="previous-shape previous-a2" />
+          <rect class="current-shape current-a2" />
+          <text class="dim-label dim-l" aria-hidden="true">L</text>
+          <text class="dim-label dim-w" aria-hidden="true">W</text>
+          <line class="outlet-line" />
+          <g class="row-label" transform="translate(746 135)">
+            <text class="badge badge-a2">A2</text>
+            <text x="0" y="37" class="surface-name">Impervious + storage</text>
+          </g>
+          <g class="values values-a2"></g>
+        </g>
+
+        <g class="surface-row" data-surface="A3">
+          <rect class="previous-shape previous-a3" />
+          <rect class="current-shape current-a3" />
+          <text class="dim-label dim-l" aria-hidden="true">L</text>
+          <text class="dim-label dim-w" aria-hidden="true">W</text>
+          <line class="outlet-line" />
+          <g class="row-label" transform="translate(746 237)">
+            <text class="badge badge-a3">A3</text>
+            <text x="0" y="37" class="surface-name">Impervious, zero storage</text>
+          </g>
+          <g class="values values-a3"></g>
+        </g>
+
+        <line x1="700" y1="12" x2="700" y2="320" class="outlet-axis" aria-hidden="true" />
+        <text x="700" y="342" text-anchor="middle" class="axis-note">shared outlet alignment</text>
+      </svg>
+
+      <p class="note">A1, A2, and A3 are conceptual runoff surfaces. The geometry is normalized for comparison, not a site map.</p>
+    </section>
+  </main>
+
+  <script type="module" src="./tool.js"></script>
+</body>
+</html>

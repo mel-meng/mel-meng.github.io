@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calibration Cases — SWMM Browser Tools</title>
+  <link rel="stylesheet" href="../../shared/base.css" />
+  <link rel="stylesheet" href="./tool.css" />
+</head>
+<body>
+  <header class="case-header">
+    <div><div class="eyebrow">SWMM calibration reasoning</div><h1>Calibration Cases</h1><p>Diagnose the mismatch, change a defensible parameter, then check both the hydrograph and the evidence.</p></div>
+    <div id="engineBadge" class="engine-badge"><span class="dot"></span><span>Loading SWMM5…</span></div>
+  </header>
+
+  <main class="case-shell">
+    <nav id="caseNav" class="case-nav" aria-label="Calibration cases"></nav>
+
+    <section class="case-layout">
+      <aside class="context-panel">
+        <div id="caseKicker" class="eyebrow"></div>
+        <h2 id="caseTitle"></h2>
+        <p id="caseStory" class="story"></p>
+        <div class="task"><span>Task</span><strong id="caseTask"></strong></div>
+        <div id="confidence" class="confidence"></div>
+        <div class="evidence-note">Independent evidence is part of the acceptance test, not decoration.</div>
+      </aside>
+
+      <section class="work-panel">
+        <div class="chart-heading">
+          <div><span class="eyebrow">Hydrograph</span><h2>Target vs model</h2></div>
+          <div class="legend"><span><i class="target"></i>Target</span><span><i class="previous"></i>Previous</span><span><i class="current"></i>Current</span></div>
+        </div>
+        <div class="chart-wrap"><canvas id="hydrograph"></canvas><div id="chartEmpty" class="chart-empty">Preparing case…</div></div>
+        <div id="diagnostics" class="diagnostics"></div>
+      </section>
+
+      <aside class="controls-panel">
+        <div class="controls-top"><div><span class="eyebrow">Editable</span><h2>Parameters</h2></div><button id="resetButton" type="button">Reset</button></div>
+        <div id="controls"></div>
+        <div class="status-grid">
+          <div id="fitStatus" class="status"><span>Hydrograph fit</span><strong>—</strong></div>
+          <div id="evidenceStatus" class="status"><span>Evidence</span><strong>—</strong></div>
+          <div id="completeStatus" class="status complete"><span>Case</span><strong>In progress</strong></div>
+        </div>
+        <div class="hint-box"><div class="hint-head"><span class="eyebrow">Reasoning help</span><button id="hintButton" type="button">Show hint</button></div><p id="hintText">Hints start with the mismatch, not the answer.</p></div>
+        <div class="run-meta"><span id="runStatus">Initializing</span><span id="runtime">—</span></div>
+        <details id="errorDetails"><summary>SWMM diagnostic</summary><pre id="errorReport"></pre></details>
+      </aside>
+    </section>
+  </main>
+
+  <footer><a href="../../">All SWMM tools</a></footer>
+  <script type="module" src="./tool.js"></script>
+</body>
+</html>

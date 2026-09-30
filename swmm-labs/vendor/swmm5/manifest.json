@@ -1,0 +1,15 @@
+{
+  "source": "SWMMEnablement/SWMM-Engine main/client/public/wasm",
+  "fetchedAt": null,
+  "files": {
+    "swmm5.js": {
+      "bytes": 139332,
+      "sha256": "0b5f08154191d3507e664fc78f92a3eb06665fb132f49c823de2c2820f5c7546"
+    },
+    "swmm5.wasm": {
+      "bytes": 479652,
+      "sha256": "7973d813bae555f573238121b741d6c1371de3c6a14bd9e53b7a6fe5d9097f99"
+    }
+  },
+  "note": "Existing repository artifacts; run npm run vendor:wasm to refresh byte counts and fetch timestamp together."
+}

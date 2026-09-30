@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Surface Lab — SWMM Browser Tools</title>
+  <link rel="stylesheet" href="../../shared/base.css" />
+  <link rel="stylesheet" href="./tool.css" />
+</head>
+<body>
+  <header class="surface-header">
+    <div>
+      <div class="eyebrow">SWMM runoff fundamentals</div>
+      <h1>Surface Lab</h1>
+      <p>One surface. One fixed storm. Change the physical representation and watch the runoff response.</p>
+    </div>
+    <div id="engineBadge" class="engine-badge"><span class="dot"></span><span>Loading SWMM5…</span></div>
+  </header>
+
+  <main class="surface-shell">
+    <section class="surface-stage" aria-labelledby="surfaceTitle">
+      <div class="surface-toolbar">
+        <div class="toolbar-start">
+          <span class="muted-label">Surface</span>
+          <div id="surfaceTabs" class="surface-tabs" role="group" aria-label="Surface type"></div>
+          <div class="preset-heading">Starting assumptions</div>
+          <div id="presetList" class="preset-list"></div>
+          <div class="preset-note">Presets are illustrative starting points, not universal parameter recommendations.</div>
+        </div>
+        <div class="fixed-context"><span>Area</span><strong>1.00 ac</strong><span>Rainfall</span><strong>fixed teaching storm</strong></div>
+      </div>
+
+      <div class="surface-main">
+        <aside>
+          <div id="controls" class="controls"></div>
+        </aside>
+
+        <div class="visual-column">
+          <div class="geometry-card">
+            <div class="geometry-title"><strong id="surfaceName">A1 · Pervious</strong><span>Equivalent SWMM geometry — normalized for display</span></div>
+            <div class="geometry-body">
+              <svg id="surfaceSvg" viewBox="0 0 560 280" role="img" aria-label="Equivalent SWMM surface plan and schematic profile">
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" /></marker>
+                </defs>
+                <g id="geometryGroup"></g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-heading">
+              <div><span class="muted-label">Response</span><h2>Rainfall and runoff</h2></div>
+              <div class="legend"><span><i class="rain-line"></i>Rainfall</span><span><i class="previous-line"></i>Previous runoff</span><span><i class="current-line"></i>Current runoff</span></div>
+            </div>
+            <div class="chart-wrap"><canvas id="responseChart"></canvas><div id="chartEmpty" class="chart-empty">Initializing SWMM5…</div></div>
+          </div>
+        </div>
+
+        <aside class="summary">
+          <span class="muted-label">Current response</span>
+          <div class="metric"><span>Runoff depth</span><strong id="runoffDepth">—</strong></div>
+          <div class="metric"><span>Peak runoff</span><strong id="peakFlow">—</strong></div>
+          <div class="metric"><span>Time to peak</span><strong id="peakTime">—</strong></div>
+          <div class="metric" id="infiltrationMetric"><span>Infiltration depth</span><strong id="infiltrationDepth">—</strong></div>
+          <div class="metric"><span>Equivalent length</span><strong id="equivalentLength">—</strong></div>
+          <div class="run-meta"><span id="runStatus">Initializing</span><span id="runtime">—</span></div>
+          <details id="errorDetails" class="error-details"><summary>SWMM diagnostic</summary><pre id="errorReport"></pre></details>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer><a href="../../">All SWMM tools</a></footer>
+  <script type="module" src="./tool.js"></script>
+</body>
+</html>

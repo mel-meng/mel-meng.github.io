@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SWMM5 WASM Runoff Calibration</title>
+  <link rel="stylesheet" href="../../shared/base.css" />
+  <link rel="stylesheet" href="./tool.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">EPA SWMM5 - WebAssembly</div>
+      <h1>Runoff calibration prototype</h1>
+      <p>Move a parameter. SWMM reruns in the browser. The runoff hydrograph morphs to the new result.</p>
+    </div>
+    <div id="engineBadge" class="engine-badge loading"><span class="dot"></span><span>Loading SWMM5 WASM...</span></div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel controls-panel">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Single subcatchment</span>
+          <h2>S1 parameters</h2>
+        </div>
+        <button id="resetButton" class="ghost-button" type="button">Reset</button>
+      </div>
+
+      <div class="mini-model" aria-label="Single subcatchment conceptual diagram">
+        <div class="cloud">&#9729;</div>
+        <div class="rain">&#8942;&#8942;&#8942;&#8942;</div>
+        <div class="catchment">S1</div>
+        <div class="arrow">&#8594;</div>
+        <div class="outlet">OUT1</div>
+      </div>
+
+      <div id="controls"></div>
+
+      <div class="note">
+        <strong>Hidden target:</strong> the black curve is generated once from a known parameter set. The slider values start intentionally wrong.
+      </div>
+    </aside>
+
+    <section class="panel chart-panel">
+      <div class="chart-header">
+        <div>
+          <span class="section-kicker">Runoff at S1</span>
+          <h2>Target vs current model</h2>
+        </div>
+        <div class="legend">
+          <span><i class="legend-line target"></i>Target</span>
+          <span><i class="legend-line model"></i>Current model</span>
+          <span><i class="legend-fill"></i>Mismatch</span>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="hydrograph" aria-label="Animated runoff hydrograph"></canvas>
+        <div id="chartEmpty" class="chart-empty">Initializing SWMM5...</div>
+      </div>
+
+      <div class="run-strip">
+        <div><span>Run status</span><strong id="runStatus">Initializing</strong></div>
+        <div><span>Last SWMM run</span><strong id="runtime">-</strong></div>
+        <div><span>Report step</span><strong id="reportStep">-</strong></div>
+        <div><span>Flow units</span><strong id="flowUnits">-</strong></div>
+      </div>
+    </section>
+
+    <aside class="panel score-panel">
+      <span class="section-kicker">Calibration feedback</span>
+      <h2>Match score</h2>
+      <div class="score-ring" id="scoreRing">
+        <div><strong id="scoreValue">-</strong><span>match</span></div>
+      </div>
+
+      <div class="metric-list">
+        <div><span>Peak error</span><strong id="peakError">-</strong></div>
+        <div><span>Volume error</span><strong id="volumeError">-</strong></div>
+        <div><span>Timing error</span><strong id="timingError">-</strong></div>
+        <div><span>NRMSE</span><strong id="nrmse">-</strong></div>
+      </div>
+
+      <button id="revealButton" class="primary-button" type="button">Reveal target values</button>
+      <div id="targetValues" class="target-values hidden"></div>
+    </aside>
+  </main>
+
+  <footer>
+    <a href="../../">All SWMM tools</a> - HTML + JavaScript + Web Worker + SWMM5 WASM. No simulation server required.
+  </footer>
+
+  <script type="module" src="./tool.js"></script>
+</body>
+</html>

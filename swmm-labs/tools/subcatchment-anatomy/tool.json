@@ -1,0 +1,7 @@
+{
+  "title": "Subcatchment anatomy",
+  "section": "SWMM5 RUNOFF",
+  "tag": "Hydrology · geometry",
+  "blurb": "See how imperviousness and depression storage divide one catchment into SWMM’s A1, A2, and A3 runoff surfaces.",
+  "order": 1
+}
