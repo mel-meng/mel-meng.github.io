@@ -1,0 +1,1403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Hydraulic Model Checkup</title>
+  <style>
+/* Model Checkup styles. Plain CSS, no preprocessor. */
+
+:root {
+  --ink: #192a3b;
+  --muted: #5d6d7c;
+  --border: #dbe2e8;
+  --light: #f5f7fa;
+  --brand: #175b9a;
+  --focus: #0765c5;
+  --warn: #925816;
+  --white: #fff;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #f6f8fa;
+  color: var(--ink);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: var(--brand); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+main:focus { outline: none; }
+
+/* ---------- Page chrome ---------- */
+
+.page { max-width: 1040px; padding: 24px 24px 60px; margin: 0 auto; }
+.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 22px; }
+.eyebrow { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: var(--brand); font-weight: 750; margin: 0 0 7px; }
+h1 { font-size: 29px; line-height: 1.2; letter-spacing: -.035em; margin: 0; }
+p.subtitle { color: var(--muted); margin: 7px 0 0; }
+.toolbar { display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
+.footer { display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 11.5px; margin: 28px 2px; }
+
+.navigation { display: flex; gap: 3px; border-bottom: 1px solid var(--border); margin-bottom: 20px; overflow-x: auto; }
+.tab { background: none; border: 0; border-bottom: 3px solid transparent; padding: 12px 18px 11px; color: var(--muted); font-weight: 650; white-space: nowrap; }
+.tab[aria-current="page"] { border-color: var(--brand); color: var(--brand); }
+.tab:hover { background: #eef3f8; }
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #bcd3e8;
+  background: #eaf3fc;
+  color: #244f76;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 0 0 16px;
+}
+.notice[hidden] { display: none; }
+.notice.error { border-color: #d9a7a2; background: #fff4f2; color: #7a2e22; }
+.notice-close { border: 0; background: transparent; color: inherit; font-size: 20px; line-height: 1; padding: 0 4px; border-radius: 4px; }
+.notice-close:hover { background: rgba(0, 0, 0, .08); }
+
+/* ---------- Buttons ---------- */
+
+.btn { border: 1px solid #c8d3de; background: #fff; color: #233c54; border-radius: 7px; padding: 9px 12px; min-height: 40px; font-size: 13px; font-weight: 650; }
+.btn:hover { background: #f0f5fa; }
+.btn.primary { border-color: var(--brand); background: var(--brand); color: #fff; }
+.btn.primary:hover { background: #104b80; }
+.btn.small { padding: 6px 10px; min-height: 32px; font-size: 12px; }
+.btn.icon { padding: 6px 8px; min-width: 32px; }
+.btn.danger { color: #9f3a26; border-color: #e9c9c4; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ---------- Panels and questions ---------- */
+
+.panel { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 23px 25px; margin: 0 0 17px; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
+.panel-head h2, .panel h2 { font-size: 19px; letter-spacing: -.025em; margin: 0; }
+.description { color: var(--muted); margin: 6px 0 18px; font-size: 13.5px; }
+.muted { color: var(--muted); font-size: 13px; }
+.count { font-weight: 600; color: #66829b; font-size: 12px; margin-left: 7px; }
+.empty { padding: 18px; border: 1px dashed #cad5dd; border-radius: 8px; color: var(--muted); background: #fbfcfe; font-size: 13px; }
+.hintbox { border-left: 3px solid #9ebfdc; background: #f2f7fb; color: #4d657b; padding: 10px 13px; margin-bottom: 15px; font-size: 13px; }
+
+.question { padding: 13px 0; border-top: 1px solid #e9edf0; }
+.question:first-child { border-top: 0; }
+fieldset.question { border-left: 0; border-right: 0; border-bottom: 0; margin: 0; min-width: 0; }
+fieldset.question:first-child { border-top: 0; }
+.question-label { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; font-weight: 650; margin: 0 0 9px; font-size: 14px; }
+legend.question-label { display: block; padding: 0; float: left; width: 100%; }
+legend.question-label + * { clear: both; }
+legend.question-label .ref-link, legend.question-label .help-link { margin-left: 7px; }
+.question.note { background: #f6f9fc; padding: 13px; border-radius: 6px; color: #51677c; border: 0; font-size: 13px; }
+.question.note .question-label { font-weight: 400; margin: 0; }
+.hint { font-weight: 400; color: var(--muted); font-size: 12px; }
+
+.ref-link { font-weight: 700; text-decoration: none; font-size: 10px; padding: 2px 4px; border-radius: 3px; background: #edf3fa; }
+.ref-link:hover, .help-link:hover { text-decoration: underline; }
+.help-link { font-weight: 600; text-decoration: none; font-size: 11px; padding: 2px 5px; border-radius: 3px; background: #eef6ee; color: #2d5a3d; }
+
+.controls { display: flex; gap: 10px 17px; flex-wrap: wrap; }
+.option-stack { display: flex; flex-direction: column; align-items: flex-start; }
+.choice { display: inline-flex; align-items: flex-start; gap: 7px; font-size: 14px; line-height: 1.45; padding: 5px 0; cursor: pointer; }
+.choice input { margin-top: 4px; accent-color: var(--brand); }
+.choice input[type="checkbox"], .choice input[type="radio"] { width: 16px; height: 16px; }
+
+.text-input, textarea, select { border: 1px solid #bfcdd9; border-radius: 6px; background: #fff; color: var(--ink); width: 100%; max-width: 630px; padding: 9px 11px; min-height: 41px; font-size: 14px; }
+textarea { resize: vertical; min-height: 72px; }
+select { max-width: 500px; }
+.text-input[type="number"] { max-width: 220px; }
+.text-input[type="date"] { max-width: 270px; }
+.other-input { margin-top: 9px; display: block; max-width: 520px; }
+
+/* ---------- Record lists ---------- */
+
+.record-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.record-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px 12px; align-items: center; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: #fff; }
+.record-row.dragging { opacity: .55; }
+.record-row.drop-before { box-shadow: inset 0 3px 0 var(--brand); }
+.record-drag { border: 0; background: transparent; color: #8a9bab; padding: 4px 6px; min-height: 32px; line-height: 1; cursor: grab; font-size: 14px; letter-spacing: -2px; border-radius: 4px; }
+.record-drag:hover { background: #eef3f8; color: #4a6278; }
+.record-drag:active { cursor: grabbing; }
+.record-title { font-weight: 650; font-size: 14px; line-height: 1.35; }
+.record-subtitle { font-size: 12px; margin-top: 2px; line-height: 1.35; color: var(--muted); }
+.record-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* ---------- Simulations ---------- */
+
+.sim-shell { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 16px; }
+.sim-content { min-width: 0; }
+.sim-picker { align-self: start; position: sticky; top: 10px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.sim-picker h2 { font-size: 15px; margin: 0 0 12px; }
+.sim-list { margin-bottom: 10px; }
+.sim-row { padding: 6px 8px; grid-template-columns: auto minmax(0, 1fr) auto; }
+.sim-row.selected { border-color: #b5d4eb; background: #f7fbff; }
+.sim-select { border: 0; background: transparent; text-align: left; padding: 6px 4px; color: #2b435a; font-size: 13px; font-weight: 600; width: 100%; border-radius: 4px; overflow-wrap: anywhere; }
+.sim-select:hover { background: #f2f6fa; }
+.sim-row.selected .sim-select { color: #134d81; font-weight: 700; }
+.sim-move { display: flex; gap: 2px; }
+.sim-move .btn.icon { min-height: 28px; min-width: 28px; padding: 2px 6px; }
+.sim-toolbar { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0 0; }
+.subnav { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0 18px; }
+.subnav button { border: 1px solid #c6d2dd; border-radius: 7px; padding: 8px 13px; background: #fff; font-weight: 600; font-size: 13px; color: #39526a; }
+.subnav button.active { background: #e8f2fb; color: var(--brand); border-color: #9fc6e6; }
+
+/* ---------- References ---------- */
+
+.refs { display: grid; gap: 12px; }
+.reference { border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; background: #fff; scroll-margin-top: 15px; }
+.reference:target { outline: 2px solid #89b4de; }
+.reference h3 { font-size: 15px; margin: 0 0 6px; }
+.reference p { margin: 5px 0; color: var(--muted); font-size: 13px; }
+.reference small { color: #667789; }
+
+/* ---------- Record editor dialog ---------- */
+
+.record-editor { border: 0; border-radius: 12px; padding: 0; max-width: min(720px, calc(100vw - 32px)); max-height: calc(100vh - 32px); box-shadow: 0 12px 40px rgba(25, 42, 59, .18); }
+.record-editor::backdrop { background: rgba(25, 42, 59, .45); }
+.record-editor-inner { display: flex; flex-direction: column; max-height: calc(100vh - 32px); }
+.record-editor-head { padding: 20px 22px 0; flex-shrink: 0; }
+.record-editor-head h2 { font-size: 20px; margin: 0 0 6px; }
+.record-editor-head .description { margin-bottom: 0; }
+.record-editor-body { padding: 8px 22px 16px; overflow: auto; flex: 1; }
+.record-editor-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 22px 18px; border-top: 1px solid var(--border); flex-shrink: 0; }
+
+/* ---------- Small screens and print ---------- */
+
+@media (max-width: 750px) {
+  .page { padding: 18px 13px 30px; }
+  .top { flex-direction: column; }
+  .toolbar { justify-content: flex-start; }
+  .panel { padding: 17px 16px; }
+  .sim-shell { display: block; }
+  .sim-picker { position: static; margin-bottom: 14px; }
+  .record-row { grid-template-columns: auto minmax(0, 1fr); }
+  .record-row .record-actions { grid-column: 1 / -1; justify-content: flex-start; }
+  .sim-row { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .footer { display: block; }
+  .footer span { display: block; margin: 6px 0; }
+  .tab { padding-left: 12px; padding-right: 12px; }
+}
+
+@media print {
+  body { background: #fff; }
+  .toolbar, .navigation, .btn, .subnav, .footer, .sim-picker, .record-editor, .notice { display: none !important; }
+  .page { max-width: none; padding: 0; }
+  .panel { border: 0; padding: 10px 0; break-inside: avoid; }
+  .question, .reference { break-inside: avoid; }
+  .sim-shell { display: block; }
+}
+
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <div>
+        <p class="eyebrow">Hydraulic model review</p>
+        <h1>Model Checkup</h1>
+        <p class="subtitle">A simple, repeatable engineering screening form.</p>
+      </div>
+      <div class="toolbar">
+        <button type="button" id="new-project" class="btn ghost">New project</button>
+        <button type="button" id="open-project" class="btn ghost">Open project</button>
+        <button type="button" id="save-project" class="btn primary">Save project</button>
+        <input type="file" id="file-input" accept="application/json,.json" hidden>
+      </div>
+    </header>
+    <nav class="navigation" id="navigation" aria-label="Main sections"></nav>
+    <div id="message" class="notice" role="status" hidden>
+      <span id="message-text"></span>
+      <button type="button" id="message-close" class="notice-close" aria-label="Dismiss message">&times;</button>
+    </div>
+    <main id="main" tabindex="-1"><p>Loading checklist…</p></main>
+    <footer class="footer"><span id="save-status">Ready</span><span>Stored on this device until exported · Checklist snapshots stay with saved projects.</span></footer>
+  </div>
+  <dialog id="record-editor" class="record-editor" aria-labelledby="record-editor-title">
+    <div class="record-editor-inner">
+      <header class="record-editor-head">
+        <h2 id="record-editor-title"></h2>
+        <p id="record-editor-desc" class="description"></p>
+      </header>
+      <div id="record-editor-body" class="record-editor-body"></div>
+      <footer class="record-editor-foot">
+        <button type="button" class="btn primary" data-action="editor-done">Done</button>
+        <button type="button" class="btn" data-action="editor-cancel">Cancel</button>
+      </footer>
+    </div>
+  </dialog>
+  <script type="application/json" id="embedded-default-checklist">
+{"version": "1.4.0", "title": "Hydraulic Model Checkup", "description": "Short, source-grounded model-review form. Questions and references are data; answers live in the saved project.", "navigation": [{"id": "project", "label": "Project", "view": "page", "title": "Project purpose", "description": "What physical system is involved, and what engineering problem needs to be solved?", "form": "project", "store": "project.answers", "collections": ["events", "systemConditions", "boundarySets"]}, {"id": "model", "label": "Model", "view": "page", "title": "Modeling approach", "description": "Record facts: what's modeled, what's omitted, where the data came from, and how water enters and leaves.", "form": "model", "store": "project.modelAnswers", "collections": ["hydrologyMethods"]}, {"id": "reviewLocations", "label": "Review locations", "view": "page", "collections": ["reviewLocations"]}, {"id": "simulations", "label": "Simulations", "view": "simulations", "tabs": [{"id": "screening", "label": "Screening", "title": "Simulation checkup", "description": "First check run health, hydrograph completeness and overall water accounting.", "form": "screening", "store": "simulation.screening.answers", "collections": ["hydroChecks", "balanceChecks"]}, {"id": "findings", "label": "Results findings", "title": "Results findings", "description": "Make a finding for each observed result. Select a shared 1D profile or 2D analysis object when available.", "hint": {"text": "To reuse a profile or results object, define it under", "linkLabel": "Review locations", "page": "reviewLocations"}, "collections": ["findings"]}, {"id": "issues", "label": "Troubleshooting", "title": "Question the model", "description": "Use these entries for suspected modeling errors, not necessarily for real-world flooding or capacity problems. Include evidence and an initial diagnosis.", "collections": ["issues"]}]}, {"id": "references", "label": "References", "view": "references", "title": "References", "description": "References linked beside questions point here. Section and page locators refer to supplied source documents, where applicable. This checklist summarizes the recommendations rather than reproducing their text.", "footnote": "The William James website may host a different or incomplete edition; use the supplied Rules for Responsible Modeling PDF for cited page locations. Agency example thresholds are not universal ICM solver limits.", "noLinkText": "Supplied reference; not repackaged in this repository."}], "references": [{"id": "C1", "title": "CIWEM UDG · Purpose and appropriate detail", "location": "Code of Practice for the Hydraulic Modelling of Urban Drainage Systems (2017), §§2.2–2.4, pp. 5–11", "note": "Agree model purpose and level of detail; different areas can require different detail.", "url": "https://www.ciwem.org/assets/pdf/Special%20Interest%20Groups/Urban%20Drainage%20Group/Code%20of%20Practice%20for%20the%20Hydraulic%20Modelling%20of%20Ur.pdf", "kind": "Engineering guidance"}, {"id": "C2", "title": "CIWEM UDG · Assumptions, sources and omissions", "location": "§4.3.1.8 (p. 51); §4.4 (pp. 61–65); §8.4 (p. 98); Appendix B (p. 107)", "note": "Review sources, assumptions, omitted features and representation of 2D topography and structures.", "url": "https://www.ciwem.org/assets/pdf/Special%20Interest%20Groups/Urban%20Drainage%20Group/Code%20of%20Practice%20for%20the%20Hydraulic%20Modelling%20of%20Ur.pdf", "kind": "Engineering guidance"}, {"id": "C3", "title": "CIWEM UDG · Model testing and sense checks", "location": "§4.6, pp. 67–69", "note": "Run completion, convergence, simulation duration, volume balance, abnormal flooding and hydraulic behavior.", "url": "https://www.ciwem.org/assets/pdf/Special%20Interest%20Groups/Urban%20Drainage%20Group/Code%20of%20Practice%20for%20the%20Hydraulic%20Modelling%20of%20Ur.pdf", "kind": "Engineering guidance"}, {"id": "C4", "title": "CIWEM UDG · Verification and model confidence", "location": "§5, pp. 70–77; §6, pp. 78–85", "note": "Compare with independent observations where available; evaluate flood extents, depth and flow paths; confidence varies by place and purpose.", "url": "https://www.ciwem.org/assets/pdf/Special%20Interest%20Groups/Urban%20Drainage%20Group/Code%20of%20Practice%20for%20the%20Hydraulic%20Modelling%20of%20Ur.pdf", "kind": "Engineering guidance"}, {"id": "J1", "title": "William James · Model purpose and outputs", "location": "Rules for Responsible Modeling, Ch. 9, pp. 139–145", "note": "Define the objective and relevant model outputs before judging results.", "url": "https://www.chiwater.com/Company/Staff/WJamesWebpage/original/homepage/Research/R184Pweb.html", "kind": "Engineering guidance"}, {"id": "J2", "title": "William James · Optimal model complexity", "location": "Rules for Responsible Modeling, Ch. 4, pp. 61–74", "note": "Use an appropriate level of complexity supported by data and suited to the decision. More detail is not necessarily better.", "url": "https://www.chiwater.com/Company/Staff/WJamesWebpage/original/homepage/Research/R184Pweb.html", "kind": "Engineering guidance"}, {"id": "J3", "title": "William James · Sources of error", "location": "Rules for Responsible Modeling, Ch. 10, §10.3, pp. 152–154", "note": "Sources of error include data/measurement, parameters, structure, numerical solution, initialization and interpretation.", "url": "https://www.chiwater.com/Company/Staff/WJamesWebpage/original/homepage/Research/R184Pweb.html", "kind": "Engineering guidance"}, {"id": "H1", "title": "Houston Stormwater Master Plan · Validation example", "location": "Supplied Model Validation White Paper (Feb. 2024), pp. 1–8", "note": "Example of comparing modeled flooding with historical evidence and investigating a missing culvert.", "url": "https://www.houstonpublicworks.org/technical-overview-page", "kind": "Case study"}], "simulationEditor": {"addLabel": "Add simulation", "itemLabel": "simulation", "editLabel": "Edit simulation", "description": "Name this run and link it to a loading event, system condition, and optional boundary set.", "previewFields": ["name"], "schema": "simulation", "pickerTitle": "Simulations", "summaryTitle": "Simulation conditions", "emptyListText": "No simulations yet.", "emptyTitle": "No simulation selected", "emptyDescription": "Add a simulation to begin its checkup. Each run keeps its own screening, results, and troubleshooting entries."}, "collections": {"events": {"title": "Loading events", "description": "Define each storm or loading case once; select it in simulations.", "scope": "project", "addLabel": "Add event", "itemLabel": "loading event", "previewFields": ["name"], "schema": "event"}, "systemConditions": {"title": "System conditions", "description": "Define baseline, proposed, future and alternatives once.", "scope": "project", "addLabel": "Add condition", "itemLabel": "system condition", "previewFields": ["name"], "schema": "systemCondition"}, "boundarySets": {"title": "Initial / boundary condition sets", "description": "Optional named presets for soil, water level and other initial/boundary assumptions.", "scope": "project", "addLabel": "Add condition set", "itemLabel": "condition set", "previewFields": ["name"], "schema": "boundarySet"}, "hydrologyMethods": {"title": "Hydrology and loss methods", "description": "Add one row per method or area. No routing-method questions.", "scope": "project", "addLabel": "Add method", "itemLabel": "hydrology method", "previewFields": ["name"], "previewSubtitleFields": ["appliedTo", "method"], "schema": "hydrologyMethod"}, "reviewLocations": {"title": "Reusable review locations", "description": "Save 1D profiles, graph objects (node, link, subcatchment), or 2D results analysis objects once, then refer to them from hydrograph checks and findings in any simulation.", "scope": "project", "addLabel": "Add review location", "itemLabel": "review location", "previewFields": ["name"], "previewSubtitleFields": ["type", "lineRole"], "schema": "reviewLocation"}, "hydroChecks": {"title": "Hydrograph spot checks", "description": "Select a shared review location for each check (define locations on the Review locations tab). Suggested: two trunk-line locations and a few branches.", "scope": "simulation.screening", "addLabel": "Add hydrograph check", "itemLabel": "hydrograph check", "previewFields": ["reviewLocationId"], "previewSubtitleFields": ["peak", "recession"], "schema": "hydroCheck"}, "balanceChecks": {"title": "Local numerical-balance checks", "description": "Add a node or 2D zone if the simulation log shows an issue.", "scope": "simulation.screening", "addLabel": "Add balance check", "itemLabel": "balance check", "previewFields": ["objectId", "type"], "schema": "balanceCheck"}, "findings": {"title": "Results findings", "description": "Each finding is independent; multiple findings may reference the same profile or results object.", "scope": "simulation", "addLabel": "Add finding", "itemLabel": "finding", "previewFields": ["objectId", "problemType", "resultType"], "schema": "finding"}, "issues": {"title": "Model troubleshooting", "description": "Investigate potential model errors, optionally linked to a result finding.", "scope": "simulation", "addLabel": "Add issue", "itemLabel": "issue", "previewFields": ["objectId", "category"], "schema": "issue"}}, "forms": {"project": [{"id": "purpose", "title": "What brings you here?", "description": "Identify the real engineering problem before reviewing the model.", "fields": [{"id": "projectName", "label": "Project name", "type": "text", "placeholder": "e.g. Houston drainage review"}, {"id": "modelType", "label": "What type of model is this?", "type": "select", "options": [{"value": "sanitary_1d", "label": "Sanitary sewer · 1D"}, {"value": "stormwater_1d", "label": "Stormwater · 1D"}, {"value": "stormwater_1d2d", "label": "Stormwater · 1D/2D"}, {"value": "stormwater_2d", "label": "Stormwater · 2D"}, {"value": "combined_1d", "label": "Combined sewer · 1D"}, {"value": "combined_1d2d", "label": "Combined sewer · 1D/2D"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C1"]}, {"id": "projectType", "label": "What type of project?", "type": "radio", "options": [{"value": "design", "label": "New site / improvement design"}, {"value": "planning", "label": "Planning / system capacity"}, {"value": "flooding", "label": "Existing flooding investigation"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["J1", "C1"]}, {"id": "designGoals", "label": "What are you designing or evaluating?", "type": "multi", "options": [{"value": "new_infrastructure", "label": "New drainage or sewer infrastructure"}, {"value": "required_capacity", "label": "Required capacity"}, {"value": "storage", "label": "Detention / storage"}, {"value": "downstream", "label": "Downstream impacts"}, {"value": "alternatives", "label": "Improvement alternatives"}, {"value": "other", "label": "Other"}], "allowOther": true, "visibleWhen": {"field": "project.answers.projectType", "in": ["design"]}}, {"id": "planningGoals", "label": "What are you assessing?", "type": "multi", "options": [{"value": "existing_capacity", "label": "Existing capacity"}, {"value": "future_growth", "label": "Future growth"}, {"value": "deficiencies", "label": "Capacity deficiencies"}, {"value": "upgrade_options", "label": "Upgrade alternatives"}, {"value": "other", "label": "Other"}], "allowOther": true, "visibleWhen": {"field": "project.answers.projectType", "in": ["planning"]}}, {"id": "floodingGoals", "label": "What problems are you investigating?", "type": "multi", "options": [{"value": "street_flood", "label": "Street flooding"}, {"value": "property_flood", "label": "Property / building flooding"}, {"value": "sewer_backup", "label": "Sewer backups / overflows"}, {"value": "combined_overflow", "label": "Combined sewer overflows"}, {"value": "channel_flood", "label": "Channel flooding"}, {"value": "other", "label": "Other"}], "allowOther": true, "visibleWhen": {"field": "project.answers.projectType", "in": ["flooding"]}}, {"id": "floodingObjective", "label": "What are you trying to accomplish?", "type": "multi", "options": [{"value": "reproduce", "label": "Reproduce historical flooding"}, {"value": "causes", "label": "Understand causes"}, {"value": "improve", "label": "Evaluate improvements"}, {"value": "other", "label": "Other"}], "allowOther": true, "visibleWhen": {"field": "project.answers.projectType", "in": ["flooding"]}}]}, {"id": "history", "title": "Existing evidence", "description": "", "fields": [{"id": "observations", "label": "What independent observations are available?", "type": "multi", "options": [{"value": "flood_locations", "label": "Reported flooding locations"}, {"value": "depth_marks", "label": "Measured flood depths / high-water marks"}, {"value": "flows", "label": "Measured flows"}, {"value": "levels", "label": "Measured water levels"}, {"value": "prior_models", "label": "Previous studies / models"}, {"value": "none", "label": "None"}, {"value": "unknown", "label": "Unknown"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C4", "H1"]}, {"id": "comparedWithObservations", "label": "Has the baseline been compared with observations?", "type": "radio", "options": [{"value": "reasonable", "label": "Yes — reasonable agreement"}, {"value": "differences", "label": "Yes — significant differences remain"}, {"value": "not_yet", "label": "Not yet"}, {"value": "unavailable", "label": "No observations available"}, {"value": "unknown", "label": "Unknown"}], "references": ["C4"]}]}], "model": [{"id": "representation", "title": "What did you model?", "description": "", "fields": [{"id": "components1d", "label": "Explicitly modeled in 1D", "type": "multi", "options": [{"value": "pipes", "label": "Pipes"}, {"value": "storage", "label": "Storage"}, {"value": "pumps", "label": "Pumps"}, {"value": "streets", "label": "Streets"}, {"value": "ditches_culverts", "label": "Culverts / ditches"}, {"value": "rivers", "label": "Rivers / channels"}, {"value": "other", "label": "Other"}], "allowOther": true, "visibleWhen": {"field": "project.answers.modelType", "in": ["sanitary_1d", "stormwater_1d", "stormwater_1d2d", "combined_1d", "combined_1d2d"]}, "references": ["C2", "J2"]}, {"id": "components2d", "label": "Explicitly modeled in 2D", "type": "multi", "options": [{"value": "connections", "label": "1D–2D connections"}, {"value": "rivers", "label": "Rivers / channels"}, {"value": "streets", "label": "Streets"}, {"value": "ditches", "label": "Ditches / culverts through terrain"}, {"value": "storage", "label": "Storage / ponds"}, {"value": "other", "label": "Other"}], "allowOther": true, "visibleWhen": {"field": "project.answers.modelType", "in": ["stormwater_1d2d", "stormwater_2d", "combined_1d2d"]}, "references": ["C2"]}, {"id": "omissions", "label": "What was left out or represented indirectly?", "type": "multi", "options": [{"value": "minor_pipes", "label": "Minor pipes"}, {"value": "private_drainage", "label": "Private drainage"}, {"value": "ditches", "label": "Roadside ditches"}, {"value": "culverts", "label": "Small culverts"}, {"value": "minor_structures", "label": "Other small structures"}, {"value": "none", "label": "Nothing significant"}, {"value": "unknown", "label": "Unknown"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C2", "J2"]}, {"id": "omissionTreatment", "label": "How are those features accounted for?", "type": "multi", "options": [{"value": "terrain", "label": "Represented in terrain"}, {"value": "subcatchment", "label": "Included indirectly in runoff"}, {"value": "equivalent", "label": "Simplified / equivalent elements"}, {"value": "unrepresented", "label": "Not accounted for"}, {"value": "unknown", "label": "Unknown"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C2"]}]}, {"id": "data", "title": "Where did the information come from?", "description": "", "fields": [{"id": "dataSources", "label": "Which data sources were used?", "type": "multi", "options": [{"value": "survey", "label": "Survey"}, {"value": "as_built", "label": "As-builts / plans"}, {"value": "gis", "label": "GIS asset data"}, {"value": "lidar", "label": "LiDAR / DEM"}, {"value": "previous", "label": "Previous model"}, {"value": "estimated", "label": "Estimated / assumed"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C2"]}, {"id": "estimatedInputs", "label": "Which important inputs were estimated?", "type": "multi", "options": [{"value": "inverts", "label": "Pipe inverts"}, {"value": "diameters", "label": "Pipe sizes"}, {"value": "cross_sections", "label": "Channel / ditch geometry"}, {"value": "surface", "label": "Surface elevations"}, {"value": "roughness", "label": "Roughness"}, {"value": "none", "label": "None"}, {"value": "unknown", "label": "Unknown"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C2"]}]}, {"id": "inputs", "title": "How does water enter and leave?", "description": "", "fields": [{"id": "flowInputs", "label": "How does flow enter the model?", "type": "multi", "options": [{"value": "rainfall_1d", "label": "Rainfall to 1D subcatchments"}, {"value": "rainfall_2d", "label": "Rainfall to 2D mesh"}, {"value": "external", "label": "External inflow / hydrographs"}, {"value": "dwf", "label": "Dry-weather flow"}, {"value": "rdii", "label": "RDII / wet-weather sanitary inflow"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C2"]}, {"id": "boundaryTypes", "label": "What types of outlet boundary conditions are used?", "type": "multi", "options": [{"value": "free", "label": "Free outfall"}, {"value": "level_fixed", "label": "Fixed water level"}, {"value": "level_varying", "label": "Time-varying water level"}, {"value": "rating", "label": "Rating curve"}, {"value": "other", "label": "Other"}, {"value": "unknown", "label": "Unknown"}], "allowOther": true, "references": ["C2"]}]}], "event": [{"id": "name", "label": "Event name", "type": "text", "placeholder": "e.g. 10-year storm", "references": ["C3"]}, {"id": "type", "label": "Loading type", "type": "select", "options": [{"value": "historical", "label": "Historical event"}, {"value": "design", "label": "Design storm"}, {"value": "dry_weather", "label": "Dry-weather flow"}, {"value": "prescribed", "label": "Prescribed inflow"}, {"value": "continuous", "label": "Continuous simulation"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C3"]}, {"id": "returnPeriod", "label": "Return period (years), if applicable", "type": "number", "min": 0, "step": 1, "references": ["C3"]}, {"id": "eventDate", "label": "Event date, if historical", "type": "date", "references": ["C3"]}, {"id": "source", "label": "Rainfall / inflow source", "type": "text", "placeholder": "e.g. observed gauge, local IDF", "references": ["C3"]}, {"id": "notes", "label": "Notes", "type": "textarea", "rows": 2, "references": ["C3"]}], "systemCondition": [{"id": "name", "label": "Condition name", "type": "text", "placeholder": "e.g. Proposed improvements", "references": ["C1"]}, {"id": "type", "label": "System condition", "type": "select", "options": [{"value": "existing", "label": "Existing / baseline"}, {"value": "proposed", "label": "Proposed design"}, {"value": "future", "label": "Future development"}, {"value": "alternative", "label": "Improvement alternative"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C1"]}, {"id": "horizon", "label": "Planning horizon (years)", "type": "number", "min": 0, "step": 1, "references": ["C1"]}, {"id": "notes", "label": "Short description", "type": "textarea", "rows": 2, "references": ["C1"]}], "boundarySet": [{"id": "name", "label": "Condition-set name", "type": "text", "placeholder": "e.g. Saturated soil / high tailwater", "references": ["C3"]}, {"id": "soil", "label": "Initial soil conditions", "type": "select", "options": [{"value": "unsaturated", "label": "Unsaturated"}, {"value": "saturated", "label": "Saturated"}, {"value": "antecedent", "label": "Based on antecedent conditions"}, {"value": "na", "label": "Not applicable"}, {"value": "unknown", "label": "Unknown"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C3"]}, {"id": "tailwater", "label": "Downstream condition", "type": "select", "options": [{"value": "free", "label": "Free outfall"}, {"value": "normal", "label": "Normal level"}, {"value": "high", "label": "High tailwater"}, {"value": "varying", "label": "Time-varying level"}, {"value": "measured", "label": "Observed level"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C3"]}, {"id": "notes", "label": "Other assumptions / source", "type": "textarea", "rows": 2, "references": ["C3"]}], "hydrologyMethod": [{"id": "name", "label": "Method name", "type": "text", "placeholder": "e.g. North subcatchments — SCS", "references": ["C2"]}, {"id": "appliedTo", "label": "Applied to", "type": "select", "options": [{"value": "subcatchment_1d", "label": "1D subcatchments"}, {"value": "mesh_2d", "label": "2D mesh"}, {"value": "sanitary", "label": "Sanitary inflows"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C2"]}, {"id": "method", "label": "Hydrology / inflow method", "type": "select", "options": [{"value": "swmm", "label": "SWMM Runoff"}, {"value": "scs", "label": "SCS / NRCS"}, {"value": "rational", "label": "Rational"}, {"value": "rain_mesh", "label": "Rain-on-mesh"}, {"value": "rdii", "label": "RDII"}, {"value": "dwf", "label": "Dry-weather flow"}, {"value": "external", "label": "External hydrograph"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C2"]}, {"id": "loss", "label": "Loss / infiltration method", "type": "select", "options": [{"value": "horton", "label": "Horton"}, {"value": "green_ampt", "label": "Green–Ampt"}, {"value": "cn", "label": "Curve Number"}, {"value": "fixed", "label": "Fixed infiltration / loss rate"}, {"value": "coefficient", "label": "Runoff coefficient"}, {"value": "depression", "label": "Initial abstraction / depression storage"}, {"value": "none", "label": "None"}, {"value": "na", "label": "Not applicable"}, {"value": "unknown", "label": "Unknown"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["C2"]}, {"id": "location", "label": "Area / network where used", "type": "text", "references": ["C2"]}, {"id": "notes", "label": "Notes", "type": "textarea", "rows": 2, "references": ["C2"]}], "reviewLocation": [{"id": "name", "label": "Review location name", "type": "text", "placeholder": "e.g. Main Trunk A", "references": ["C2"]}, {"id": "type", "label": "Review object type", "type": "select", "options": [{"value": "1d_profile", "label": "1D profile / long section"}, {"value": "1d_node", "label": "1D node (graph)"}, {"value": "1d_link", "label": "1D link (graph)"}, {"value": "1d_subcatchment", "label": "1D subcatchment (graph)"}, {"value": "2d_polygon", "label": "2D results polygon"}, {"value": "2d_polyline", "label": "2D results polyline / section"}, {"value": "2d_other", "label": "Other 2D results analysis object"}], "references": ["C2"], "helpUrl": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/Extracting-results-from-the-2D-domain-in-InfoWorks-ICM.html", "helpLinkLabel": "2D results in ICM"}, {"id": "lineRole", "label": "Conveyance role", "type": "select", "options": [{"value": "trunk", "label": "Trunk"}, {"value": "branch", "label": "Branch"}, {"value": "other", "label": "Other"}], "visibleWhen": {"field": "type", "in": ["1d_profile", "1d_link"]}, "references": ["C2"]}, {"id": "identifierType", "label": "ICM identifier", "type": "select", "optionsBy": "type", "optionSets": {"1d_profile": [{"value": "branch", "label": "Branch ID"}, {"value": "selection", "label": "Selection List"}, {"value": "other", "label": "Other"}], "1d_node": [{"value": "node", "label": "Node ID"}], "1d_link": [{"value": "link", "label": "Link ID"}], "1d_subcatchment": [{"value": "subcatchment", "label": "Subcatchment ID"}], "2d_polygon": [{"value": "object", "label": "Results object name / ID"}], "2d_polyline": [{"value": "object", "label": "Results object name / ID"}], "2d_other": [{"value": "object", "label": "Results object name / ID"}]}, "visibleWhen": {"field": "type", "in": ["1d_profile"]}, "references": ["C2"], "helpUrl": "https://help.autodesk.com/view/IWICMS/2026/ENU/?guid=GUID-7944D41B-4ACD-4AEE-B661-BD13FB3CED75", "helpLinkLabel": "Long section & selection lists"}, {"id": "identifier", "label": "Identifier in ICM", "type": "text", "placeholder": "e.g. BR-01 or Area_A", "references": ["C2"], "helpUrl": "https://help.autodesk.com/view/IWICMS/2026/ENU/?guid=GUID-4DB61575-E353-49DE-8B8C-00EA6F4A1662", "helpLinkLabel": "Results analysis objects"}, {"id": "notes", "label": "Location notes", "type": "textarea", "rows": 2, "references": ["C2"]}], "simulation": [{"id": "name", "label": "Simulation name", "type": "text", "placeholder": "e.g. Existing 10-year"}, {"id": "systemConditionId", "label": "System condition", "type": "reference", "source": "systemConditions", "allowBlank": true}, {"id": "eventId", "label": "Loading event", "type": "reference", "source": "events", "allowBlank": true}, {"id": "boundarySetId", "label": "Initial / boundary conditions", "type": "reference", "source": "boundarySets", "allowBlank": true}, {"id": "notes", "label": "Simulation notes", "type": "textarea", "rows": 2}], "screening": [{"id": "run", "title": "Run health", "description": "", "fields": [{"id": "status", "label": "Simulation status", "type": "radio", "options": [{"value": "success", "label": "Completed successfully"}, {"value": "warnings", "label": "Completed with warnings"}, {"value": "failed", "label": "Failed"}, {"value": "not_checked", "label": "Not checked"}], "references": ["C3"], "helpUrl": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-check-simulation-run-log-results-in-InfoWorks-ICM.html", "helpLinkLabel": "Check log results"}, {"id": "hydrographOverall", "label": "Did spot-check hydrographs capture peaks and required recession?", "type": "radio", "options": [{"value": "yes", "label": "Yes"}, {"value": "no", "label": "No"}, {"value": "not_checked", "label": "Not checked"}], "references": ["C3"], "helpUrl": "https://help.autodesk.com/view/IWICMS/2026/ENU/?guid=GUID-4ECC28FC-F4CE-4601-9CF7-91AA5B693703", "helpLinkLabel": "Graph results"}]}, {"id": "water", "title": "Where did the water go?", "description": "", "fields": [{"id": "waterBudgetNote", "label": "Use quantities and units as reported by ICM; do not add 1D and 2D totals together without accounting for transfers.", "type": "note", "references": ["C3"], "helpUrl": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-assess-dynamic-storage-volume-in-InfoWorks-ICM.html", "helpLinkLabel": "Dynamic storage & volume balance"}, {"id": "volumeUnits", "label": "Reported volume units", "type": "select", "options": [{"value": "m3", "label": "m³"}, {"value": "ft3", "label": "ft³"}, {"value": "MG", "label": "million gallons"}, {"value": "acreft", "label": "acre-feet"}, {"value": "other", "label": "Other"}], "allowOther": true}, {"id": "rainfallVolume", "label": "Total rainfall volume (if reported)", "type": "number", "step": "any"}, {"id": "runoffVolume", "label": "Total runoff volume (if reported)", "type": "number", "step": "any"}, {"id": "networkInflow", "label": "Total network inflow / volume (as reported)", "type": "number", "step": "any"}, {"id": "outfallVolume", "label": "Volume leaving at outfalls", "type": "number", "step": "any"}, {"id": "lostVolume", "label": "Reported lost volume", "type": "number", "step": "any"}, {"id": "storageVolume", "label": "Final / dynamic storage (as reported)", "type": "number", "step": "any"}, {"id": "balanceNote", "label": "Notes on definitions or unexplained water", "type": "textarea", "rows": 2, "references": ["C3"], "helpUrl": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-assess-dynamic-storage-volume-in-InfoWorks-ICM.html", "helpLinkLabel": "Dynamic storage & volume balance"}]}, {"id": "numerical", "title": "Numerical screening", "description": "", "fields": [{"id": "overallContinuity", "label": "Overall continuity error (%) — if reported", "type": "number", "step": "any", "references": ["C3"], "helpUrl": "https://help.autodesk.com/view/IWICMS/2026/ENU/?guid=GUID-4D6605FB-26B6-4CB4-AF14-4C681722DABF", "helpLinkLabel": "Log & PRN reports"}, {"id": "warnings", "label": "Significant warnings or errors in the log?", "type": "radio", "options": [{"value": "yes", "label": "Yes"}, {"value": "no", "label": "No"}, {"value": "not_checked", "label": "Not checked"}], "references": ["C3"], "helpUrl": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-check-simulation-run-log-results-in-InfoWorks-ICM.html", "helpLinkLabel": "Check log results"}, {"id": "logExcerpt", "label": "Paste relevant simulation errors or warnings", "type": "textarea", "rows": 5, "visibleWhen": {"field": "warnings", "in": ["yes"]}, "helpUrl": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-check-simulation-run-log-results-in-InfoWorks-ICM.html", "helpLinkLabel": "Check log results"}, {"id": "oscillations", "label": "Unexpected flow or water-level oscillations?", "type": "radio", "options": [{"value": "yes", "label": "Yes"}, {"value": "no", "label": "No"}, {"value": "not_checked", "label": "Not checked"}], "references": ["C3"], "helpUrl": "https://help.autodesk.com/view/IWICMS/2026/ENU/?guid=GUID-2C5C3870-5BC6-487C-8306-AA7397CDD239", "helpLinkLabel": "Computational instabilities"}, {"id": "oscillationLocations", "label": "Object IDs / comments", "type": "textarea", "rows": 2, "visibleWhen": {"field": "oscillations", "in": ["yes"]}}, {"id": "localBalance", "label": "Significant node or 2D-zone balance errors?", "type": "radio", "options": [{"value": "yes", "label": "Yes"}, {"value": "no", "label": "No"}, {"value": "not_checked", "label": "Not checked"}], "references": ["C3"], "helpUrl": "https://help.autodesk.com/view/IWICMS/2026/ENU/?guid=GUID-2C5C3870-5BC6-487C-8306-AA7397CDD239", "helpLinkLabel": "Computational instabilities"}, {"id": "balanceLocations", "label": "Object or zone names / comments", "type": "textarea", "rows": 2, "visibleWhen": {"field": "localBalance", "in": ["yes"]}}]}], "hydroCheck": [{"id": "reviewLocationId", "label": "Review location", "type": "reference", "source": "reviewLocations", "allowBlank": false, "filterBy": "reviewLocationTypes", "filterTypes": ["1d_profile", "1d_node", "1d_link", "1d_subcatchment"], "helpUrl": "https://help.autodesk.com/view/IWICMS/2026/ENU/?guid=GUID-4ECC28FC-F4CE-4601-9CF7-91AA5B693703", "helpLinkLabel": "Graph results"}, {"id": "peak", "label": "Peak captured?", "type": "radio", "options": [{"value": "yes", "label": "Yes"}, {"value": "no", "label": "No"}, {"value": "not_checked", "label": "Not checked"}], "helpUrl": "https://help.autodesk.com/view/IWICMS/2026/ENU/?guid=GUID-4ECC28FC-F4CE-4601-9CF7-91AA5B693703", "helpLinkLabel": "Graph results"}, {"id": "recession", "label": "Recession captured?", "type": "radio", "options": [{"value": "yes", "label": "Yes"}, {"value": "no", "label": "No"}, {"value": "not_checked", "label": "Not checked"}]}, {"id": "notes", "label": "Comments", "type": "text"}], "balanceCheck": [{"id": "type", "label": "Check type", "type": "select", "options": [{"value": "node", "label": "1D node"}, {"value": "2d_zone", "label": "2D zone"}, {"value": "other", "label": "Other"}]}, {"id": "objectId", "label": "Object / zone ID", "type": "text"}, {"id": "errorPct", "label": "Reported balance error (%)", "type": "number", "step": "any"}, {"id": "comments", "label": "Notes", "type": "textarea", "rows": 2}], "finding": [{"id": "resultType", "label": "Results type", "type": "radio", "options": [{"value": "1d", "label": "1D"}, {"value": "2d", "label": "2D"}], "defaultValue": "1d"}, {"id": "reviewLocationId", "label": "Profile or 2D results object", "type": "reference", "source": "reviewLocations", "allowBlank": true, "filterBy": "resultType", "typePrefixes": {"1d": "1d_", "2d": "2d_"}, "resetOnChange": true}, {"id": "problemType", "label": "What did you find?", "type": "select", "optionsBy": "resultType", "optionSets": {"1d": [{"value": "flooding", "label": "Node flooding"}, {"value": "surcharge", "label": "Surcharging"}, {"value": "capacity", "label": "Pipe capacity"}, {"value": "overtopping", "label": "Channel overtopping"}, {"value": "backwater", "label": "Backwater"}, {"value": "abnormal", "label": "Unexpected water level / flow"}, {"value": "other", "label": "Other"}], "2d": [{"value": "flooding", "label": "Excessive flooding"}, {"value": "path", "label": "Unexpected flow path"}, {"value": "velocity", "label": "High velocity"}, {"value": "ponding", "label": "Persistent ponding"}, {"value": "level", "label": "Unexpected level / depth"}, {"value": "other", "label": "Other"}]}, "allowOther": true, "resetOnChange": true}, {"id": "objectId", "label": "Specific object ID / location (optional)", "type": "text"}, {"id": "severity", "label": "Observed result / severity", "type": "textarea", "rows": 2}, {"id": "diagnosis", "label": "Initial diagnosis", "type": "textarea", "rows": 2}, {"id": "classification", "label": "What kind of problem?", "type": "radio", "options": [{"value": "system", "label": "Real system problem"}, {"value": "model", "label": "Possible model problem"}, {"value": "unknown", "label": "Not sure"}]}, {"id": "investigate", "label": "Further investigation?", "type": "radio", "options": [{"value": "yes", "label": "Yes"}, {"value": "no", "label": "No"}, {"value": "unknown", "label": "Not sure"}], "references": ["C4"]}], "issue": [{"id": "findingId", "label": "Related finding (optional)", "type": "reference", "source": "findings", "allowBlank": true}, {"id": "objectId", "label": "Object ID / location", "type": "text"}, {"id": "category", "label": "Suspected error source", "type": "select", "options": [{"value": "data", "label": "Data / measurement"}, {"value": "structure", "label": "Model representation / omitted features"}, {"value": "parameter", "label": "Parameters / assumptions"}, {"value": "boundary", "label": "Boundary / external loading"}, {"value": "initial", "label": "Initial conditions"}, {"value": "numerical", "label": "Numerical solver"}, {"value": "interpretation", "label": "Observations / interpretation"}, {"value": "unknown", "label": "Unknown"}, {"value": "other", "label": "Other"}], "allowOther": true, "references": ["J3", "C3"]}, {"id": "evidence", "label": "Evidence / pasted diagnostic log", "type": "textarea", "rows": 4}, {"id": "diagnosis", "label": "Initial diagnosis / next check", "type": "textarea", "rows": 2}, {"id": "status", "label": "Investigation status", "type": "select", "options": [{"value": "new", "label": "Needs investigation"}, {"value": "working", "label": "Investigating"}, {"value": "resolved", "label": "Resolved"}, {"value": "deferred", "label": "Deferred"}], "defaultValue": "new"}]}}
+</script>
+  <!-- Script order matters: the offline build concatenates these files, in this order, into one script. -->
+<script>
+(() => {
+/*
+ * Model Checkup: core helpers and shared state.
+ * The app is a generic renderer: questions, pages, tabs and references live in default-checklist.json.
+ * The offline build concatenates app/js/*.js (in index.html order) into one script.
+ */
+'use strict';
+
+const STORAGE_KEY = 'icm-model-checkup-project-v1';
+const BACKUP_KEY = STORAGE_KEY + '-backup';
+const VIEW_KEY = 'icm-model-checkup-view-v1';
+
+const $ = (selector) => document.querySelector(selector);
+const copy = (value) => JSON.parse(JSON.stringify(value));
+const uid = (prefix) => prefix + '-' + (globalThis.crypto?.randomUUID?.() || Math.random().toString(36).slice(2));
+
+const HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (ch) => HTML_ESCAPES[ch]);
+
+/**
+ * Return a normalized http(s) URL, or '' for anything else.
+ * Opened project files carry their own checklist snapshot, which is untrusted input:
+ * escaping alone does not stop `javascript:` or `data:` links, so every href goes through here.
+ */
+function safeHttpUrl(value) {
+  try {
+    const url = new URL(String(value ?? '').trim());
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
+  } catch {
+    return '';
+  }
+}
+
+/** Compare dotted numeric versions ("1.3.1" vs "1.4.0"). Returns -1, 0 or 1. */
+function compareVersions(a, b) {
+  const pa = String(a ?? '').split('.').map((n) => parseInt(n, 10) || 0);
+  const pb = String(b ?? '').split('.').map((n) => parseInt(n, 10) || 0);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const diff = (pa[i] || 0) - (pb[i] || 0);
+    if (diff !== 0) return diff < 0 ? -1 : 1;
+  }
+  return 0;
+}
+
+// Shared mutable state.
+let defaultChecklist = null; // bundled default; used only for NEW projects and layout fill-in
+let doc = null;              // the open project file: { fileVersion, checklist, project }
+let dirty = false;           // changes since the last Save project / Open project / New project
+let lastAutosave = '';
+let autosaveFailed = false;
+let dragPayload = null;
+const view = { page: '', simTab: '', simId: null, editor: null };
+
+const currentProject = () => doc.project;
+const selectedSimulation = () => currentProject().simulations.find((s) => s.id === view.simId) || null;
+
+/** Safe storage wrappers: even touching window.localStorage can throw (sandboxed frames, private mode, some file:// setups). */
+const localArea = () => { try { return localStorage; } catch { return null; } };
+const sessionArea = () => { try { return sessionStorage; } catch { return null; } };
+function readStorage(area, key) {
+  try { return area ? area.getItem(key) : null; } catch { return null; }
+}
+function writeStorage(area, key, value) {
+  try { if (!area) return false; area.setItem(key, value); return true; } catch { return false; }
+}
+
+function notify(message, isError = false) {
+  const box = $('#message');
+  $('#message-text').textContent = message;
+  box.classList.toggle('error', Boolean(isError));
+  box.hidden = false;
+}
+function dismissNotice() {
+  $('#message').hidden = true;
+}
+
+function renderSaveStatus() {
+  const parts = [];
+  if (autosaveFailed) parts.push('Autosave unavailable — use Save project');
+  else parts.push(lastAutosave ? 'Autosaved locally · ' + lastAutosave : 'Ready');
+  if (dirty) parts.push('changes not yet saved to a file');
+  $('#save-status').textContent = parts.join(' · ');
+}
+
+function autosave() {
+  dirty = true;
+  const ok = writeStorage(localArea(), STORAGE_KEY, JSON.stringify(doc));
+  autosaveFailed = !ok;
+  if (ok) lastAutosave = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  renderSaveStatus();
+}
+
+/** Called after Save project / Open project / New project: the file on disk (or a fresh project) matches the screen. */
+function markClean() {
+  dirty = false;
+  renderSaveStatus();
+}
+
+/* Model Checkup: checklist snapshot helpers (schema lookup, validation, layout fill-in). */
+'use strict';
+
+const FIELD_TYPES = ['text', 'date', 'number', 'textarea', 'radio', 'multi', 'select', 'reference', 'note'];
+const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+
+/** A form is a plain array of fields, or an array of titled groups that each hold a `fields` array. */
+function fieldsOfForm(form) {
+  if (!Array.isArray(form)) return [];
+  return form.flatMap((entry) => (entry && Array.isArray(entry.fields) ? entry.fields : [entry]));
+}
+function flatFormFields(schemaName) {
+  return fieldsOfForm(doc.checklist.forms[schemaName]);
+}
+function getFieldDef(schemaName, fieldId) {
+  return flatFormFields(schemaName).find((f) => f.id === fieldId);
+}
+
+const collectionMeta = (name) => doc.checklist.collections[name] || null;
+const simulationEditorMeta = () => doc.checklist.simulationEditor || null;
+const navigationPage = (id) => doc.checklist.navigation.find((n) => n.id === id) || null;
+const simulationTabs = () => navigationPage('simulations')?.tabs || [];
+
+/** Collection scope says where its records live: "project", "simulation", or "simulation.screening". */
+const collectionScope = (name) => collectionMeta(name)?.scope || 'project';
+const isSimulationScope = (scope) => scope === 'simulation' || scope.startsWith('simulation.');
+
+/**
+ * Names of fields whose value changes the *rendering* of other fields (visibleWhen, optionsBy, reference filters)
+ * or that show an "other" box. Only these changes need a re-render; every other edit leaves the DOM (and focus) alone.
+ */
+function redrawTriggerKeys(checklist) {
+  const keys = new Set();
+  for (const form of Object.values(checklist.forms)) {
+    for (const f of fieldsOfForm(form)) {
+      if (f.visibleWhen?.field) keys.add(String(f.visibleWhen.field).split('.').pop());
+      if (f.optionsBy) keys.add(f.optionsBy);
+      if (f.typePrefixes && f.filterBy) keys.add(f.filterBy);
+      if (f.allowOther) keys.add(f.id);
+    }
+  }
+  return keys;
+}
+
+/**
+ * Validate the shape of a checklist snapshot that came from a file or from browser storage.
+ * The snapshot is untrusted: reject anything the renderer could not safely draw.
+ */
+function validateChecklistShape(cl) {
+  const fail = (why) => { throw new Error('The saved checklist is not usable (' + why + ').'); };
+  if (!isObject(cl)) fail('missing checklist');
+  if (!isObject(cl.forms)) fail('forms');
+  if (!isObject(cl.collections)) fail('collections');
+  if (!Array.isArray(cl.navigation) || !cl.navigation.length) fail('navigation');
+  if (!Array.isArray(cl.references)) fail('references');
+  for (const n of cl.navigation) {
+    if (!isObject(n) || typeof n.id !== 'string' || typeof n.label !== 'string') fail('navigation entry');
+  }
+  for (const r of cl.references) {
+    if (!isObject(r) || typeof r.id !== 'string') fail('reference entry');
+  }
+  for (const [name, form] of Object.entries(cl.forms)) {
+    if (!Array.isArray(form)) fail('form ' + name);
+    for (const f of fieldsOfForm(form)) {
+      if (!isObject(f) || typeof f.id !== 'string' || !FIELD_TYPES.includes(f.type)) fail('field in form ' + name);
+      if (f.options !== undefined && !Array.isArray(f.options)) fail('options of ' + name + '.' + f.id);
+      if (f.optionSets !== undefined && !isObject(f.optionSets)) fail('optionSets of ' + name + '.' + f.id);
+    }
+  }
+  for (const [name, meta] of Object.entries(cl.collections)) {
+    if (!isObject(meta) || !cl.forms[meta.schema]) fail('collection ' + name);
+  }
+  if (cl.simulationEditor !== undefined && (!isObject(cl.simulationEditor) || !cl.forms[cl.simulationEditor.schema])) {
+    fail('simulationEditor');
+  }
+}
+
+/**
+ * Structural (not question) keys introduced after older checklist versions: page layout, collection scope,
+ * field defaults and dependent-field rules. When an older snapshot lacks them they are filled in, in memory,
+ * from the bundled default for the same ids. Question text, options, ids, visibility and references of the
+ * snapshot are never replaced, and the snapshot keeps its own `version`.
+ */
+const LAYOUT_NAV_KEYS = ['view', 'title', 'description', 'form', 'store', 'collections', 'tabs', 'footnote', 'noLinkText'];
+const LAYOUT_SIM_KEYS = ['pickerTitle', 'summaryTitle', 'emptyListText', 'emptyTitle', 'emptyDescription'];
+const LAYOUT_FIELD_KEYS = ['defaultValue', 'typePrefixes', 'resetOnChange'];
+
+function applyLayoutDefaults(cl) {
+  const def = defaultChecklist;
+  if (!def) return;
+  for (const nav of cl.navigation) {
+    const d = def.navigation.find((n) => n.id === nav.id);
+    if (!d) continue;
+    for (const k of LAYOUT_NAV_KEYS) if (nav[k] === undefined && d[k] !== undefined) nav[k] = copy(d[k]);
+  }
+  for (const [name, meta] of Object.entries(cl.collections)) {
+    const d = def.collections[name];
+    if (meta.scope === undefined && d?.scope !== undefined) meta.scope = d.scope;
+  }
+  if (cl.simulationEditor && def.simulationEditor) {
+    for (const k of LAYOUT_SIM_KEYS) {
+      if (cl.simulationEditor[k] === undefined && def.simulationEditor[k] !== undefined) cl.simulationEditor[k] = def.simulationEditor[k];
+    }
+  }
+  for (const [formName, form] of Object.entries(cl.forms)) {
+    const defFields = fieldsOfForm(def.forms[formName]);
+    for (const f of fieldsOfForm(form)) {
+      const d = defFields.find((x) => x.id === f.id);
+      if (!d) continue;
+      for (const k of LAYOUT_FIELD_KEYS) if (f[k] === undefined && d[k] !== undefined) f[k] = copy(d[k]);
+    }
+  }
+}
+
+/* Model Checkup: project data access, defaults, integrity rules and reordering. All shapes come from the checklist. */
+'use strict';
+
+/** Resolve a dotted store path such as "project.answers" or "simulation.screening.answers"; create objects on the way. */
+function resolveStore(path) {
+  const parts = String(path || '').split('.').filter(Boolean);
+  if (!parts.length) return null;
+  const root = parts[0] === 'project' ? currentProject() : parts[0] === 'simulation' ? selectedSimulation() : null;
+  if (!root) return null;
+  let node = root;
+  for (const part of parts.slice(1)) {
+    if (!isObject(node[part])) node[part] = {};
+    node = node[part];
+  }
+  return node;
+}
+
+/** The array holding a collection's records for one simulation (or the project). */
+function recordsForCollection(name, sim = selectedSimulation()) {
+  const scope = collectionScope(name);
+  const p = currentProject();
+  if (name === 'simulations') return p.simulations;
+  if (scope === 'project') {
+    if (!Array.isArray(p[name])) p[name] = [];
+    return p[name];
+  }
+  if (!sim) return [];
+  if (scope === 'simulation') {
+    if (!Array.isArray(sim[name])) sim[name] = [];
+    return sim[name];
+  }
+  if (scope === 'simulation.screening') {
+    if (!isObject(sim.screening)) sim.screening = {};
+    if (!Array.isArray(sim.screening[name])) sim.screening[name] = [];
+    return sim.screening[name];
+  }
+  return [];
+}
+
+/** Every record that was created from a given form schema, across the whole project. */
+function recordsForSchema(schemaName) {
+  const p = currentProject();
+  const out = [];
+  if (simulationEditorMeta()?.schema === schemaName) out.push(...p.simulations);
+  for (const [name, meta] of Object.entries(doc.checklist.collections)) {
+    if (meta.schema !== schemaName) continue;
+    if (isSimulationScope(collectionScope(name))) p.simulations.forEach((s) => out.push(...recordsForCollection(name, s)));
+    else out.push(...recordsForCollection(name));
+  }
+  return out;
+}
+
+/** Page or simulation tab that edits a single (non-repeatable) record with this form, or null. */
+function singleFormOwner(schemaName) {
+  const pages = doc.checklist.navigation;
+  for (const page of pages) {
+    if (page.form === schemaName && page.store) return page;
+    const tab = (page.tabs || []).find((t) => t.form === schemaName && t.store);
+    if (tab) return tab;
+  }
+  return null;
+}
+
+/** `kind` is a form schema name. Returns the answers object / repeatable record that the form edits. */
+function getRecord(kind, id) {
+  const single = singleFormOwner(kind);
+  if (single) return resolveStore(single.store);
+  if (simulationEditorMeta()?.schema === kind) return currentProject().simulations.find((s) => s.id === id) || null;
+  for (const [name, meta] of Object.entries(doc.checklist.collections)) {
+    if (meta.schema !== kind) continue;
+    const found = recordsForCollection(name).find((r) => r.id === id);
+    if (found) return found;
+  }
+  return null;
+}
+
+function blankValue(field) {
+  if (field.defaultValue !== undefined) return copy(field.defaultValue);
+  return field.type === 'multi' ? [] : '';
+}
+function applyDefaults(record, schemaName) {
+  for (const f of flatFormFields(schemaName)) {
+    if (f.type === 'note' || record[f.id] !== undefined) continue;
+    if (f.defaultValue !== undefined) record[f.id] = copy(f.defaultValue);
+  }
+  return record;
+}
+
+/** Make sure a simulation has every array its collections expect. Never overwrites existing data. */
+function normalizeSimulation(sim) {
+  for (const [name] of Object.entries(doc.checklist.collections)) {
+    const scope = collectionScope(name);
+    if (!isSimulationScope(scope)) continue;
+    recordsForCollection(name, sim);
+  }
+  for (const page of doc.checklist.navigation) {
+    for (const tab of page.tabs || []) {
+      if (tab.store?.startsWith('simulation.')) {
+        let node = sim;
+        for (const part of tab.store.split('.').slice(1)) {
+          if (!isObject(node[part])) node[part] = {};
+          node = node[part];
+        }
+      }
+    }
+  }
+  return sim;
+}
+
+function blankSimulation() {
+  const sim = { id: uid('sim') };
+  for (const f of flatFormFields(simulationEditorMeta()?.schema)) if (f.type !== 'note') sim[f.id] = blankValue(f);
+  return normalizeSimulation(sim);
+}
+
+function newProject() {
+  const project = { id: uid('project'), simulations: [] };
+  const cl = copy(defaultChecklist);
+  for (const page of cl.navigation) {
+    const m = /^project\.(.+)$/.exec(page.store || '');
+    if (m) project[m[1]] = {};
+  }
+  for (const [name, meta] of Object.entries(cl.collections)) if ((meta.scope || 'project') === 'project') project[name] = [];
+  return { fileVersion: '1.0', checklist: cl, project };
+}
+
+/** Repair missing containers in an opened file without touching any answer. */
+function ensureShape(obj) {
+  const p = obj.project;
+  if (!isObject(p)) throw new Error('This is not a saved Model Checkup project JSON.');
+  if (!Array.isArray(p.simulations)) p.simulations = [];
+  p.simulations = p.simulations.filter(isObject);
+  for (const [name, meta] of Object.entries(obj.checklist.collections)) {
+    if ((meta.scope || 'project') === 'project' && !Array.isArray(p[name])) p[name] = [];
+  }
+  for (const page of obj.checklist.navigation) {
+    const m = /^project\.(.+)$/.exec(page.store || '');
+    if (m && !isObject(p[m[1]])) p[m[1]] = {};
+  }
+  const previous = doc;
+  doc = obj; // normalizeSimulation reads the checklist from `doc`
+  try {
+    p.simulations.forEach(normalizeSimulation);
+  } finally {
+    doc = previous;
+  }
+}
+
+/** Records elsewhere that point at this id through a `reference` field. Used to block deletion. */
+function isReferenced(collectionName, id) {
+  for (const [formName, form] of Object.entries(doc.checklist.forms)) {
+    for (const f of fieldsOfForm(form)) {
+      if (f.type !== 'reference' || f.source !== collectionName) continue;
+      if (recordsForSchema(formName).some((r) => r[f.id] === id)) return true;
+    }
+  }
+  return false;
+}
+
+/** Create a repeatable record with checklist defaults and return it (already inserted in its array). */
+function addRecord(collection) {
+  const meta = collectionMeta(collection);
+  const record = applyDefaults({ id: uid(meta.schema) }, meta.schema);
+  recordsForCollection(collection).push(record);
+  return record;
+}
+
+function removeRecord(collection, id) {
+  if (isReferenced(collection, id)) {
+    notify('This record is used elsewhere. Change those references before deleting it.', true);
+    return;
+  }
+  if (!confirm('Remove this entry?')) return;
+  const arr = recordsForCollection(collection);
+  const idx = arr.findIndex((x) => x.id === id);
+  if (idx >= 0) arr.splice(idx, 1);
+  if (view.editor?.kind === 'collection' && view.editor.recordId === id) view.editor = null;
+  autosave();
+  draw();
+}
+
+/** Move a record to a final index (0-based) inside its array. */
+function moveRecordTo(collection, id, finalIndex) {
+  const arr = recordsForCollection(collection);
+  const from = arr.findIndex((x) => x.id === id);
+  if (from < 0) return;
+  const target = Math.max(0, Math.min(arr.length - 1, finalIndex));
+  if (target === from) return;
+  const [item] = arr.splice(from, 1);
+  arr.splice(target, 0, item);
+  autosave();
+}
+
+/** Drag-and-drop gives an insertion slot (before row N); convert to a final index. */
+function moveRecordToSlot(collection, id, slot) {
+  const from = recordsForCollection(collection).findIndex((x) => x.id === id);
+  if (from < 0) return;
+  moveRecordTo(collection, id, slot > from ? slot - 1 : slot);
+  draw();
+}
+
+/** Keyboard / touch alternative to dragging. */
+function moveRecordBy(collection, id, delta) {
+  const arr = recordsForCollection(collection);
+  const from = arr.findIndex((x) => x.id === id);
+  if (from < 0) return;
+  moveRecordTo(collection, id, from + delta);
+  draw();
+  const wanted = `[data-action="move-${delta < 0 ? 'up' : 'down'}"][data-collection="${CSS.escape(collection)}"][data-id="${CSS.escape(id)}"]`;
+  const btn = document.querySelector(wanted + ':not(:disabled)') ||
+    document.querySelector(`[data-action="move-${delta < 0 ? 'down' : 'up'}"][data-collection="${CSS.escape(collection)}"][data-id="${CSS.escape(id)}"]:not(:disabled)`);
+  btn?.focus();
+}
+
+/** Copy only the selections and descriptive fields of a simulation. Screening, findings and issues are never copied. */
+function duplicateSimulation(source) {
+  const sim = blankSimulation();
+  for (const f of flatFormFields(simulationEditorMeta().schema)) {
+    if (f.type === 'note' || f.id === 'name') continue;
+    sim[f.id] = copy(source[f.id] ?? blankValue(f));
+  }
+  sim.name = (source.name || 'Simulation') + ' (copy)';
+  return sim;
+}
+
+/* Model Checkup: generic rendering. Headings, descriptions, tabs and labels all come from the checklist. */
+'use strict';
+
+/* ---------- Record labels and option lists ---------- */
+
+function valueLabel(options, val) {
+  return options.find((x) => x.value === val)?.label || val || '';
+}
+
+function recordPreviewParts(meta, item) {
+  const schema = meta.schema;
+  const values = (meta.previewFields || []).map((fid) => displayFieldValue(schema, fid, item)).filter(Boolean);
+  const title = values[0] || `Untitled ${meta.itemLabel || 'entry'}`;
+  let subtitle = '';
+  if (meta.previewSubtitleFields?.length) {
+    subtitle = meta.previewSubtitleFields.map((fid) => displayFieldValue(schema, fid, item)).filter(Boolean).join(' · ');
+  } else if (values.length > 1) {
+    subtitle = values.slice(1).join(' · ');
+  }
+  return { title, subtitle };
+}
+
+/** Text used for a shared record inside a <select>. */
+function sharedRecordLabel(collectionName, item) {
+  const meta = collectionMeta(collectionName);
+  if (!meta) return item.name || item.id;
+  const { title, subtitle } = recordPreviewParts(meta, item);
+  return [title, subtitle].filter(Boolean).join(' · ');
+}
+
+function optionList(field, record) {
+  if (field.type === 'reference') {
+    let list = recordsForCollection(field.source);
+    if (field.typePrefixes && field.filterBy) {
+      const prefix = field.typePrefixes[record[field.filterBy]];
+      if (prefix) list = list.filter((item) => String(item.type || '').startsWith(prefix));
+    }
+    if (Array.isArray(field.filterTypes)) list = list.filter((item) => field.filterTypes.includes(item.type));
+    return list.map((item) => ({ value: item.id, label: sharedRecordLabel(field.source, item) }));
+  }
+  return field.optionsBy ? (field.optionSets?.[record[field.optionsBy]] || []) : (field.options || []);
+}
+
+function displayFieldValue(schemaName, fieldId, record) {
+  const val = record?.[fieldId];
+  if (val === undefined || val === null || val === '') return '';
+  const field = getFieldDef(schemaName, fieldId);
+  if (!field) return String(val);
+  if (field.type === 'select' || field.type === 'radio') return valueLabel(optionList(field, record), val) || String(val);
+  if (field.type === 'reference') {
+    const target = recordsForCollection(field.source).find((r) => r.id === val);
+    if (!target) return String(val);
+    const meta = collectionMeta(field.source);
+    return meta ? recordPreviewParts(meta, target).title : (target.name || String(val));
+  }
+  if (field.type === 'multi' && Array.isArray(val)) return val.filter(Boolean).join(', ');
+  return String(val);
+}
+
+/* ---------- Field and form rendering ---------- */
+
+function contextValue(path, record) {
+  if (!String(path).includes('.')) return record?.[path];
+  const root = { project: currentProject(), record, simulation: selectedSimulation() };
+  return String(path).split('.').reduce((acc, segment) => acc?.[segment], root);
+}
+
+function isVisible(field, record) {
+  if (!field.visibleWhen) return true;
+  return (field.visibleWhen.in || []).includes(contextValue(field.visibleWhen.field, record));
+}
+
+function refLinks(field) {
+  return (field.references || [])
+    .filter((id) => doc.checklist.references.some((r) => r.id === id))
+    .map((id) => ` <a class="ref-link" href="#ref-${escapeHtml(id)}" data-ref="${escapeHtml(id)}" title="View reference ${escapeHtml(id)}">${escapeHtml(id)}</a>`)
+    .join('');
+}
+
+function helpLinks(field) {
+  const url = safeHttpUrl(field.helpUrl);
+  if (!url) return '';
+  const label = field.helpLinkLabel || 'ICM help ↗';
+  return ` <a class="help-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+}
+
+const fieldAsideLinks = (field) => refLinks(field) + helpLinks(field);
+
+function renderField(field, kind, id) {
+  const record = getRecord(kind, id) || {};
+  if (!isVisible(field, record)) return '';
+  const key = field.id;
+  const raw = record[key];
+  const val = raw ?? (field.type === 'multi' ? [] : '');
+  const tag = `${kind}-${id || 'single'}-${key}`.replace(/[^a-zA-Z0-9_-]/g, '_');
+  const attrs = `data-kind="${escapeHtml(kind)}" data-owner="${escapeHtml(id || '')}" data-field="${escapeHtml(key)}"`;
+  const options = optionList(field, record);
+  const labelInner = escapeHtml(field.label || '') + (field.help ? ` <span class="hint">${escapeHtml(field.help)}</span>` : '') + fieldAsideLinks(field);
+
+  if (field.type === 'note') return `<div class="question note"><p class="question-label">${labelInner}</p></div>`;
+
+  let control = '';
+  if (field.type === 'text' || field.type === 'date' || field.type === 'number') {
+    const n = field.type === 'number' ? `step="${escapeHtml(field.step ?? 'any')}" ${field.min !== undefined ? `min="${escapeHtml(field.min)}"` : ''}` : '';
+    control = `<input id="${tag}" class="text-input" type="${field.type}" value="${escapeHtml(val)}" placeholder="${escapeHtml(field.placeholder || '')}" ${n} ${attrs}>`;
+  } else if (field.type === 'textarea') {
+    control = `<textarea id="${tag}" rows="${Number(field.rows || 2)}" ${attrs}>${escapeHtml(val)}</textarea>`;
+  } else if (field.type === 'select' || field.type === 'reference') {
+    const required = field.type === 'reference' && field.allowBlank === false;
+    const blank = field.type === 'reference' ? (required ? 'Select a shared record…' : 'Select a shared record (optional)') : 'Select one…';
+    const list = (required ? [] : [`<option value="">${escapeHtml(blank)}</option>`])
+      .concat(options.map((o) => `<option value="${escapeHtml(o.value)}" ${String(val) === String(o.value) ? 'selected' : ''}>${escapeHtml(o.label)}</option>`));
+    if (val && !options.some((o) => String(o.value) === String(val))) list.push(`<option value="${escapeHtml(val)}" selected>Reference unavailable: ${escapeHtml(val)}</option>`);
+    control = `<select id="${tag}" ${attrs}>${list.join('')}</select>`;
+  } else if (field.type === 'radio' || field.type === 'multi') {
+    const multi = field.type === 'multi';
+    const array = Array.isArray(val) ? val : [];
+    const choices = options.map((o) => {
+      const checked = multi ? array.includes(o.value) : val === o.value;
+      return `<label class="choice"><input type="${multi ? 'checkbox' : 'radio'}" name="${tag}" value="${escapeHtml(o.value)}" ${checked ? 'checked' : ''} ${attrs}><span>${escapeHtml(o.label)}</span></label>`;
+    }).join('');
+    control = `<div class="${multi ? 'option-stack' : 'controls'}">${choices}</div>`;
+  }
+
+  const isOther = field.allowOther && (Array.isArray(val) ? val.includes('other') : val === 'other');
+  if (isOther) {
+    control += `<input class="text-input other-input" aria-label="Specify other for ${escapeHtml(field.label)}" placeholder="Please specify" value="${escapeHtml(record[key + 'Other'] || '')}" data-kind="${escapeHtml(kind)}" data-owner="${escapeHtml(id || '')}" data-field="${escapeHtml(key)}Other">`;
+  }
+
+  // Choice groups get a fieldset/legend so assistive tech announces the question with every option.
+  if (field.type === 'radio' || field.type === 'multi') {
+    return `<fieldset class="question"><legend class="question-label">${labelInner}</legend>${control}</fieldset>`;
+  }
+  return `<div class="question"><label class="question-label" for="${tag}">${labelInner}</label>${control}</div>`;
+}
+
+function renderForm(schemaName, kind, id = '') {
+  const form = doc.checklist.forms[schemaName] || [];
+  if (form.length && Array.isArray(form[0].fields)) {
+    return form.map((g) => `<div class="form-group"><div class="panel-head"><h2>${escapeHtml(g.title)}</h2></div>${g.description ? `<p class="description">${escapeHtml(g.description)}</p>` : ''}${g.fields.map((f) => renderField(f, kind, id)).join('')}</div>`).join('');
+  }
+  return form.map((f) => renderField(f, kind, id)).join('');
+}
+
+/* ---------- Lists of records ---------- */
+
+const panel = (content, className = '') => `<section class="panel ${className}">${content}</section>`;
+
+function renderDragHandle(collection, id) {
+  return `<button type="button" class="record-drag" draggable="true" title="Drag to reorder" aria-label="Drag to reorder" data-action="drag-handle" data-collection="${escapeHtml(collection)}" data-id="${escapeHtml(id)}">⋮⋮</button>`;
+}
+
+function renderMoveButtons(collection, id, title, index, count) {
+  const attrs = `data-collection="${escapeHtml(collection)}" data-id="${escapeHtml(id)}"`;
+  return `<button type="button" class="btn small icon" data-action="move-up" ${attrs} aria-label="Move ${escapeHtml(title)} up" title="Move up" ${index === 0 ? 'disabled' : ''}>↑</button>`
+    + `<button type="button" class="btn small icon" data-action="move-down" ${attrs} aria-label="Move ${escapeHtml(title)} down" title="Move down" ${index >= count - 1 ? 'disabled' : ''}>↓</button>`;
+}
+
+function renderRecordRow(collection, item, meta, index, count) {
+  const { title, subtitle } = recordPreviewParts(meta, item);
+  const editLabel = meta.editLabel || 'Edit';
+  const ref = `data-collection="${escapeHtml(collection)}" data-id="${escapeHtml(item.id)}"`;
+  return `<div class="record-row" data-reorder-id="${escapeHtml(item.id)}">${renderDragHandle(collection, item.id)}`
+    + `<div class="record-summary"><div class="record-title">${escapeHtml(title)}</div>${subtitle ? `<div class="record-subtitle">${escapeHtml(subtitle)}</div>` : ''}</div>`
+    + `<div class="record-actions">${renderMoveButtons(collection, item.id, title, index, count)}`
+    + `<button type="button" class="btn small" data-action="edit-record" ${ref}>${escapeHtml(editLabel)}</button>`
+    + `<button type="button" class="btn small danger" data-action="delete" ${ref}>Remove</button></div></div>`;
+}
+
+function renderCollection(name) {
+  const meta = collectionMeta(name);
+  if (!meta) return '';
+  const items = recordsForCollection(name);
+  const addLabel = meta.addLabel || 'Add';
+  const addBtn = `<button type="button" class="btn small" data-action="add" data-collection="${escapeHtml(name)}">+ ${escapeHtml(addLabel)}</button>`;
+  const top = `<div class="panel-head"><h2>${escapeHtml(meta.title)} <span class="count">${items.length}</span></h2>${addBtn}</div><p class="description">${escapeHtml(meta.description || '')}</p>`;
+  const rows = items.length
+    ? `<div class="record-list" data-reorder-collection="${escapeHtml(name)}">${items.map((item, i) => renderRecordRow(name, item, meta, i, items.length)).join('')}</div>`
+    : `<p class="empty">No entries yet. Choose “${escapeHtml(addLabel)}” to start.</p>`;
+  return panel(top + rows);
+}
+
+/* ---------- Pages ---------- */
+
+function pageIntro(page) {
+  return `<h2>${escapeHtml(page.title || page.label)}</h2>${page.description ? `<p class="description">${escapeHtml(page.description)}</p>` : ''}`;
+}
+
+/** A page is an optional single form plus any number of repeatable collections, all named by the checklist. */
+function renderPage(page) {
+  const form = page.form ? panel(pageIntro(page) + renderForm(page.form, page.form)) : '';
+  return form + (page.collections || []).map(renderCollection).join('');
+}
+
+function linkedRecordName(collectionName, id) {
+  if (!id) return '';
+  const item = recordsForCollection(collectionName).find((x) => x.id === id);
+  return item ? sharedRecordLabelTitle(collectionName, item) : '';
+}
+function sharedRecordLabelTitle(collectionName, item) {
+  const meta = collectionMeta(collectionName);
+  return meta ? recordPreviewParts(meta, item).title : (item.name || '');
+}
+
+/** One-line summary of the shared definitions a simulation selects, from its reference fields. */
+function simulationConditionsSummary(sim) {
+  const meta = simulationEditorMeta();
+  const { title, subtitle } = meta ? recordPreviewParts(meta, sim) : { title: sim.name || 'Untitled simulation', subtitle: '' };
+  const bits = [];
+  for (const f of flatFormFields(meta?.schema)) {
+    if (f.type !== 'reference' || !sim[f.id]) continue;
+    const name = linkedRecordName(f.source, sim[f.id]);
+    if (name) bits.push(`${f.label}: ${name}`);
+  }
+  return { title, subtitle: bits.join(' · ') || subtitle };
+}
+
+function renderSimulationPicker(sims, selected, meta) {
+  const addLabel = meta?.addLabel || 'Add simulation';
+  const rows = sims.length
+    ? sims.map((s, i) => {
+      const { title } = meta ? recordPreviewParts(meta, s) : { title: s.name || 'Untitled simulation' };
+      const isSel = selected?.id === s.id;
+      return `<div class="record-row sim-row ${isSel ? 'selected' : ''}" data-reorder-id="${escapeHtml(s.id)}">${renderDragHandle('simulations', s.id)}`
+        + `<button type="button" class="sim-select" data-action="select-sim" data-id="${escapeHtml(s.id)}" ${isSel ? 'aria-current="true"' : ''}>${escapeHtml(title)}</button>`
+        + `<div class="sim-move">${renderMoveButtons('simulations', s.id, title, i, sims.length)}</div></div>`;
+    }).join('')
+    : `<p class="muted">${escapeHtml(meta?.emptyListText || '')}</p>`;
+  return `<aside class="sim-picker"><h2>${escapeHtml(meta?.pickerTitle || 'Simulations')} <span class="count">${sims.length}</span></h2>`
+    + `<div class="sim-list record-list" data-reorder-collection="simulations">${rows}</div>`
+    + `<div class="sim-toolbar"><button type="button" class="btn small primary" data-action="add-sim">+ ${escapeHtml(addLabel)}</button>`
+    + `<button type="button" class="btn small" data-action="duplicate-sim" ${!selected ? 'disabled' : ''}>Duplicate</button></div></aside>`;
+}
+
+function renderSimulationTab(tab) {
+  const hint = tab.hint
+    ? `<div class="hintbox">${escapeHtml(tab.hint.text)} <button type="button" class="btn small" data-action="go-page" data-page="${escapeHtml(tab.hint.page)}">${escapeHtml(tab.hint.linkLabel)}</button>.</div>`
+    : '';
+  const intro = tab.title || tab.description || hint || tab.form
+    ? panel(pageIntro({ title: tab.title, label: tab.label, description: tab.description }) + hint + (tab.form ? renderForm(tab.form, tab.form) : ''))
+    : '';
+  return intro + (tab.collections || []).map(renderCollection).join('');
+}
+
+function renderSimulationView(page) {
+  const sims = currentProject().simulations;
+  const selected = selectedSimulation();
+  const meta = simulationEditorMeta();
+  const list = renderSimulationPicker(sims, selected, meta);
+  if (!selected) {
+    return `<div class="sim-shell">${list}<section class="panel sim-content"><h2>${escapeHtml(meta?.emptyTitle || '')}</h2><p class="description">${escapeHtml(meta?.emptyDescription || '')}</p></section></div>`;
+  }
+  const tabs = page.tabs || [];
+  const tab = tabs.find((t) => t.id === view.simTab) || tabs[0];
+  const subnav = `<div class="subnav">${tabs.map((t) => `<button type="button" data-action="sim-tab" data-id="${escapeHtml(t.id)}" class="${tab?.id === t.id ? 'active' : ''}" ${tab?.id === t.id ? 'aria-current="true"' : ''}>${escapeHtml(t.label)}</button>`).join('')}</div>`;
+  const summary = simulationConditionsSummary(selected);
+  const info = panel(`<div class="panel-head"><h2>${escapeHtml(meta?.summaryTitle || 'Simulation')}</h2><div class="record-actions">${meta ? `<button type="button" class="btn small" data-action="edit-simulation" data-id="${escapeHtml(selected.id)}">${escapeHtml(meta.editLabel || 'Edit')}</button>` : ''}<button type="button" class="btn small danger" data-action="delete-sim">Remove simulation</button></div></div><div class="record-summary"><div class="record-title">${escapeHtml(summary.title)}</div>${summary.subtitle ? `<div class="record-subtitle">${escapeHtml(summary.subtitle)}</div>` : ''}</div>`);
+  return `<div class="sim-shell">${list}<div class="sim-content">${info}${subnav}${tab ? renderSimulationTab(tab) : ''}</div></div>`;
+}
+
+function renderReferences(page) {
+  const items = doc.checklist.references.map((r) => {
+    const url = safeHttpUrl(r.url);
+    const link = url
+      ? `<p><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open source website ↗</a></p>`
+      : (page.noLinkText ? `<p><em>${escapeHtml(page.noLinkText)}</em></p>` : '');
+    return `<article class="reference" id="ref-${escapeHtml(r.id)}"><h3>[${escapeHtml(r.id)}] ${escapeHtml(r.title)}</h3><small>${escapeHtml(r.kind || '')}</small><p><strong>Where:</strong> ${escapeHtml(r.location)}</p><p>${escapeHtml(r.note)}</p>${link}</article>`;
+  }).join('');
+  return panel(pageIntro(page) + `<div class="refs">${items}</div>` + (page.footnote ? `<p class="description">${escapeHtml(page.footnote)}</p>` : ''));
+}
+
+const PAGE_RENDERERS = { page: renderPage, simulations: renderSimulationView, references: renderReferences };
+
+function renderNav() {
+  $('#navigation').innerHTML = doc.checklist.navigation
+    .map((t) => `<button type="button" class="tab" data-action="tab" data-id="${escapeHtml(t.id)}" ${view.page === t.id ? 'aria-current="page"' : ''}>${escapeHtml(t.label)}</button>`)
+    .join('');
+}
+
+function persistView() {
+  writeStorage(sessionArea(), VIEW_KEY, JSON.stringify({ page: view.page, simTab: view.simTab, simId: view.simId }));
+}
+
+function draw() {
+  if (!doc) return;
+  const sims = currentProject().simulations;
+  if (!selectedSimulation() && sims.length) view.simId = sims[0].id;
+  if (!navigationPage(view.page)) view.page = doc.checklist.navigation[0].id;
+  renderNav();
+  const page = navigationPage(view.page);
+  $('#main').innerHTML = (PAGE_RENDERERS[page.view] || renderPage)(page);
+  $('#save-status').title = `Saved project uses checklist ${doc.checklist.version}`;
+  persistView();
+  if (view.editor) {
+    syncEditorDialog();
+    const dlg = $('#record-editor');
+    if (dlg && !dlg.open && view.editor) dlg.showModal();
+  }
+}
+
+/**
+ * Re-render after a change that alters which fields exist, then put focus and scroll back where they were.
+ * Without this, picking a radio that reveals another question would drop keyboard focus to the page top.
+ */
+function redrawKeepingFocus(el) {
+  const spot = { kind: el.dataset.kind, owner: el.dataset.owner, field: el.dataset.field, value: el.value, type: el.type };
+  const inDialog = Boolean(el.closest('#record-editor'));
+  const body = $('#record-editor-body');
+  const bodyScroll = body ? body.scrollTop : 0;
+  const winScroll = window.scrollY;
+  draw();
+  const container = inDialog ? $('#record-editor') : $('#main');
+  let selector = `[data-kind="${CSS.escape(spot.kind)}"][data-owner="${CSS.escape(spot.owner)}"][data-field="${CSS.escape(spot.field)}"]`;
+  if (spot.type === 'radio' || spot.type === 'checkbox') selector += `[value="${CSS.escape(spot.value)}"]`;
+  container?.querySelector(selector)?.focus({ preventScroll: true });
+  if (body) body.scrollTop = bodyScroll;
+  window.scrollTo({ top: winScroll, behavior: 'instant' });
+}
+
+/*
+ * Model Checkup: the modal record editor.
+ * Edits are applied to the live record as you type (so dependent fields update). Opening an existing record
+ * keeps a backup copy; Cancel restores it, and Cancel on a newly added record removes that record.
+ */
+'use strict';
+
+function editorMetaFor(editor) {
+  return editor.kind === 'simulation' ? simulationEditorMeta() : collectionMeta(editor.collection);
+}
+
+function getEditorRecord(editor) {
+  if (!editor) return null;
+  if (editor.kind === 'simulation') return currentProject().simulations.find((s) => s.id === editor.recordId) || null;
+  return recordsForCollection(editor.collection).find((x) => x.id === editor.recordId) || null;
+}
+
+function editorDialogTitle(editor, meta, record) {
+  const addTitle = meta.addLabel || `Add ${meta.itemLabel || 'entry'}`;
+  if (editor.mode === 'create') return addTitle;
+  const { title } = recordPreviewParts(meta, record);
+  const noun = meta.itemLabel || 'entry';
+  return `${meta.editLabel || 'Edit'} — ${title === `Untitled ${noun}` ? noun : title}`;
+}
+
+function syncEditorDialog() {
+  const dlg = $('#record-editor');
+  if (!dlg || !view.editor) return;
+  const meta = editorMetaFor(view.editor);
+  const record = getEditorRecord(view.editor);
+  if (!meta || !record) {
+    view.editor = null;
+    if (dlg.open) dlg.close();
+    return;
+  }
+  $('#record-editor-title').textContent = editorDialogTitle(view.editor, meta, record);
+  const desc = $('#record-editor-desc');
+  desc.textContent = meta.description || '';
+  desc.hidden = !meta.description;
+  $('#record-editor-body').innerHTML = renderForm(meta.schema, meta.schema, record.id);
+}
+
+function openEditor(editor) {
+  const meta = editorMetaFor(editor);
+  if (!meta) {
+    notify('This project’s checklist snapshot is missing editor settings. Use New project for the current form, or open a project file saved with an up-to-date checklist.', true);
+    return;
+  }
+  if (editor.mode === 'edit') editor.backup = copy(getEditorRecord(editor));
+  view.editor = editor;
+  syncEditorDialog();
+  const dlg = $('#record-editor');
+  if (!dlg.open) dlg.showModal();
+  dlg.querySelector('#record-editor-body input, #record-editor-body textarea, #record-editor-body select')?.focus();
+}
+
+/** Done keeps what was typed. Cancel discards: removes a just-added record, or restores an edited one. */
+function closeEditor(cancel) {
+  const dlg = $('#record-editor');
+  const editor = view.editor;
+  if (editor && cancel) {
+    if (editor.mode === 'create') {
+      if (editor.kind === 'simulation') {
+        const sims = currentProject().simulations;
+        const idx = sims.findIndex((s) => s.id === editor.recordId);
+        if (idx >= 0) sims.splice(idx, 1);
+        if (view.simId === editor.recordId) view.simId = sims[0]?.id || null;
+      } else {
+        const arr = recordsForCollection(editor.collection);
+        const idx = arr.findIndex((x) => x.id === editor.recordId);
+        if (idx >= 0) arr.splice(idx, 1);
+      }
+    } else if (editor.backup) {
+      const record = getEditorRecord(editor);
+      if (record) {
+        for (const k of Object.keys(record)) delete record[k];
+        Object.assign(record, editor.backup);
+      }
+    }
+    autosave();
+  }
+  view.editor = null;
+  if (dlg?.open) dlg.close();
+  draw();
+}
+
+/* Model Checkup: events, actions, file import/export and start-up. */
+'use strict';
+
+/* ---------- Field edits ---------- */
+
+/**
+ * When a driver field changes, keep dependent selects valid: a single-option set auto-fills,
+ * `resetOnChange` clears, and otherwise a value that is no longer offered is cleared.
+ */
+function syncDependents(schemaName, record, driverId) {
+  for (const f of flatFormFields(schemaName)) {
+    if (f.id === driverId) continue;
+    const byOptions = f.optionsBy === driverId;
+    const byFilter = Boolean(f.typePrefixes) && f.filterBy === driverId;
+    if (!byOptions && !byFilter) continue;
+    const opts = optionList(f, record);
+    if (byOptions && opts.length === 1) record[f.id] = opts[0].value;
+    else if (f.resetOnChange) record[f.id] = '';
+    else if (record[f.id] && !opts.some((o) => o.value === record[f.id])) record[f.id] = '';
+  }
+}
+
+function setField(el) {
+  const record = getRecord(el.dataset.kind, el.dataset.owner);
+  if (!record || !el.dataset.field) return;
+  const key = el.dataset.field;
+  if (el.type === 'checkbox') {
+    const set = new Set(Array.isArray(record[key]) ? record[key] : []);
+    if (el.checked) set.add(el.value); else set.delete(el.value);
+    record[key] = [...set];
+  } else if (el.type === 'number') {
+    record[key] = el.value.trim() === '' ? '' : Number(el.value);
+  } else if (el.type === 'radio') {
+    if (!el.checked) return;
+    record[key] = el.value;
+  } else {
+    record[key] = el.value;
+  }
+  syncDependents(el.dataset.kind, record, key);
+  autosave();
+}
+
+/* ---------- View state ---------- */
+
+const firstSimTab = () => simulationTabs()[0]?.id || '';
+
+function resetView() {
+  view.page = doc.checklist.navigation[0].id;
+  view.simId = currentProject().simulations[0]?.id || null;
+  view.simTab = firstSimTab();
+  view.editor = null;
+  $('#record-editor')?.close();
+}
+
+/** A page refresh keeps you on the same page and simulation (per browser tab; not part of the saved project). */
+function restoreView() {
+  try {
+    const saved = JSON.parse(readStorage(sessionArea(), VIEW_KEY) || 'null');
+    if (!saved) return;
+    if (navigationPage(saved.page)) view.page = saved.page;
+    if (currentProject().simulations.some((s) => s.id === saved.simId)) view.simId = saved.simId;
+    if (simulationTabs().some((t) => t.id === saved.simTab)) view.simTab = saved.simTab;
+  } catch { /* ignore a corrupt view record */ }
+}
+
+function activate(page) {
+  view.page = page;
+  draw();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  $('#main').focus({ preventScroll: true });
+}
+
+/* ---------- Actions ---------- */
+
+function doAction(target) {
+  const action = target.dataset.action;
+  const { collection, id } = target.dataset;
+  switch (action) {
+    case 'tab': return activate(id);
+    case 'go-page': return activate(target.dataset.page);
+    case 'sim-tab': view.simTab = id; return draw();
+    case 'select-sim': view.simId = id; view.simTab = firstSimTab(); return draw();
+    case 'add-sim': {
+      const sim = blankSimulation();
+      currentProject().simulations.push(sim);
+      view.simId = sim.id;
+      view.simTab = firstSimTab();
+      autosave();
+      return openEditor({ kind: 'simulation', recordId: sim.id, mode: 'create' });
+    }
+    case 'duplicate-sim': {
+      const source = selectedSimulation();
+      if (!source) return undefined;
+      const sim = duplicateSimulation(source);
+      currentProject().simulations.push(sim);
+      view.simId = sim.id;
+      view.simTab = firstSimTab();
+      autosave();
+      return draw();
+    }
+    case 'delete-sim': {
+      const sim = selectedSimulation();
+      if (!sim || !confirm(`Delete simulation “${sim.name || 'Untitled'}” and ALL its findings?`)) return undefined;
+      currentProject().simulations = currentProject().simulations.filter((x) => x.id !== sim.id);
+      if (view.editor?.kind === 'simulation' && view.editor.recordId === sim.id) view.editor = null;
+      view.simId = currentProject().simulations[0]?.id || null;
+      autosave();
+      return draw();
+    }
+    case 'add': {
+      const record = addRecord(collection);
+      autosave();
+      return openEditor({ kind: 'collection', collection, recordId: record.id, mode: 'create' });
+    }
+    case 'delete': return removeRecord(collection, id);
+    case 'edit-record': return openEditor({ kind: 'collection', collection, recordId: id, mode: 'edit' });
+    case 'edit-simulation': return openEditor({ kind: 'simulation', recordId: id, mode: 'edit' });
+    case 'editor-done': return closeEditor(false);
+    case 'editor-cancel': return closeEditor(true);
+    case 'move-up': return moveRecordBy(collection, id, -1);
+    case 'move-down': return moveRecordBy(collection, id, 1);
+    default: return undefined;
+  }
+}
+
+/* ---------- Save / open ---------- */
+
+function downloadJson() {
+  const name = (currentProject().answers?.projectName || 'icm-model-checkup').replace(/[^a-z0-9_-]+/gi, '-').slice(0, 70);
+  const blob = new Blob([JSON.stringify(doc, null, 2) + '\n'], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = name + '.json';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 800);
+  markClean();
+  notify('Saved project JSON includes checklist questions, references, answers and all linked objects.');
+}
+
+/** Opened files are untrusted: check the shape, then fill in structural keys without touching questions or answers. */
+function validateOpen(parsed) {
+  if (!isObject(parsed) || !isObject(parsed.project) || !isObject(parsed.checklist)) throw new Error('This is not a saved Model Checkup project JSON.');
+  if (!parsed.fileVersion || String(parsed.fileVersion).split('.')[0] !== '1') throw new Error('Unsupported saved-project file version.');
+  validateChecklistShape(parsed.checklist);
+  applyLayoutDefaults(parsed.checklist);
+  ensureShape(parsed);
+  return parsed;
+}
+
+/** Non-blocking hint; the project always keeps its own checklist snapshot. */
+function olderChecklistNotice() {
+  if (!defaultChecklist || compareVersions(doc.checklist.version, defaultChecklist.version) >= 0) return '';
+  return ` This project uses checklist ${doc.checklist.version}; a newer checklist (${defaultChecklist.version}) exists. The project keeps its own questions. Start a New project to use the newer checklist.`;
+}
+
+/* ---------- Drag reordering ---------- */
+
+function reorderDropIndex(listEl, clientY) {
+  const rows = [...listEl.querySelectorAll('.record-row')];
+  for (let i = 0; i < rows.length; i++) {
+    const rect = rows[i].getBoundingClientRect();
+    if (clientY < rect.top + rect.height / 2) return i;
+  }
+  return rows.length;
+}
+
+function setupDragReorder() {
+  document.addEventListener('dragstart', (event) => {
+    const handle = event.target.closest('[data-action="drag-handle"]');
+    if (!handle || $('#record-editor')?.open) return;
+    dragPayload = { collection: handle.dataset.collection, id: handle.dataset.id };
+    event.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
+    event.dataTransfer.effectAllowed = 'move';
+    handle.closest('.record-row')?.classList.add('dragging');
+  });
+  document.addEventListener('dragend', () => {
+    dragPayload = null;
+    document.querySelectorAll('.record-row.dragging, .record-row.drop-before').forEach((el) => el.classList.remove('dragging', 'drop-before'));
+  });
+  document.addEventListener('dragover', (event) => {
+    const list = event.target.closest('[data-reorder-collection]');
+    if (!list || !dragPayload || list.dataset.reorderCollection !== dragPayload.collection) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    const rows = [...list.querySelectorAll('.record-row')];
+    rows.forEach((r) => r.classList.remove('drop-before'));
+    const idx = reorderDropIndex(list, event.clientY);
+    if (rows[idx]) rows[idx].classList.add('drop-before');
+  });
+  document.addEventListener('drop', (event) => {
+    const list = event.target.closest('[data-reorder-collection]');
+    if (!list || !dragPayload) return;
+    event.preventDefault();
+    const collection = list.dataset.reorderCollection;
+    if (collection !== dragPayload.collection) return;
+    moveRecordToSlot(collection, dragPayload.id, reorderDropIndex(list, event.clientY));
+    dragPayload = null;
+  });
+}
+
+/* ---------- Start-up ---------- */
+
+function setup() {
+  setupDragReorder();
+  const redrawKeys = () => redrawTriggerKeys(doc.checklist);
+
+  $('#record-editor')?.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeEditor(true);
+  });
+  document.addEventListener('click', (event) => {
+    const ref = event.target.closest('[data-ref]');
+    if (ref) {
+      event.preventDefault();
+      activate('references');
+      const dest = $('#ref-' + CSS.escape(ref.dataset.ref));
+      if (dest) {
+        dest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        dest.style.outline = '2px solid #89b4de';
+        setTimeout(() => { dest.style.outline = ''; }, 2000);
+      }
+      return;
+    }
+    const target = event.target.closest('[data-action]');
+    if (target && !target.disabled) doAction(target);
+  });
+  document.addEventListener('input', (event) => {
+    const el = event.target;
+    if (el.matches('[data-field]') && !['radio', 'checkbox', 'select-one'].includes(el.type)) setField(el);
+  });
+  document.addEventListener('change', (event) => {
+    const el = event.target;
+    if (!el.matches('[data-field]') || !['radio', 'checkbox', 'select-one'].includes(el.type)) return;
+    setField(el);
+    if (redrawKeys().has(el.dataset.field)) redrawKeepingFocus(el);
+  });
+
+  $('#message-close').addEventListener('click', dismissNotice);
+  $('#new-project').addEventListener('click', () => {
+    if (!confirm('Start a new project? Save the current project JSON first if you need a copy.')) return;
+    doc = newProject();
+    resetView();
+    autosave();
+    markClean();
+    draw();
+    notify('New project created from the current default checklist.');
+  });
+  $('#open-project').addEventListener('click', () => $('#file-input').click());
+  $('#file-input').addEventListener('change', async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    try {
+      const parsed = validateOpen(JSON.parse(await file.text()));
+      doc = parsed;
+      resetView();
+      autosave();
+      markClean();
+      draw();
+      notify(`Opened saved project with checklist ${doc.checklist.version}.` + olderChecklistNotice());
+    } catch (e) {
+      notify('Could not open file: ' + e.message, true);
+    } finally {
+      event.target.value = '';
+    }
+  });
+  $('#save-project').addEventListener('click', downloadJson);
+  window.addEventListener('beforeunload', (event) => {
+    if (!dirty) return;
+    event.preventDefault();
+    event.returnValue = '';
+  });
+}
+
+async function loadDefaultChecklist() {
+  const embedded = $('#embedded-default-checklist');
+  if (embedded) return JSON.parse(embedded.textContent);
+  const res = await fetch('default-checklist.json');
+  if (!res.ok) throw new Error(`Checklist could not be loaded (${res.status})`);
+  return res.json();
+}
+
+async function init() {
+  try {
+    defaultChecklist = await loadDefaultChecklist();
+    validateChecklistShape(defaultChecklist);
+    const stored = readStorage(localArea(), STORAGE_KEY);
+    let notice = '';
+    let isError = false;
+    if (stored) {
+      try {
+        doc = validateOpen(JSON.parse(stored));
+        notice = olderChecklistNotice().trim();
+      } catch (e) {
+        // Never silently overwrite what the user had: keep the unreadable copy under a backup key.
+        writeStorage(localArea(), BACKUP_KEY, stored);
+        doc = newProject();
+        isError = true;
+        notice = `The autosaved copy in this browser could not be read (${e.message}) and was kept under a backup key. A new project was started.`;
+      }
+    } else {
+      doc = newProject();
+    }
+    resetView();
+    restoreView();
+    setup();
+    draw();
+    renderSaveStatus();
+    if (notice) notify(notice, isError);
+  } catch (e) {
+    $('#main').innerHTML = `<section class="panel"><h2>Could not load the checklist</h2><p>${escapeHtml(e.message)}</p><p>For source files, run <code>python3 -m http.server 8000</code> inside the app folder, or open the standalone offline HTML in <code>dist/</code>.</p></section>`;
+  }
+}
+
+init();
+
+})();
+</script>
+</body>
+</html>
