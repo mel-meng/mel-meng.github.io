@@ -1,0 +1,1808 @@
+  Current Directory:   C:\PROGRA~1\Innovyze\XPSWMM~1
+  Engine Name: C:\PROGRA~1\Innovyze\XPSWMM~1\engine\SWMMEN~2.EXE
+  Input File: D:\proj\fnafpm\training\xp2icm\model\xp\1D\xp\xp.XP
+
+          *===============================================*
+          |                   xpswmm                      |
+          |     Storm and Wastewater Management Model     |
+          |            Developed by Innovyze.             |
+          |===============================================|
+          |                                               |
+          | Last Update      : Mar 27 2025                |
+          | Interface Version: 2021.4                     |
+          | Engine Version   : 12.0                       |
+          | Data File Version: 12.62                      |
+          |                                               |
+          |                                               |
+          *===============================================*
+
+Engine Name: C:\PROGRA~1\Innovyze\XPSWMM~1\engine\SWMMEN~2.EXE
+
+
+*====================================================*
+|       Input and Output file names by Layer         |
+*====================================================*
+
+ Input File  to Layer #     1 JOT.US
+ Output File to Layer #     1 JOT.US
+ Input File  to Layer #     2 JOT.US
+ Output File to Layer #     2 JOT.US
+
+*===========================================================*
+|                Configuration Parameters                   |
+|  Configuration Parameters, both those that are hardwired  |
+|  and those added to the simulation are listed below.      |
+|  Configuration Parameters that start with a $ are set in  |
+|  the engine as defaults.  The remaining in UPPERCASE      |
+|  have been added to the simulation in the Configuration-> |
+|  Configuration Parameters dialog or as Engine Defaults in |
+|  the SWMXP.INI file.                                      |
+|                                                           |
+|  Consult the Help File for the specific meaning/purpose   |
+|  of any particular parameter.                             |
+|                                                           |
+|  Note:                                                    |
+|  The second column denotes the value of the parameter.    |
+*===========================================================*
+
+ $powerstation                        0.0000         1         2
+ $perv                                0.0000         0         4
+ $oldegg                              0.0000         0         7
+ $as                                  0.0000         0        11
+ $noflat                              0.0000         0        21
+ $oldomega                            0.0000         0        24
+ $oldvol                              0.0000         1        28
+ $implicit                            0.0000         1        29
+ $oldhot                              0.0000         1        31
+ $oldscs                              0.0000         0        33
+ $flood                               0.0000         1        40
+ $nokeys                              0.0000         0        42
+ $pzero                               0.0000         0        55
+ $oldvol2                             0.0000         2        59
+ $storage2                            0.0000         3        62
+ $oldhot1                             0.0000         1        63
+ $pumpwt                              0.0000         1        70
+ $ecloss                              0.0000         1        77
+ $exout                               0.0000         0        97
+ $spatial = 0.90                      0.9000         5       124
+ $djref = -1.0                       -0.1000         3       143
+ $weirlen = 50                       50.0000         1       153
+ $oldbnd                              0.0000         1       154
+ $nogrelev                            0.0000         1       161
+ $ncmid                               0.0000         0       164
+ $new_nl_97                           0.0000         2       290
+ SCSIADEPTH=ON                        0.0000         1       293
+ $best97                              0.0000         1       294
+ $newbound                            0.0000         1       295
+ $q_tol = 0.01                        0.0001         1       316
+ $new_storage                         0.0000         1       322
+ $old_iteration                       0.0000         1       333
+ $minlen=30.0                        30.0000         1       346
+ $review_elevation                    0.0000         1       383
+ $use_half_volume                     0.0000         1       385
+ VERT_WALLS=ON                        0.0000         1       389
+ $min_ts = 1.0                        1.0000         1       407
+ $design_restart = on                 0.0000         1       412
+ $zero_value=1.e-05                   0.0000         1       415
+ SUBCATCHMENT_RES=ON                  0.0000         1       419
+ $relax_depth = on                    0.0000         1       427
+ $saveallpts = on                     0.0000         1       434
+ PUMP_NEGHD=ON                        0.0000         1       437
+ $channel_geometry=1                  0.0000         1       456
+ PROJUNITS == US                      0.0000         1       462
+
+ *===========================================================* 
+ |   The XPSWMM/XPSTORM engine internally uses object IDs    | 
+ |     instead of full object names to represent objects.    |
+ |   Included below is a table of these IDs along with the   |
+ |         name of the object that ID corresponds to.        |
+ *===========================================================* 
+        Object ID         Object          
+           Number          Name         
+ ================  ====================    
+              201  J1                                                                              
+              202  J2                                                                              
+              203  J3                                                                              
+              204  J4                                                                              
+              205  J5                                                                              
+              206  J6                                                                              
+              207  J7                                                                              
+              208  J8                                                                              
+              209  J9                                                                              
+              210  J10                                                                             
+              211  J11                                                                             
+              212  O1                                                                              
+              213  C1                                                                              
+              214  C2                                                                              
+              215  C3                                                                              
+              216  C4                                                                              
+              217  C5                                                                              
+              218  C6                                                                              
+              219  C7                                                                              
+              220  C8                                                                              
+              221  C9                                                                              
+              222  C10                                                                             
+              223  C11                                                                             
+
+ *==========================================================*
+ | Parameter Values on the Tapes Common Block.These are the |
+ | values read from the data file and dynamically allocated |
+ | by the model for this simulation.                        |
+ *==========================================================*
+
+  Number of Subcatchments in the Runoff Block (NW)....     7
+  Number of Channel/Pipes in the Runoff Block (NG)....     0
+  Runoff Water quality constituents (NRQ).............     0
+  Runoff Land Uses per Subcatchment (NLU).............     0
+  Number of Elements in the Transport Block (NET).....     0
+  Number of Storage Junctions in Transport (NTSE).....     0
+  Number of Input Hydrographs in Transport (NTH)......     0
+  Number of Elements in the Extran Block (NEE)........    12
+  Number of Groundwater Subcatchments in Runoff (NGW).     0
+  Number of Interface locations for all Blocks (NIE)..    12
+  Number of Pumps in Extran (NEP).....................     0
+  Number of Orifices in Extran (NEO)..................     0
+  Number of Tide Gates/Free Outfalls in Extran (NTG)..     1
+  Number of Extran Weirs (NEW)........................     0
+  Number of scs hydrograph points.....................  1729
+  Number of Extran printout locations (NPO)...........     0
+  Number of Tide elements in Extran (NTE).............     1
+  Number of Natural channels (NNC)....................     0
+  Number of Storage junctions in Extran (NVSE)........     0
+  Number of Time history data points in Extran(NTVAL).     0
+  Number of Variable storage elements in Extran (NVST)     0
+  Number of Input Hydrographs in Extran (NEH).........     0
+  Number of Particle sizes in Transport Block (NPS)...     0
+  Number of User defined conduits (NHW)...............     7
+  Number of Connecting conduits in Extran (NECC)......    20
+  Number of Upstream elements in Transport (NTCC).....    10
+  Number of Storage/treatment plants (NSTU)...........     1
+  Number of Values for R1 lines in Transport (NR1)....     0
+  Number of Nodes to be allowed for (NNOD)............    12
+  Number of Plugs in a Storage Treatment Unit.........     1
+
+
+ #######################################################
+ #    Entry made to the Runoff Layer(Block) of SWMM    #
+ #    Last Updated June, 2014 by Innovyze              #
+ #######################################################
+
+ *==========================================================*
+ |         RUNOFF TABLES IN THE OUTPUT FILE.                |
+ |  These are the more important tables in the output file. |
+ |  You can use your editor to find the table numbers,      |
+ |  for example: search for Table R3 to check continuity.   |
+ |  This output file can be imported into a Word Processor  |
+ |  and printed on US letter or A4 paper using portrait     |
+ |  mode, courier font, a size of 8 pt. and margins of 0.75 |
+ |                                                          |
+ | Table R1  - Physical Hydrology Data                      |
+ | Table R2  - Infiltration data                            |
+ | Table R3  - Raingage and Infiltration Database Names     |
+ | Table R4  - Groundwater Data                             |
+ | Table R5  - Continuity Check for Surface Water           |
+ | Table R6  - Continuity Check for Channels/Pipes          |
+ | Table R7  - Continuity Check for Subsurface Water        |
+ | Table R8  - Infiltration/Inflow Continuity Check         |
+ | Table R9  - Summary Statistics for Subcatchments         |
+ | Table R10 - Sensitivity anlysis for Subcatchments        |
+ *==========================================================*
+
+                    A1                                                                              
+                                                                                                    
+###########################################
+#             RUNOFF JOB CONTROL          #
+###########################################
+
+ Snowmelt parameter - ISNOW.......................            0
+ Number of rain gages - NRGAG.....................            1
+ Quality is not simulated - KWALTY................            0
+ Default evaporation rate used - IVAP.............            0
+ Hour of day at start of storm - NHR..............            0
+ Minute of hour at start of storm - NMN...........            0
+ Time TZERO at start of storm (hours).............        0.000
+ Use U.S. Customary units for most I/O - METRIC...            0
+ Runoff input print control...                                0
+ Runoff graph plot control....                                0
+ Runoff output print control..                                0
+ Limit number of groundwater convergence messages to      10000
+
+ Print headers every 50 lines - NOHEAD (0=yes, 1=no)          0
+
+ Print land use load percentages -LANDUPR (0=no, 1=yes)       0
+ Month, day, year of start of storm is:               1/ 1/1998
+ Wet time step length (seconds).......                     60.0
+ Dry time step length (seconds).......                   3600.0
+ Wet/Dry time step length (seconds)...                     60.0
+ Simulation length is......                                24.0 Hours    
+
+ If Horton infiltration model is being used           
+ A mixture of infiltration options may be used in     
+ XP-SWMM as a watershed specific option.              
+ Rate for regeneration of infiltration = REGEN * DECAY
+ Decay is read in for each subcatchment               
+ REGEN = .............................................  0.01000
+
+
+ Raingage #................................          1
+ KTYPE  - Rainfall input type..............          0
+ NHISTO - Total number of rainfall values..         24
+ KINC   - Rainfall values(pairs) per line..         10
+ KPRINT - Print rainfall(0-Yes,1-No).......          0
+ KTIME  - Precipitation time units         
+ 0 --> Minutes  1 --> Hours................          0
+ KPREP  - Precipitation unit type          
+ 0 --> Intensity  1 --> Volume.............          0
+ KTHIS - Variable rainfall intervals       
+ 0 --> No, >= 1 --> Yes....................          0
+ THISTO - Rainfall time interval...........       5.00
+ TZRAIN - Starting time(KTIME units).......       0.00
+
+
+######################################
+# Rainfall input summary from Runoff #
+######################################
+
+ Total rainfall for gage #     1 is    0.9783 inches
+
+   #############################
+   #        Data Group F1      #
+   # Evaporation Rate (in/day) #
+   #############################
+
+  JAN.  FEB.  MAR.  APR.  MAY   JUN.  JUL.  AUG.  SEP.  OCT.  NOV  DEC.
+  ----  ----  ----  ----  ----  ----  ----  ----  ----  ----  ---- ----
+ 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100
+
+
+  ###################################################
+  #  Table R1.  S U B C A T C H M E N T  D A T A    #
+  #             Physical Hydrology Data             #
+  ###################################################
+
+                                                                                                            Deprs   Deprs   Prcnt
+                                                                            Per-                            -sion   -sion    Zero
+       Subcatchment              Channel              Width      Area       cent    Slope    "n"     "n"   Storge   Strge   Deten
+  Number           Name         or inlet              (ft)       (ac)      Imperv   ft/ft   Imprv    Perv   Imprv    Perv   -tion
+  ====== ==================== ==================== ========== ==========   ====== ======= ======= ======= ======= ======= =======
+       1                 J3#1                   J3   1456.0      3.7400     39.50   0.031   0.015   0.240   0.060   0.300  25.000
+       2                 J1#1                   J1   1587.0      4.5500     56.80   0.020   0.015   0.240   0.060   0.300  25.000
+       3                 J7#1                   J7   2331.0      6.7900     49.90   0.031   0.015   0.240   0.060   0.300  25.000
+       4                J10#1                  J10   1670.0      4.7900     87.70   0.020   0.015   0.240   0.060   0.300  25.000
+       5                J10#2                  J10   907.00      2.3300      0.00   0.031   0.015   0.240   0.060   0.300  25.000
+       6                 J2#1                   J2   1653.0      4.7400     63.00   0.020   0.015   0.240   0.060   0.300  25.000
+       7                J11#1                  J11   690.00      1.9800     95.00   0.020   0.015   0.240   0.060   0.300  25.000
+
+
+#######################################################################################################
+#          Table R2.  SUBCATCHMENT  DATA                                                              #
+#                     Infiltration or Time of Concentration Data                                      #
+#                                                                                                     #
+# Infiltration Type      Infl #1(#5)       Infl #2(#6)          Infl #3(#7)              Infl #4(#8)  #
+# SCS                  ->   Comp CN          Time Conc         Shape Factor        Depth or Fraction  #
+# SBUH                 ->   Comp CN          Time Conc                  N/A                      N/A  #
+# Green Ampt           ->   Suction          Hydr Cond           Initial MD                      N/A  #
+# Horton               ->  Max Rate           Min Rate   Decay Rate (1/sec)      Max. Infilt. Volume  #
+# Proportional         ->  Constant                N/A                  N/A                      N/A  #
+# Initial/Cont Loss    ->   Initial         Continuing                  N/A                      N/A  #
+# Initial/Proportional ->   Initial           Constant                  N/A                      N/A  #
+# Laurenson Parameters ->   B Value       Pervious "n"      Impervious Cont                 Exponent  #
+# Rational Formula     -> Tc Method   Flow Path Length      Flow Path Slope  Roughness or Retardance  #
+#                                (#1 - #4 is Impervious Data / #5 - #8 is Pervious Data)              #
+#                      Rational Formula Tc Method: 1 = Constant                                       #
+#                                                  2 = Friend's Equation                              #
+#                                                  3 = Kinematic Wave                                 #
+#                                                  4 = Alameda Method                                 #
+#                                                  5 = Izzard's Formula                               #
+#                                                  6 = Kerby's Equation                               #
+#                                                  7 = Kirpich's Equation                             #
+#                                                  8 = Bransby Williams Equation                      #
+#                                                  9 = Federal Aviation Authority Equation            #
+#######################################################################################################
+
+        Subcatchment           Infl      Infl      Infl      Infl      Infl      Infl      Infl      Infl
+  Number            Name       # 1       # 2       # 3       # 4       # 5       # 6       # 7       # 8
+  ========================    ========= ========= ========= ========= ========= ========= ========= =========
+    1                 J3#1       4.500     0.200     0.002
+    2                 J1#1       4.500     0.200     0.002
+    3                 J7#1       4.500     0.200     0.002
+    4                J10#1       4.500     0.200     0.002
+    5                J10#2       4.500     0.200     0.002
+    6                 J2#1       4.500     0.200     0.002
+    7                J11#1       4.500     0.200     0.002
+
+
+############################################################
+#     Table R3.  SUBCATCHMENT  DATA                        #
+#                Rainfall and Infiltration Database Names  #
+############################################################
+
+       Subcatchment             Gage  Infiltration       Routing        
+  Number          Name           No       Type            Type          
+  ====== ==================== ======= ============ ====================
+       1                 J3#1      1       Horton  Non-linear reservoir
+       2                 J1#1      1       Horton  Non-linear reservoir
+       3                 J7#1      1       Horton  Non-linear reservoir
+       4                J10#1      1       Horton  Non-linear reservoir
+       5                J10#2      1       Horton  Non-linear reservoir
+       6                 J2#1      1       Horton  Non-linear reservoir
+       7                J11#1      1       Horton  Non-linear reservoir
+
+ Total Number of Subcatchments...              7
+ Total Tributary Area (acres)....          28.92
+ Impervious Area (acres).........          16.52
+ Pervious Area (acres)...........          12.40
+ Total Width (feet)..............       10294.00
+ Impervious Area (%).............          57.12
+
+
+  ###################################################
+  #          S U B C A T C H M E N T  D A T A       #
+  #   Default, Ratio values for subcatchment data   #
+  #   Used with the calibrate node in the runoff.   #
+  # 1 - width     2 - area       3 - impervious %   #
+  # 4 - slope     5 - imp "n"    6 - perv "n"       #
+  # 7 - imp ds    8 - perv ds    9 - 1st infil      #
+  #10 - 2nd infil               11 - 3rd infil      #
+  ###################################################
+
+ Column           1         2         3         4         5         6         7         8         9        10        11
+ Default     0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+ Ratio       1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000
+
+ *********************************************************
+ *     Arrangement of Subcatchments and Channel/Pipes    *
+ *********************************************************
+
+
+     Inlet
+ J3                       No Tributary Channel/Pipes
+                Tributary Subareas........ J3#1
+ J1                       No Tributary Channel/Pipes
+                Tributary Subareas........ J1#1
+ J7                       No Tributary Channel/Pipes
+                Tributary Subareas........ J7#1
+ J10                      No Tributary Channel/Pipes
+                Tributary Subareas........ J10#1 J10#2
+ J2                       No Tributary Channel/Pipes
+                Tributary Subareas........ J2#1
+ J11                      No Tributary Channel/Pipes
+                Tributary Subareas........ J11#1
+
+
+ ***********************************************************
+ * Hydrographs will be stored for the following   6 INLETS *
+ ***********************************************************
+  J3                  J1                  J7                  
+  J10                 J2                  J11                 
+
+
+ ************************************************
+ *  Quality Simulation not included in this run *
+ ************************************************
+
+
+
+
+ ***************************************************
+ *  Precipitation Interface File Summary           *
+ *  Number of precipitation station....        1   *
+ ***************************************************
+
+ Location Station Number
+ -------- --------------
+        1.             1
+
+ XXX End of Header Section XXX
+
+ #######################################################
+ #    Entry made to the HYDRAULIC Layer of XP-SWMM     #
+ #    Last Updated in June, 2014 by Innovyze           #
+ #######################################################
+
+ #######################################################
+ #    Entry made to the Runoff Layer(Block) of SWMM    #
+ #    Last Updated June, 2014 by Innovyze              #
+ #######################################################
+
+ *==========================================================*
+ |         RUNOFF TABLES IN THE OUTPUT FILE.                |
+ |  These are the more important tables in the output file. |
+ |  You can use your editor to find the table numbers,      |
+ |  for example: search for Table R3 to check continuity.   |
+ |  This output file can be imported into a Word Processor  |
+ |  and printed on US letter or A4 paper using portrait     |
+ |  mode, courier font, a size of 8 pt. and margins of 0.75 |
+ |                                                          |
+ | Table R1  - Physical Hydrology Data                      |
+ | Table R2  - Infiltration data                            |
+ | Table R3  - Raingage and Infiltration Database Names     |
+ | Table R4  - Groundwater Data                             |
+ | Table R5  - Continuity Check for Surface Water           |
+ | Table R6  - Continuity Check for Channels/Pipes          |
+ | Table R7  - Continuity Check for Subsurface Water        |
+ | Table R8  - Infiltration/Inflow Continuity Check         |
+ | Table R9  - Summary Statistics for Subcatchments         |
+ | Table R10 - Sensitivity anlysis for Subcatchments        |
+ *==========================================================*
+
+                    A1                                                                              
+                                                                                                    
+###########################################
+#             RUNOFF JOB CONTROL          #
+###########################################
+
+ Snowmelt parameter - ISNOW.......................            0
+ Number of rain gages - NRGAG.....................            1
+ Quality is not simulated - KWALTY................            0
+ Default evaporation rate used - IVAP.............            0
+ Hour of day at start of storm - NHR..............            0
+ Minute of hour at start of storm - NMN...........            0
+ Time TZERO at start of storm (hours).............        0.000
+ Use U.S. Customary units for most I/O - METRIC...            0
+ Runoff input print control...                                0
+ Runoff graph plot control....                                0
+ Runoff output print control..                                0
+ Limit number of groundwater convergence messages to      10000
+
+ Print headers every 50 lines - NOHEAD (0=yes, 1=no)          0
+
+ Print land use load percentages -LANDUPR (0=no, 1=yes)       0
+ Month, day, year of start of storm is:               1/ 1/1998
+ Wet time step length (seconds).......                     60.0
+ Dry time step length (seconds).......                   3600.0
+ Wet/Dry time step length (seconds)...                     60.0
+ Simulation length is......                                24.0 Hours    
+
+ If Horton infiltration model is being used           
+ A mixture of infiltration options may be used in     
+ XP-SWMM as a watershed specific option.              
+ Rate for regeneration of infiltration = REGEN * DECAY
+ Decay is read in for each subcatchment               
+ REGEN = .............................................  0.01000
+
+
+ Raingage #................................          1
+ KTYPE  - Rainfall input type..............          0
+ NHISTO - Total number of rainfall values..         24
+ KINC   - Rainfall values(pairs) per line..         10
+ KPRINT - Print rainfall(0-Yes,1-No).......          0
+ KTIME  - Precipitation time units         
+ 0 --> Minutes  1 --> Hours................          0
+ KPREP  - Precipitation unit type          
+ 0 --> Intensity  1 --> Volume.............          0
+ KTHIS - Variable rainfall intervals       
+ 0 --> No, >= 1 --> Yes....................          0
+ THISTO - Rainfall time interval...........       5.00
+ TZRAIN - Starting time(KTIME units).......       0.00
+
+
+######################################
+# Rainfall input summary from Runoff #
+######################################
+
+ Total rainfall for gage #     1 is    0.9783 inches
+
+   #############################
+   #        Data Group F1      #
+   # Evaporation Rate (in/day) #
+   #############################
+
+  JAN.  FEB.  MAR.  APR.  MAY   JUN.  JUL.  AUG.  SEP.  OCT.  NOV  DEC.
+  ----  ----  ----  ----  ----  ----  ----  ----  ----  ----  ---- ----
+ 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100 0.100
+
+
+  ###################################################
+  #  Table R1.  S U B C A T C H M E N T  D A T A    #
+  #             Physical Hydrology Data             #
+  ###################################################
+
+                                                                                                            Deprs   Deprs   Prcnt
+                                                                            Per-                            -sion   -sion    Zero
+       Subcatchment              Channel              Width      Area       cent    Slope    "n"     "n"   Storge   Strge   Deten
+  Number           Name         or inlet              (ft)       (ac)      Imperv   ft/ft   Imprv    Perv   Imprv    Perv   -tion
+  ====== ==================== ==================== ========== ==========   ====== ======= ======= ======= ======= ======= =======
+       1                 J3#1                   J3   1456.0      3.7400     39.50   0.031   0.015   0.240   0.060   0.300  25.000
+       2                 J1#1                   J1   1587.0      4.5500     56.80   0.020   0.015   0.240   0.060   0.300  25.000
+       3                 J7#1                   J7   2331.0      6.7900     49.90   0.031   0.015   0.240   0.060   0.300  25.000
+       4                J10#1                  J10   1670.0      4.7900     87.70   0.020   0.015   0.240   0.060   0.300  25.000
+       5                J10#2                  J10   907.00      2.3300      0.00   0.031   0.015   0.240   0.060   0.300  25.000
+       6                 J2#1                   J2   1653.0      4.7400     63.00   0.020   0.015   0.240   0.060   0.300  25.000
+       7                J11#1                  J11   690.00      1.9800     95.00   0.020   0.015   0.240   0.060   0.300  25.000
+
+
+#######################################################################################################
+#          Table R2.  SUBCATCHMENT  DATA                                                              #
+#                     Infiltration or Time of Concentration Data                                      #
+#                                                                                                     #
+# Infiltration Type      Infl #1(#5)       Infl #2(#6)          Infl #3(#7)              Infl #4(#8)  #
+# SCS                  ->   Comp CN          Time Conc         Shape Factor        Depth or Fraction  #
+# SBUH                 ->   Comp CN          Time Conc                  N/A                      N/A  #
+# Green Ampt           ->   Suction          Hydr Cond           Initial MD                      N/A  #
+# Horton               ->  Max Rate           Min Rate   Decay Rate (1/sec)      Max. Infilt. Volume  #
+# Proportional         ->  Constant                N/A                  N/A                      N/A  #
+# Initial/Cont Loss    ->   Initial         Continuing                  N/A                      N/A  #
+# Initial/Proportional ->   Initial           Constant                  N/A                      N/A  #
+# Laurenson Parameters ->   B Value       Pervious "n"      Impervious Cont                 Exponent  #
+# Rational Formula     -> Tc Method   Flow Path Length      Flow Path Slope  Roughness or Retardance  #
+#                                (#1 - #4 is Impervious Data / #5 - #8 is Pervious Data)              #
+#                      Rational Formula Tc Method: 1 = Constant                                       #
+#                                                  2 = Friend's Equation                              #
+#                                                  3 = Kinematic Wave                                 #
+#                                                  4 = Alameda Method                                 #
+#                                                  5 = Izzard's Formula                               #
+#                                                  6 = Kerby's Equation                               #
+#                                                  7 = Kirpich's Equation                             #
+#                                                  8 = Bransby Williams Equation                      #
+#                                                  9 = Federal Aviation Authority Equation            #
+#######################################################################################################
+
+        Subcatchment           Infl      Infl      Infl      Infl      Infl      Infl      Infl      Infl
+  Number            Name       # 1       # 2       # 3       # 4       # 5       # 6       # 7       # 8
+  ========================    ========= ========= ========= ========= ========= ========= ========= =========
+    1                 J3#1       4.500     0.200     0.002
+    2                 J1#1       4.500     0.200     0.002
+    3                 J7#1       4.500     0.200     0.002
+    4                J10#1       4.500     0.200     0.002
+    5                J10#2       4.500     0.200     0.002
+    6                 J2#1       4.500     0.200     0.002
+    7                J11#1       4.500     0.200     0.002
+
+
+############################################################
+#     Table R3.  SUBCATCHMENT  DATA                        #
+#                Rainfall and Infiltration Database Names  #
+############################################################
+
+       Subcatchment             Gage  Infiltration       Routing        
+  Number          Name           No       Type            Type          
+  ====== ==================== ======= ============ ====================
+       1                 J3#1      1       Horton  Non-linear reservoir
+       2                 J1#1      1       Horton  Non-linear reservoir
+       3                 J7#1      1       Horton  Non-linear reservoir
+       4                J10#1      1       Horton  Non-linear reservoir
+       5                J10#2      1       Horton  Non-linear reservoir
+       6                 J2#1      1       Horton  Non-linear reservoir
+       7                J11#1      1       Horton  Non-linear reservoir
+
+ Total Number of Subcatchments...              7
+ Total Tributary Area (acres)....          28.92
+ Impervious Area (acres).........          16.52
+ Pervious Area (acres)...........          12.40
+ Total Width (feet)..............       10294.00
+ Impervious Area (%).............          57.12
+
+
+  ###################################################
+  #          S U B C A T C H M E N T  D A T A       #
+  #   Default, Ratio values for subcatchment data   #
+  #   Used with the calibrate node in the runoff.   #
+  # 1 - width     2 - area       3 - impervious %   #
+  # 4 - slope     5 - imp "n"    6 - perv "n"       #
+  # 7 - imp ds    8 - perv ds    9 - 1st infil      #
+  #10 - 2nd infil               11 - 3rd infil      #
+  ###################################################
+
+ Column           1         2         3         4         5         6         7         8         9        10        11
+ Default     0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+ Ratio       1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000    1.0000
+
+ *********************************************************
+ *     Arrangement of Subcatchments and Channel/Pipes    *
+ *********************************************************
+
+
+     Inlet
+ J3                       No Tributary Channel/Pipes
+                Tributary Subareas........ J3#1
+ J1                       No Tributary Channel/Pipes
+                Tributary Subareas........ J1#1
+ J7                       No Tributary Channel/Pipes
+                Tributary Subareas........ J7#1
+ J10                      No Tributary Channel/Pipes
+                Tributary Subareas........ J10#1 J10#2
+ J2                       No Tributary Channel/Pipes
+                Tributary Subareas........ J2#1
+ J11                      No Tributary Channel/Pipes
+                Tributary Subareas........ J11#1
+
+
+ ***********************************************************
+ * Hydrographs will be stored for the following   6 INLETS *
+ ***********************************************************
+  J3                  J1                  J7                  
+  J10                 J2                  J11                 
+
+
+ ************************************************
+ *  Quality Simulation not included in this run *
+ ************************************************
+
+
+
+
+ ***************************************************
+ *  Precipitation Interface File Summary           *
+ *  Number of precipitation station....        1   *
+ ***************************************************
+
+ Location Station Number
+ -------- --------------
+        1.             1
+
+
+     A1                                                                              
+     See Site_Drainage_Model.txt for more details.                                   
+
+
+ *===========================================================*
+ |        HYDRAULICS TABLES IN THE OUTPUT FILE               |
+ |  These are the more important tables in the output file.  |
+ |  You can use your editor to find the table numbers,       |
+ |  for example: search for Table E20 to check continuity.   |
+ |  This output file can be imported into a Word Processor   |
+ |  and printed on US letter or A4 paper using portrait      |
+ |  mode, courier font, a size of 8 pt. and margins of 0.75  |
+ |                                                           |
+ | Table E1   - Basic Conduit Data                           |
+ | Table E2   - Conduit Factor Data                          |
+ | Table E3a  - Junction Data                                |
+ | Table E3b  - Junction Data                                |
+ | Table E4   - Conduit Connectivity Data                    |
+ | Table E4a  - Dry Weather Flow Data                        |
+ | Table E4b  - Real Time Control Data                       |
+ | Table E5   - Junction Time Step Limitation Summary        |
+ | Table E5a  - Conduit Explicit Condition Summary           |
+ | Table E6   - Final Model Condition                        |
+ | Table E7   - Iteration Summary                            |
+ | Table E8   - Junction Time Step Limitation Summary        |
+ | Table E9   - Junction  Summary  Statistics                |
+ | Table E10  - Conduit   Summary  Statistics                |
+ | Table E11  - Area assumptions used in the analysis        |
+ | Table E12  - Mean conduit information                     |
+ | Table E13  - Channel losses(H) and culvert info           |
+ | Table E13a - Culvert Analysis Classification              |
+ | Table E14  - Natural Channel Overbank Flow Information    |
+ | Table E14a - Natural Channel Encroachment Information     |
+ | Table E14b - Floodplain Mapping                           |
+ | Table E15  - Spreadsheet Info List                        |
+ | Table E15a - Spreadsheet Reach List                       |
+ | Table E16  - New Conduit Output Section                   |
+ | Table E17  - Pump Operation                               |
+ | Table E18  - Junction Continuity Error                    |
+ | Table E19  - Junction Inflow & Outflow Listing            |
+ | Table E20  - Junction Flooding and Volume List            |
+ | Table E21  - Continuity balance at simulation end         |
+ | Table E22  - Model Judgement Section                      |
+ *==========================================================*
+
+ Time Control from Hydraulics Job Control 
+ Year.........    1998 Month.......       1
+ Day..........       1 Hour........       0
+ Minute.......       0 Second......       0
+
+
+ Control information for simulation
+ ----------------------------------
+
+ Integration cycles.................      1440
+ Length of integration step is......     15.00 seconds
+ Simulation length..................      6.00 hours
+ Do not create equiv. pipes(NEQUAL).         0
+ Use U.S. customary units for I/O...         0
+ Printing starts in cycle...........         1
+ Intermediate printout intervals of.       500 cycles
+ Intermediate printout intervals of.    125.00 minutes
+ Summary printout intervals of......       500 cycles
+ Summary printout time interval of..    125.00 minutes
+ Hot start file parameter (REDO)....         0
+ Initial time.......................      0.00 hours
+
+ Iteration variables: Flow Tolerance.   0.00010
+                      Head Tolerance.   0.00050 
+     Minimum depth (m or ft).........   0.00001
+     Underrelaxation parameter.......   0.85000
+     Time weighting parameter........   0.85000
+     Conduit roughness factor........   1.00000
+     Flow adjustment factor..........   1.00000
+     Initial Condition Smoothing.....         0
+     Courant Time Step Factor........   1.00000
+     Default Expansion/Contraction K.   0.00000
+     Default Entrance/Exit K.........   0.00000
+     Routing Method..................   Dynamic Wave                            
+ Default surface area of junctions...     12.57 square feet.
+ Minimum Junction/Conduit Depth......   0.00001 feet.
+ Ponding Area Coefficient............   5000.00 
+ Ponding Area Exponent...............    1.0000 
+ Minimum Orifice Length..............   1000.00 feet.
+ NJSW input hydrograph junctions.....     0
+      or user defined hydrographs....
+
+ *==================================================*
+ |          Table E1 - Conduit Data                 |
+ *==================================================*
+
+                                                                                             Trapezoid  Hazen
+  Inp              Conduit     Length    Conduit      Area    Manning  Max Width      Depth       Side  Williams
+  Num                 Name       (ft)      Class    (ft^2)      Coef.    (ft)         (ft)      Slopes  c-factor
+ ---- -------------------- ---------- ----------   -------    -------  ---------      -----    -------  -------
+    1                   C1   185.0000  Trapezoid   60.0000     0.0500     5.0000     3.0000     5.0000     5.0000
+    2                   C2   526.0000  Trapezoid   12.5000     0.0160     0.0100     1.0000     0.0000    25.0000
+    3                   C3   109.0000   Circular    3.9761     0.0160     2.2500     2.2500
+    4                   C4   133.0000  Trapezoid   60.0000     0.0500     5.0000     3.0000     5.0000     5.0000
+    5                   C5   207.0000  Trapezoid   60.0000     0.0500     5.0000     3.0000     5.0000     5.0000
+    6                   C6   140.0000  Trapezoid   60.0000     0.0500     5.0000     3.0000     5.0000     5.0000
+    7                   C7    95.0000   Circular    9.6211     0.0160     3.5000     3.5000
+    8                   C8   166.0000  Trapezoid   60.0000     0.0500     5.0000     3.0000     5.0000     5.0000
+    9                   C9   320.0000  Trapezoid   60.0000     0.0500     5.0000     3.0000     5.0000     5.0000
+   10                  C10   145.0000  Trapezoid   60.0000     0.0500     5.0000     3.0000     5.0000     5.0000
+   11                  C11    89.0000   Circular   17.7205     0.0160     4.7500     4.7500
+ Total length of all conduits ....      2115.0000 feet 
+
+ *===================================================*
+ | If there are messages about (sqrt(g*d)*dt/dx), or |
+ | the sqrt(wave celerity)*time step/conduit length  |
+ | in the output file all it means is that the       |
+ | program will lower the internal time step to      |
+ | satisfy this condition (explicit condition).      |
+ | You control the actual internal time step by      |
+ | using the minimum courant time step factor in the |
+ | HYDRAULICS job control.  The message put in words |
+ | states that the smallest conduit with the fastest |
+ | velocity will control the time step selection.    |
+ | You have further control by using the modify      |
+ | conduit option in the HYDRAULICS Job Control.     |
+ *===================================================*
+
+  
+              Conduit     Courant
+                 Name       Ratio
+ --------------------   ---------
+                  C1        0.60
+                  C2        0.11
+                  C3        1.17  ===> Warning ! (sqrt(wave celerity)*time step/conduit length)
+                  C4        0.84
+                  C5        0.54
+                  C6        0.80
+                  C7        1.68  ===> Warning ! (sqrt(wave celerity)*time step/conduit length)
+                  C8        0.67
+                  C9        0.35
+                 C10        0.77
+                 C11        2.08  ===> Warning ! (sqrt(wave celerity)*time step/conduit length)
+
+ *==================*
+ |  Conduit Volume  |
+ *==================*
+
+ Full pipe or full open conduit volume
+ Input full depth volume............    8.7260E+04 cubic feet
+
+
+ *===================================================*
+ |           Table E3a - Junction Data               |
+ *===================================================*
+
+  Inp             Junction      Ground     Crown    Invert    Qinst  Initial  Interface
+  Num                 Name   Elevation Elevation Elevation      cfs Depth-ft   Flow (%)
+  --- --------------------   --------- --------- --------- -------- --------  ---------
+    1                  J1   4981.0000 4976.0000 4973.0000   0.0000   0.0000    100.0000
+    2                  J2   4975.0000 4970.0000 4969.0000   0.0000   0.0000    100.0000
+    3                  J3   4981.0000 4975.2500 4973.0000   0.0000   0.0000    100.0000
+    4                  J4   4979.0000 4974.0000 4971.0000   0.0000   0.0000    100.0000
+    5                  J5   4977.8000 4972.8000 4969.8000   0.0000   0.0000    100.0000
+    6                  J6   4977.0000 4972.5000 4969.0000   0.0000   0.0000    100.0000
+    7                  J7   4980.5000 4974.5000 4971.5000   0.0000   0.0000    100.0000
+    8                  J8   4975.5000 4970.0000 4966.5000   0.0000   0.0000    100.0000
+    9                  J9   4969.8000 4967.8000 4964.8000   0.0000   0.0000    100.0000
+   10                 J10   4968.8000 4966.8000 4963.8000   0.0000   0.0000    100.0000
+   11                 J11   4973.0000 4968.0000 4963.0000   0.0000   0.0000    100.0000
+   12                  O1   4977.0000 4966.7500 4962.0000   0.0000   0.0000    100.0000
+
+
+ *===================================================*
+ |           Table E3b - Junction Data               |
+ *===================================================*
+
+  Inp             Junction           X             Y       Type of      Type of  Maximum       Pavement  
+  Num                 Name         Coord.        Coord.    Manhole        Inlet  Capacity    Shape   Slope
+ ---- --------------------    -----------   ----------- ---------- ------------  --------  -------- -------
+    1                   J1         0.0000        0.0000 No Ponding       Normal                  0     0.00
+    2                   J2         0.0000        0.0000 No Ponding       Normal                  0     0.00
+    3                   J3         0.0000        0.0000 No Ponding       Normal                  0     0.00
+    4                   J4         0.0000        0.0000 No Ponding       Normal                  0     0.00
+    5                   J5         0.0000        0.0000 No Ponding       Normal                  0     0.00
+    6                   J6         0.0000        0.0000 No Ponding       Normal                  0     0.00
+    7                   J7         0.0000        0.0000 No Ponding       Normal                  0     0.00
+    8                   J8         0.0000        0.0000 No Ponding       Normal                  0     0.00
+    9                   J9         0.0000        0.0000 No Ponding       Normal                  0     0.00
+   10                  J10         0.0000        0.0000 No Ponding       Normal                  0     0.00
+   11                  J11         0.0000        0.0000 No Ponding       Normal                  0     0.00
+   12                   O1         0.0000        0.0000 No Ponding       Normal                  0     0.00
+
+
+ *===================================================*
+ |           Table E4 - Conduit Connectivity         |
+ *===================================================*
+
+ Input              Conduit               Upstream            Downstream     Upstream  Downstream
+Number                 Name                   Node                  Node    Elevation   Elevation
+====== ====================   ====================  ====================    =========   =========
+     1                   C1                     J1                    J5    4973.0000   4969.8000   No Design
+     2                   C2                     J2                   J11    4969.0000   4967.0000   No Design
+     3                   C3                     J3                    J4    4973.0000   4971.0000   No Design
+     4                   C4                     J4                    J5    4971.0000   4969.8000   No Design
+     5                   C5                     J5                    J6    4969.8000   4969.0000   No Design
+     6                   C6                     J7                    J6    4971.5000   4969.0000   No Design
+     7                   C7                     J6                    J8    4969.0000   4966.5000   No Design
+     8                   C8                     J8                    J9    4966.5000   4964.8000   No Design
+     9                   C9                     J9                   J10    4964.8000   4963.8000   No Design
+    10                  C10                    J10                   J11    4963.8000   4963.0000   No Design
+    11                  C11                    J11                    O1    4963.0000   4962.0000   No Design
+
+
+ *================================================*
+ |          FREE OUTFALL DATA (DATA GROUP I1)     |
+ |         BOUNDARY CONDITION ON DATA GROUP J1    |
+ *================================================*
+
+ Outfall at Junction....O1 has boundary condition number...         1
+
+
+ *================================================*
+ |        INTERNAL CONNECTIVITY INFORMATION       |
+ *================================================*
+
+              CONDUIT             JUNCTION             JUNCTION
+ -------------------- -------------------- --------------------
+              FREE# 1                   O1             BOUNDARY
+
+ *===================================================*
+ |        Boundary Condition Information             |
+ |                 Data Groups J1-J4                 |
+ *===================================================*
+
+
+ BC NUMBER..         1 has no control water surface.
+
+ *===================================================*
+ |             XP Note Field Summary                 |
+ *===================================================*
+
+
+
+
+ *=================================*
+ |   Conduit Convergence Criteria  |
+ *=================================*
+
+              Conduit        Full     Conduit 
+                 Name        Flow       Slope 
+ --------------------  ----------  ---------- 
+                   C1     332.1783      0.0173
+                   C2      43.8990      0.0038
+                   C3      34.0856      0.0183
+                   C4     239.9092      0.0090
+                   C5     157.0153      0.0039
+                   C6     337.5111      0.0179
+                   C7     132.6086      0.0263
+                   C8     255.5951      0.0102
+                   C9     141.1910      0.0031
+                  C10     187.6044      0.0055
+                  C11     195.6305      0.0112
+
+ *=================================*
+ |    Initial Model Condition      |
+ | Initial Time =      0.00 hours  |
+ *=================================*
+
+           Junction / Depth  / Elevation    ===>  "*" Junction is Surcharged.
+                  J1/   0.00 /  4973.00                   J2/   0.00 /  4969.00                   J3/   0.00 /  4973.00
+                  J4/   0.00 /  4971.00                   J5/   0.00 /  4969.80                   J6/   0.00 /  4969.00
+                  J7/   0.00 /  4971.50                   J8/   0.00 /  4966.50                   J9/   0.00 /  4964.80
+                 J10/   0.00 /  4963.80                  J11/   0.00 /  4963.00                   O1/   0.00 /  4962.00
+
+             Conduit/       FLOW   ===> "*" Conduit uses the normal flow option.
+                  C1/       0.00                   C2/       0.00                   C3/       0.00 
+                  C4/       0.00                   C5/       0.00                   C6/       0.00 
+                  C7/       0.00                   C8/       0.00                   C9/       0.00 
+                 C10/       0.00                  C11/       0.00              FREE# 1/       0.00 
+
+             Conduit/   Velocity
+                  C1/       0.00                   C2/       0.00                   C3/       0.00
+                  C4/       0.00                   C5/       0.00                   C6/       0.00
+                  C7/       0.00                   C8/       0.00                   C9/       0.00
+                 C10/       0.00                  C11/       0.00
+
+             Conduit/ Cross Sectional Area
+                  C1/       0.00                   C2/       0.00                   C3/       0.00
+                  C4/       0.00                   C5/       0.00                   C6/       0.00
+                  C7/       0.00                   C8/       0.00                   C9/       0.00
+                 C10/       0.00                  C11/       0.00
+
+             Conduit/ Hydraulic Radius
+                  C1/       0.00                   C2/       0.00                   C3/       0.00
+                  C4/       0.00                   C5/       0.00                   C6/       0.00
+                  C7/       0.00                   C8/       0.00                   C9/       0.00
+                 C10/       0.00                  C11/       0.00
+
+             Conduit/ Upstream/ Downstream Elevation
+                  C1/  4969.80/  4969.80                  C2/  4963.00/  4963.00                  C3/  4971.00/  4971.00
+                  C4/  4969.80/  4969.80                  C5/  4969.00/  4969.00                  C6/  4969.00/  4969.00
+                  C7/  4966.50/  4966.50                  C8/  4964.80/  4964.80                  C9/  4963.80/  4963.80
+                 C10/  4963.00/  4963.00                 C11/  4962.00/  4962.00
+
+ Cycle        500      Time          2 Hrs -  5.00 Min
+
+           Junction / Depth  / Elevation    ===>  "*" Junction is Surcharged.
+                  J1/   0.06 /  4973.06                   J2/   0.17 /  4969.17                   J3/   0.07 /  4973.07
+                  J4/   0.05 /  4971.05                   J5/   0.15 /  4969.95                   J6/   0.18 /  4969.18
+                  J7/   0.06 /  4971.56                   J8/   0.16 /  4966.66                   J9/   0.25 /  4965.05
+                 J10/   0.26 /  4964.06                  J11/   0.32 /  4963.32                   O1/   0.31 /  4962.31
+
+             Conduit/       FLOW   ===> "*" Conduit uses the normal flow option.
+                  C1/       0.18*                  C2/       0.32                   C3/       0.06                   C4/       0.10*
+                  C5/       0.41*                  C6/       0.19*                  C7/       0.65                   C8/       0.75*
+                  C9/       0.91*                 C10/       1.29*                 C11/       1.78              FREE# 1/       1.78 
+
+ Cycle       1000      Time          4 Hrs - 10.00 Min
+
+           Junction / Depth  / Elevation    ===>  "*" Junction is Surcharged.
+                  J1/   0.00 /  4973.00                   J2/   0.02 /  4969.02                   J3/   0.00 /  4973.00
+                  J4/   0.00 /  4971.00                   J5/   0.00 /  4969.80                   J6/   0.00 /  4969.00
+                  J7/   0.00 /  4971.50                   J8/   0.00 /  4966.50                   J9/   0.01 /  4964.81
+                 J10/   0.01 /  4963.81                  J11/   0.01 /  4963.01                   O1/   0.00 /  4962.00
+
+             Conduit/       FLOW   ===> "*" Conduit uses the normal flow option.
+                  C1/       0.00*                  C2/       0.00                   C3/       0.00*                  C4/       0.00*
+                  C5/       0.00                   C6/       0.00*                  C7/       0.00*                  C8/       0.00*
+                  C9/       0.00                  C10/       0.00                  C11/       0.00              FREE# 1/       0.00 
+
+
+ *===================================================*
+ | Table E5 - Junction Time Limitation Summary       |
+ |              (0.10 or 0.25)* Depth * Area         |
+ | Time step = ------------------------------        |
+ |                  Sum of Flow                      |
+ *===================================================*
+ |  The time this junction was the limiting junction |
+ |                is listed in the third column.     |
+ *===================================================*
+
+             Junction     Time(.10)  Time(.25)  Time(sec)
+ --------------------     ---------  ---------  ---------
+                   J1         93.57     150.00    21600.0
+                   J2        150.00     150.00        0.0
+                   J3         45.42     113.55        0.0
+                   J4        101.04     150.00        0.0
+                   J5        150.00     150.00        0.0
+                   J6        131.63     150.00        0.0
+                   J7         54.28     135.70        0.0
+                   J8        105.05     150.00        0.0
+                   J9        149.68     150.00        0.0
+                  J10        150.00     150.00        0.0
+                  J11        111.44     150.00        0.0
+                   O1        150.00     150.00        0.0
+ The junction requiring the smallest time step was...J1
+
+
+ *==========================================================*
+ |       Table E5a - Conduit Explicit Condition Summary     |
+ |       Courant   =         Conduit Length                 |
+ |       Time step = --------------------------------       |
+ |                      Velocity + sqrt(g*depth)            |
+ |                                                          |
+ |                  Conduit Implicit Condition Summary      |
+ |       Courant   =         Conduit Length                 |
+ |       Time step = --------------------------------       |
+ |                             Velocity                     |
+ *==========================================================*
+ |  The 3rd column is the Explicit time step times the      |
+ |      minimum courant time step factor                    |
+ |                                                          |
+ |  Minimum Conduit Time Step in seconds in the 4th column  |
+ |  in the list. Maximum possible is 10 * maximum time step |
+ |                                                          |
+ |  The 5th column is the maximum change at any time step   |
+ |  during the simulation. The 6th column is the wobble     |
+ |  value which is an indicator of the flow stability.      |
+ |                                                          |
+ |  You should use this section to find those conduits that |
+ |  are slowing your model down.  Use modify conduits to    |
+ |  alter the length of the slow conduits to make your      |
+ |  simulation faster, or change the conduit name to        |
+ |  "CHME?????" where ????? are any characters, this will   |
+ |  lengthen the conduit based on the model time step,      |
+ |  not the value listed in modify conduits.                |
+ *==========================================================*
+
+              Conduit  Time(exp)  Expl*Cmin  Time(imp) Time(min)  Max Qchange   Wobble  Type of Soln
+       --------------  ---------  ---------  --------- ---------  -----------  -------  ------------
+                   C1     34.54     34.54    104.17      15.5         -0.274     0.044   Normal Soln
+                   C2    105.62    105.62    150.00       0.0          0.081     0.317   Normal Soln
+                   C3     11.14     11.14     19.61       0.0         -0.140     0.248   Normal Soln
+                   C4     28.82     28.82    113.40       0.0         -0.107     0.035   Normal Soln
+                   C5     36.44     36.44    150.00       0.0          0.115     0.136   Normal Soln
+                   C6     24.30     24.30     69.75       0.0         -0.432     0.057   Normal Soln
+                   C7      6.21      6.21      9.66       7.8         -0.221     0.296   Normal Soln
+                   C8     25.06     25.06     79.48       0.0         -0.253     0.151   Normal Soln
+                   C9     50.53     50.53    150.00       0.0          0.165     0.249   Normal Soln
+                  C10     21.21     21.21     82.24       0.0          0.202     0.262   Normal Soln
+                  C11      5.96      5.96     10.69     336.8          0.302     0.354   Normal Soln
+The conduit with the smallest time step limitation was..C11
+The conduit with the largest wobble was.................C11
+The conduit with the largest flow change in any
+consecutive time step...................................C6
+
+ ************************************************
+ *      End of time step DO-loop in Runoff      *
+ ************************************************
+
+ Final Date (Mo/Day/Year)   =             1/ 1/1998
+ Total number of time steps =                   360
+ Final Julian Date          =               1998001
+ Final time of day          =                21600. seconds.
+ Final time of day          =                  6.00   hours.
+ Final running time         =                6.0000   hours.
+ Final running time         =                0.2500    days.
+
+ ****************************************************
+ *     Extrapolation Summary for Watersheds         *
+ * Explains the number of time steps and iterations *
+ * used in the solution of the subcatchments.       *
+ * # Steps ==> Total Number of Extrapolated Steps   *
+ * # Calls ==> Total Number of OVERLND Calls        *
+ ****************************************************
+
+         Subcatchment   # Steps  # Calls              Subcatchment   # Steps  # Calls              Subcatchment   # Steps  # Calls
+ --------------------   -------  --------     --------------------   -------  --------     --------------------   -------  --------
+                 J3#1      1857       287                     J1#1      1937       319                     J7#1      1897       303
+                J10#1      1991       345                    J10#2         0         0                     J2#1      1947       325
+                J11#1      2009       351
+
+
+#########################################################
+# Rainfall input summary from Runoff Continuity Check   #
+#########################################################
+
+ Total rainfall read for gage #         1 is       0.9783 in
+ Total rainfall duration for gage #     1 is       120.00 minutes
+
+ ************************************************************
+ * Table R5. CONTINUITY CHECK FOR SURFACE WATER             *
+ *       Any continuity error can be fixed by lowering the  *
+ *       wet and transition time step. The transition time  *
+ *       should not be much greater than the wet time step. *
+ ************************************************************
+                                                                     Inches over
+                                                       cubic feet    Total Basin
+ Total Precipitation (Rain plus Snow)                 1.027050E+05          0.978
+ Total Infiltration                                   4.366889E+04          0.416
+ Total Evaporation                                    1.674340E+03          0.016
+ Surface Runoff from Watersheds                       5.530461E+04          0.527
+ Total Water remaining in Surface Storage             2.098729E+03          0.020
+ Infiltration over the Pervious Area...               4.366889E+04          0.970
+                       --------        
+ Infiltration + Evaporation + 
+ Surface Runoff + Snow removal +
+ Water remaining in Surface Storage +
+ Water remaining in Snow Cover.........               1.027466E+05          0.979
+ Total Precipitation + Initial Storage.               1.027050E+05          0.978
+
+
+ The error in continuity is calculated as
+ ***************************************
+ * Precipitation + Initial Snow Cover  *
+ *      - Infiltration -               *
+ *Evaporation - Snow removal -         *
+ *Surface Runoff from Watersheds -     *
+ *Water in Surface Storage -           *
+ *Water remaining in Snow Cover        *
+ *-------------------------------------*
+ * Precipitation + Initial Snow Cover  *
+ ***************************************
+ Percent Continuity Error...............                               -0.0404
+
+
+ ****************************************************
+ * Table R6. Continuity Check for Channel/Pipes     *
+ *           You should have zero continuity error  *
+ *           if you are not using runoff hydraulics *
+ ****************************************************
+                                                                         Inches over
+                                                       cubic feet        Total Basin
+ Initial Channel/Pipe Storage................         0.000000E+00          0.000
+ Final Channel/Pipe Storage..................         0.000000E+00          0.000
+ Surface Runoff from Watersheds..............         5.530461E+04          0.527
+ Groundwater Subsurface Inflow or Diversion..         0.000000E+00          0.000
+ Evaporation Loss from Channels..............         0.000000E+00          0.000
+ Groundwater Flow Diverted Out of Network....         0.000000E+00          0.000
+ Channel/Pipe/Inlet Outflow..................         5.530461E+04          0.527
+ Initial Storage + Inflow....................         5.530461E+04          0.527
+ Final Storage + Outflow + Diverted GW.......         5.530461E+04          0.527
+ ********************************************
+ * Final Storage + Outflow + Evaporation  - *
+ * Watershed Runoff - Groundwater Inflow  - *
+ *     Initial Channel/Pipe Storage         *
+ *     ----------------------------------   *
+ *  Final Storage + Outflow  + Evaporation  *
+ ********************************************
+ Percent Continuity Error....................                        -0.0000
+
+         ##################################################
+         # Table R9. Summary Statistics for Subcatchments #
+         ##################################################
+
+ Note: Total Runoff Depth includes pervious & impervious areas.
+       Pervious and Impervious Runoff Depth is only the runoff from those two areas.
+       For catchments receiving redirected flow, this flow will only be shown if the flow is not 
+       directed directly to the outlet. Flow that is getting redirected is also listed with     
+       the original subcatchment.
+
+
+ Subcatchment...........                 J3#1                 J1#1                 J7#1                J10#1                J10#2
+ Area (acres)...........              3.74000              4.55000              6.79000              4.79000              2.33000
+ Percent Impervious.....             39.50000             56.80000             49.90000             87.70000              0.00000
+ Total Rainfall (in)....              0.97833              0.97833              0.97833              0.97833              0.97833
+ Max Intensity (in/hr)..              2.85000              2.85000              2.85000              2.85000              2.85000
+
+ Pervious Area
+ -------------
+ Total Runoff Depth (in)              0.00000              0.00000              0.00000              0.00000              0.00000
+ Peak Runoff Rate (cfs).              0.00000              0.00000              0.00000              0.00000              0.00000
+
+ Total Impervious Area
+ ---------------------
+ Total Runoff Depth (in)              0.92385              0.92256              0.92323              0.92150              0.00000
+ Peak Runoff Rate (cfs).              4.23374              7.33847              9.68152             11.72463              0.00000
+
+ Impervious Area with depression storage
+ ---------------------------------------
+ Total Runoff Depth (in)              0.68165              0.68068              0.68118              0.67989              0.00000
+ Peak Runoff Rate (cfs).              3.17530              5.50385              7.26114              8.79334              0.00000
+
+ Impervious Area without depression storage
+ ------------------------------------------
+ Total Runoff Depth (in)              0.24220              0.24188              0.24205              0.24162              0.00000
+ Peak Runoff Rate (cfs).              1.05843              1.83462              2.42038              2.93129              0.00000
+
+ Total Area
+ ----------
+ Total Runoff Depth (in)              0.36492              0.52401              0.46069              0.80816              0.00000
+ Peak Runoff Rate (cfs).              4.23374              7.33847              9.68152             11.72463              0.00000
+
+ Rational Formula
+ ----------------
+ Pervious Tc. (mins)....              0.00000              0.00000              0.00000              0.00000              0.00000
+ Perv. Intensity (in/hr)              0.00000              0.00000              0.00000              0.00000              0.00000
+ Pervious C ............              0.00000              0.00000              0.00000              0.00000              0.00000
+ Impervious Tc. (mins)..              0.00000              0.00000              0.00000              0.00000              0.00000
+ Imp. Intensity (in/hr).              0.00000              0.00000              0.00000              0.00000              0.00000
+ Impervious C ..........              0.00000              0.00000              0.00000              0.00000              0.00000
+ Partial Area (Ha)......              0.00000              0.00000              0.00000              0.00000              0.00000
+ Partial Area Tc........              0.00000              0.00000              0.00000              0.00000              0.00000
+ Partial Area Intensity.              0.00000              0.00000              0.00000              0.00000              0.00000
+
+
+ Subcatchment...........                 J2#1                J11#1
+ Area (acres)...........              4.74000              1.98000
+ Percent Impervious.....             63.00000             95.00000
+ Total Rainfall (in)....              0.97833              0.97833
+ Max Intensity (in/hr)..              2.85000              2.85000
+
+ Pervious Area
+ -------------
+ Total Runoff Depth (in)              0.00000              0.00000
+ Peak Runoff Rate (cfs).              0.00000              0.00000
+
+ Total Impervious Area
+ ---------------------
+ Total Runoff Depth (in)              0.92233              0.92128
+ Peak Runoff Rate (cfs).              8.45392              5.22514
+
+ Impervious Area with depression storage
+ ---------------------------------------
+ Total Runoff Depth (in)              0.68051              0.67972
+ Peak Runoff Rate (cfs).              6.34043              3.91876
+
+ Impervious Area without depression storage
+ ------------------------------------------
+ Total Runoff Depth (in)              0.24182              0.24156
+ Peak Runoff Rate (cfs).              2.11349              1.30638
+
+ Total Area
+ ----------
+ Total Runoff Depth (in)              0.58107              0.87522
+ Peak Runoff Rate (cfs).              8.45392              5.22514
+
+ Rational Formula
+ ----------------
+ Pervious Tc. (mins)....              0.00000              0.00000
+ Perv. Intensity (in/hr)              0.00000              0.00000
+ Pervious C ............              0.00000              0.00000
+ Impervious Tc. (mins)..              0.00000              0.00000
+ Imp. Intensity (in/hr).              0.00000              0.00000
+ Impervious C ..........              0.00000              0.00000
+ Partial Area (Ha)......              0.00000              0.00000
+ Partial Area Tc........              0.00000              0.00000
+ Partial Area Intensity.              0.00000              0.00000
+
+ ===> Runoff simulation ended normally.
+
+ *==================================================*
+ |  Table E6. Final Model Condition                 |
+ |            This table is used for steady state   |
+ |            flow comparison and is the information|
+ |            saved to the hot-restart file.        |
+ |            Final Time =     6.000 hours          |
+ *==================================================*
+
+           Junction / Depth  / Elevation    ===>  "*" Junction is Surcharged.
+                  J1/   0.00 /  4973.00/                  J2/   0.01 /  4969.01/                  J3/   0.00 /  4973.00/
+                  J4/   0.00 /  4971.00/                  J5/   0.00 /  4969.80/                  J6/   0.00 /  4969.00/
+                  J7/   0.00 /  4971.50/                  J8/   0.00 /  4966.50/                  J9/   0.00 /  4964.80/
+                 J10/   0.00 /  4963.80/                 J11/   0.00 /  4963.00/                  O1/   0.00 /  4962.00/
+
+           Conduit/       Flow   ===> "*" Conduit uses the normal flow option.
+                  C1/       0.00*/                  C2/       0.00 /                  C3/       0.00*/
+                  C4/       0.00*/                  C5/       0.00 /                  C6/       0.00*/
+                  C7/       0.00*/                  C8/       0.00*/                  C9/       0.00 /
+                 C10/       0.00 /                 C11/       0.00 /             FREE# 1/       0.00 /
+
+              Conduit/   Velocity
+                  C1/       0.01 /                  C2/       0.11 /                  C3/       0.00 /
+                  C4/       0.01 /                  C5/       0.02 /                  C6/       0.01 /
+                  C7/       0.45 /                  C8/       0.03 /                  C9/       0.03 /
+                 C10/       0.04 /                 C11/       0.43 /
+
+         Conduit/      Width
+                  C1/       5.00 /                  C2/       0.19 /                  C3/       0.88 /
+                  C4/       5.00 /                  C5/       5.01 /                  C6/       5.00 /
+                  C7/       1.37 /                  C8/       5.01 /                  C9/       5.03 /
+                 C10/       5.03 /                 C11/       1.86 /
+
+        Junction/        EGL
+                  J1/       0.00 /                  J2/       0.01 /                  J3/       0.00 /
+                  J4/       0.00 /                  J5/       0.00 /                  J6/       0.00 /
+                  J7/       0.00 /                  J8/       0.00 /                  J9/       0.00 /
+                 J10/       0.00 /                 J11/       4.00 /                  O1/       0.00 /
+
+        Junction/  Freeboard
+                  J1/       8.00 /                  J2/       5.99 /                  J3/       8.00 /
+                  J4/       8.00 /                  J5/       8.00 /                  J6/       8.00 /
+                  J7/       9.00 /                  J8/       9.00 /                  J9/       5.00 /
+                 J10/       5.00 /                 J11/      10.00 /                  O1/      15.00 /
+
+        Junction/ Max Volume
+                  J1/       6.14 /                  J2/       6.55 /                  J3/       7.18 /
+                  J4/       5.47 /                  J5/      11.06 /                  J6/      11.43 /
+                  J7/       7.08 /                  J8/      11.64 /                  J9/      14.88 /
+                 J10/      15.48 /                 J11/      17.01 /                  O1/      16.99 /
+
+        Junction/Total Fldng
+                  J1/       0.00 /                  J2/       0.00 /                  J3/       0.00 /
+                  J4/       0.00 /                  J5/       0.00 /                  J6/       0.00 /
+                  J7/       0.00 /                  J8/       0.00 /                  J9/       0.00 /
+                 J10/       0.00 /                 J11/       0.00 /                  O1/       0.00 /
+
+         Conduit/ Cross Sectional Area
+                  C1/       0.00 /                  C2/       0.00 /                  C3/       0.00 /
+                  C4/       0.00 /                  C5/       0.01 /                  C6/       0.00 /
+                  C7/       0.00 /                  C8/       0.01 /                  C9/       0.01 /
+                 C10/       0.02 /                 C11/       0.00 /
+
+         Conduit/  Final Volume 
+                  C1/       0.28 /                  C2/       0.41 /                  C3/       0.00 /
+                  C4/       0.20 /                  C5/       1.34 /                  C6/       0.09 /
+                  C7/       0.03 /                  C8/       1.07 /                  C9/       4.60 /
+                 C10/       2.33 /                 C11/       0.15 /
+
+         Conduit/ Hydraulic Radius
+                  C1/       0.00 /                  C2/       0.00 /                  C3/       0.01 /
+                  C4/       0.00 /                  C5/       0.00 /                  C6/       0.00 /
+                  C7/       0.01 /                  C8/       0.00 /                  C9/       0.00 /
+                 C10/       0.00 /                 C11/       0.01 /
+
+         Conduit/ Upstream/ Downstream Elevation
+                  C1/  4973.00/  4969.80                  C2/  4969.01/  4967.00                  C3/  4973.00/  4971.00/
+                  C4/  4971.00/  4969.80                  C5/  4969.80/  4969.00                  C6/  4971.50/  4969.00/
+                  C7/  4969.00/  4966.50                  C8/  4966.50/  4964.80                  C9/  4964.80/  4963.80/
+                 C10/  4963.80/  4963.00                 C11/  4963.00/  4962.00
+
+
+ *=========================================================*
+ |         Table E7 -  Iteration Summary                   |
+ *=========================================================*
+
+ Total number of time steps simulated............       1440
+ Total number of passes in the simulation........      37592
+ Total number of time steps during simulation....       1980
+ Ratio of actual # of time steps / NTCYC.........      1.375
+ Average number of iterations per time step......     18.986
+ Average  time step size(seconds)................     10.909
+ Smallest time step size(seconds)................      5.000
+ Largest  time step size(seconds)................     15.000
+ Average minimum Conduit Courant time step (sec).     13.546
+ Average minimum implicit time step (sec)........      5.596
+ Average minimum junction time step (sec)........      5.596
+ Average Courant Factor Tf.......................      5.596
+ Number of times omega reduced...................        202
+
+
+ *=========================================================*
+ |     Table E8 - Junction Time Step Limitation Summary    |
+ *=========================================================*
+ |   Not Convr = Number of times this junction did not     |
+ |               converge during the simulation.           |
+ |   Avg Convr = Average junction iterations.              |
+ |   Conv err  = Mean convergence error.                   |
+ |   Omega Cng = Change of omega during iterations         |
+ |   Max Itern = Maximum number of iterations              |
+ *=========================================================*
+             Junction Not Convr Avg Convr Total Itt Omega Cng  Max Itern  Ittrn >10  Ittrn >25  Ittrn >40
+ -------------------- --------- --------- ---------  --------  ---------  ---------  ---------  ---------
+                   J1         0      1.98      3912         0         7         0         0         0
+                   J2         0      2.61      5171         0         6         0         0         0
+                   J3         0      2.04      4032        32        10         1         0         0
+                   J4         0      2.49      4934         0         6         0         0         0
+                   J5         0      2.45      4844         2        14         2         0         0
+                   J6         0      2.77      5491        11        18         2         0         0
+                   J7         0      1.99      3932         4        11         1         0         0
+                   J8         0      2.92      5780         7         7         0         0         0
+                   J9         0      2.72      5384         0         7         0         0         0
+                  J10         0      2.67      5285        58         7         0         0         0
+                  J11         0      3.86      7639         6       425         5         4         4
+                   O1         0     19.86     39313        82       489        80        79        79
+ Total number of iterations for all junctions..     95717
+ Minimum number of possible iterations.........     23760
+ Efficiency of the simulation..................      4.03
+                                                   Fair Efficiency
+
+ *==========================================================*
+ | Extran Efficiency is an indicator of the efficiency of   |
+ | the simulation.  Ideal efficiency is one iteration per   |
+ | time step.  Altering the underrelaxation parameter,      |
+ | lowering the time step, increasing the flow and head     |
+ | tolerance are good ways of improving the efficiency,     |
+ | another is lowering the internal time step. The lower the|
+ | efficiency generally the faster your model will run.     |
+ | If your efficiency is less than 1.5 then you may try     |
+ | increasing your time step so that your overall simulation|
+ | is faster.  Ideal efficiency would be around 2.0         |
+ |                                                          |
+ | Good Efficiency      < 1.5           mean iterations     |
+ | Excellent Efficiency < 2.5 and > 1.5 mean iterations     |
+ | Good      Efficiency < 4.0 and > 2.5 mean iterations     |
+ | Fair      Efficiency < 7.5 and > 4.0 mean iterations     |
+ | Poor Efficiency      > 7.5           mean iterations     |
+ *==========================================================*
+
+
+ *======================================================*
+ |        Table E9 - JUNCTION SUMMARY STATISTICS        |
+ | The Maximum area is only the area of the node, it    |
+ | does not include the area of the surrounding conduits|
+ *======================================================*
+
+                                  Uppermost   Maximum     Time        Feet of             Maximum   Maximum   Maximum   Maximum
+                           Ground PipeCrown  Junction      of       Surcharge  Freeboard Junction    Gutter    Gutter    Gutter
+             Junction   Elevation Elevation Elevation    Occurence     at Max   of node      Area     Depth     Width  Velocity
+                 Name        feet      feet      feet    Hr. Min.   Elevation      feet      ft^2      feet      feet      ft/s
+ --------------------   ---------  --------  --------   ---------   ---------  --------  -------- --------- --------- ---------
+                  J1   4981.0000 4976.0000 4973.4888      0   35      0.0000    7.5112   12.5660    0.0000      0.00    0.0000
+                  J2   4975.0000 4970.0000 4969.5213      0   35      0.0000    5.4787   12.5660    0.0000      0.00    0.0000
+                  J3   4981.0000 4975.2500 4973.5714      0   34      0.0000    7.4286   12.5660    0.0000      0.00    0.0000
+                  J4   4979.0000 4974.0000 4971.4350      0   35      0.0000    7.5650   12.5660    0.0000      0.00    0.0000
+                  J5   4977.8000 4972.8000 4970.6800      0   36      0.0000    7.1200   12.5660    0.0000      0.00    0.0000
+                  J6   4977.0000 4972.5000 4969.9099      0   35      0.0000    7.0901   12.5660    0.0000      0.00    0.0000
+                  J7   4980.5000 4974.5000 4972.0633      0   35      0.0000    8.4367   12.5660    0.0000      0.00    0.0000
+                  J8   4975.5000 4970.0000 4967.4266      0   36      0.0000    8.0734   12.5660    0.0000      0.00    0.0000
+                  J9   4969.8000 4967.8000 4965.9844      0   37      0.0000    3.8156   12.5660    0.0000      0.00    0.0000
+                 J10   4968.8000 4966.8000 4965.0319      0   37      0.0000    3.7681   12.5660    0.0000      0.00    0.0000
+                 J11   4973.0000 4968.0000 4964.3540      0   36      0.0000    8.6460   12.5660    0.0000      0.00    0.0000
+                  O1   4977.0000 4966.7500 4963.3524      0   36      0.0000   13.6476   12.5660    0.0000      0.00    0.0000
+
+ *======================================================*
+ |        Table E10 - CONDUIT SUMMARY STATISTICS        |
+ | Note: The peak flow may be less than the design flow |
+ | and the conduit may still surcharge because of the   |
+ | downstream boundary conditions.                      |
+ |                                                      |
+ | * denotes an open conduit that has been overtopped   |
+ |   this is a potential source of severe errors        |
+ *======================================================*
+
+                                Conduit  Maximum  Maximum    Time      Maximum    Time   Ratio of    Maximum Water      Ratio
+                        Design   Design Vertical Computed     of      Computed     of     Max. to  Elev at Pipe Ends     d/D
+              Conduit     Flow Velocity    Depth     Flow  Occurence  Velocity Occurence   Design  Upstream  Dwnstrm   US   DS
+                 Name    (cfs)   (ft/s)     (in)    (cfs)   Hr.  Min.  (ft/s)   Hr.  Min.    Flow    (ft)     (ft)  
+ --------------------  ------- -------- --------  ------- -----------  ------- ----------  ------- -------- -------- ----- -----
+                   C1 332.1783   5.5363  36.0000   7.2574     0    35   1.7760     0   34   0.0218 4973.489 4970.680 0.163 0.293
+                   C2  43.8990   3.5119  12.0000   6.9641     0    36   2.1020     0   36   0.1586 4969.521 4967.453 0.521 0.453
+                   C3  34.0856   8.5727  27.0000   4.2339     0    35   5.5572     0   35   0.1242 4973.571 4971.435 0.254 0.193
+                   C4 239.9092   3.9985  36.0000   4.2132     0    35   1.1729     0   33   0.0176 4971.435 4970.680 0.145 0.293
+                   C5 157.0153   2.6169  36.0000  10.6558     0    36   1.2839     0   36   0.0679 4970.680 4969.910 0.293 0.303
+                   C6 337.5111   5.6252  36.0000   9.6421     0    35   2.0074     0   33   0.0286 4972.063 4969.910 0.188 0.303
+                   C7 132.6086  13.7831  42.0000  19.6157     0    35   9.8461     0   35   0.1479 4969.910 4967.427 0.260 0.265
+                   C8 255.5951   4.2599  36.0000  19.3399     0    36   2.0886     0   36   0.0757 4967.427 4965.984 0.309 0.395
+                   C9 141.1910   2.3532  36.0000  17.5972     0    37   1.3521     0   37   0.1246 4965.984 4965.032 0.395 0.411
+                  C10 187.6044   3.1267  36.0000  24.5485     0    37   1.7632     0   38   0.1309 4965.032 4964.354 0.411 0.451
+                  C11 195.6305  11.0398  57.0000  34.6593     0    36   8.3301     0   37   0.1772 4964.354 4963.352 0.285 0.285
+              FREE# 1  Undefnd  Undefnd  Undefnd  34.6603     0    36
+
+
+ *==================================================*
+ | Table E11.  Area assumptions used in the analysis|
+ | Subcritical and Critical flow assumptions from   |
+ |    Subroutine Head.  See Figure 17-1 in the      |
+ |         manual for further information.          |
+ *==================================================*
+
+                      Duration    Duration  Durat. of Durat. of
+                         of       of Sub-    Upstream Downstream   Maximum   Maximum   Maximum
+             Conduit    Dry       Critical   Critical   Critical Hydraulic    X-Sect    Vel*D 
+              Name    Flow(min)  Flow(min)  Flow(min)  Flow(min)  Radius-m Area(ft^2) (ft^2/s)
+ -------------------- ---------- ----------  ---------  --------- ---------  --------- --------
+                   C1       0.50     359.50       0.00       0.00     0.387     5.763     1.206
+                   C2       0.50       0.00       0.00     359.50     0.247     2.976     1.022
+                   C3     186.25     173.75       0.00       0.00     0.327     0.664     2.765
+                   C4       0.50     359.50       0.00       0.00     0.356     5.467     0.759
+                   C5       0.50     359.50       0.00       0.00     0.594     8.475     1.146
+                   C6       0.25     359.75       0.00       0.00     0.429     6.400     1.467
+                   C7       0.25     359.75       0.00       0.00     0.531     2.012     9.009
+                   C8       0.50     359.50       0.00       0.00     0.630    10.723     2.169
+                   C9       0.50     359.50       0.00       0.00     0.760    13.339     1.633
+                  C10       0.50     359.50       0.00       0.00     0.789    14.802     2.267
+                  C11       0.50     359.50       0.00       0.00     0.778     4.163    11.263
+
+ *===========================================*
+ | Table E12. Mean Conduit Flow Information  |
+ *===========================================*
+                           Mean         Total      Mean       Low      Mean      Mean     Mean      Mean
+              Conduit      Flow          Flow   Percent      Flow    Froude Hydraulic    Cross   Conduit
+                 Name     (cfs)        (ft^3)    Change  Weightng    Number    Radius     Area  Roughness
+ --------------------  --------      --------  --------  --------    ------  --------   ------- ---------
+                   C1    0.4018     8678.0428    0.0123    0.9975    0.2885    0.0818   0.6283    0.0500
+                   C2    0.4652     10047.541    0.0187    0.9975    0.5055    0.0730   0.5426    0.0160
+                   C3    0.2296     4959.4929    0.0116    0.6227    0.8474    0.0737   0.1135    0.0160
+                   C4    0.2300     4967.8583    0.0109    0.9970    0.1946    0.0738   0.5540    0.0500
+                   C5    0.6312     13634.026    0.0259    0.9970    0.2036    0.1388   1.3032    0.0500
+                   C6    0.5268     11379.689    0.0369    0.9975    0.2990    0.0916   0.7347    0.0500
+                   C7    1.1578     25007.568    0.0532    0.9975    2.3487    0.1269   0.3151    0.0160
+                   C8    1.1613     25085.023    0.0479    0.9970    0.2960    0.1499   1.4747    0.0500
+                   C9    1.1610     25077.961    0.0456    0.9970    0.1712    0.1943   2.1856    0.0500
+                  C10    1.8113     39123.139    0.0659    0.9975    0.2297    0.2118   2.4953    0.0500
+                  C11    2.5690     55490.509    0.0995    0.9975    1.7920    0.2087   0.7708    0.0160
+              FREE# 1    2.5719     55552.547
+
+ *===============================================================*
+ | Table E13. Channel losses(H), headwater depth (HW), tailwater |
+ | depth (TW), critical and normal depth (Yc and Yn).            |
+ | Use this section for culvert comparisons                      |
+ *===============================================================*
+
+              Conduit   Maximum      Head  Friction  Critical    Normal        HW        TW
+                 Name      Flow      Loss      Loss     Depth     Depth    Elevat    Elevat
+ -------------------- --------- --------- --------- --------- --------- --------- ---------
+                  C1    7.2091    0.0000    3.0916    0.3533    0.4864 4973.4871 4970.6626   Max Flow
+                  C2    6.9641    0.0000    1.7305    0.4530    0.5002 4969.5212 4967.4530   Max Flow
+                  C3    4.2303    0.0000    1.6945    0.6964    0.5349 4973.5713 4971.4343   Max Flow
+                  C4    4.1987    0.0000    1.1600    0.2537    0.4303 4971.4341 4970.6626   Max Flow
+                  C5   10.6558    0.0000    0.7728    0.4424    0.8733 4970.6800 4969.9073   Max Flow
+                  C6    9.6275    0.0000    2.4677    0.4163    0.5598 4972.0627 4969.8980   Max Flow
+                  C7   19.5389    0.0000    2.4826    1.3509    0.9056 4969.9073 4967.4255   Max Flow
+                  C8   19.2895    0.0000    1.6823    0.6221    0.9203 4967.4255 4965.9377   Max Flow
+                  C9   17.5455    0.0000    0.9561    0.5908    1.1732 4965.9822 4965.0305   Max Flow
+                 C10   24.5291    0.0000    0.7614    0.7114    1.2031 4965.0305 4964.3414   Max Flow
+                 C11   34.6367    0.0000    1.0020    1.6602    1.3520 4964.3523 4963.3521   Max Flow
+
+ *==========================================================*
+ | Table E13a. CULVERT ANALYSIS CLASSIFICATION,             |
+ | and the time the culvert was in a particular             |
+ | classification during the simulation.  The time is       |
+ | in minutes.  The Dynamic Wave Equation is used for       |
+ | all conduit analysis but the culvert flow classification |
+ | condition is based on the HW and TW depths.              |
+ *==========================================================*
+                           Mild      Mild     Steep                Mild      Mild
+                          Slope  Slope TW  Slope TW Slug Flow     Slope     Slope
+                     Critical D   Control   Insignf   Outlet/    TW > D   TW <= D                    
+              Conduit    Outlet    Outlet  Entrance  Entrance    Outlet    Outlet    Outlet     Inlet         Inlet
+                 Name   Control   Control   Control   Control   Control   Control   Control   Control Configuration
+ -------------------- --------- --------- --------- --------- --------- --------- --------- --------- -------------
+
+                   C1    0.0000  360.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                   C2  147.0000  213.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                   C3    0.0000    0.0000  360.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                   C4    0.0000  360.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                   C5    0.0000  360.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                   C6    0.0000  360.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                   C7    0.0000    0.0000  360.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                   C8    4.0000  356.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                   C9    0.0000  360.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                  C10    0.0000  360.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000 None
+                  C11    0.0000    0.0000  345.0000    0.0000    0.0000    0.0000   15.0000    0.0000 None
+
+   *=====================================*
+   |    Kinematic Wave Approximations    |
+   |  Time in Minutes for Each Condition |
+   *=====================================*
+
+              Conduit Duration of     Slope    Super-      Roll
+                 Name Normal Flow  Criteria  Critical     Waves
+ -------------------- ----------- --------- --------- ---------
+                  C1    351.0000  351.0000    1.0000    0.0000
+                  C2      0.0000    0.0000    0.0000    0.0000
+                  C3    223.7500  224.5000  359.5000    0.0000
+                  C4    351.2500  351.5000    0.5000    0.0000
+                  C5    107.6250  148.2500    0.0000    0.0000
+                  C6    356.5000  356.5000    0.0000    0.0000
+                  C7    233.4167  234.5000  359.7500    0.0000
+                  C8    331.7917  340.0000    2.7500    0.0000
+                  C9    126.7500  174.0000    0.0000    0.0000
+                 C10    147.1250  357.2500    0.0000    0.0000
+                 C11     14.5833   14.5833  352.2500    0.0000
+
+ *=========================================================*
+ |     Table E15 - SPREADSHEET INFO LIST                   |
+ | Conduit Flow and Junction Depth Information for use in  |
+ | spreadsheets.  The maximum values in this table are the |
+ | true maximum values because they sample every time step.|
+ | The values in the review results may only be the        |
+ | maximum of a subset of all the time steps in the run.   |
+ | Note: These flows are only the flows in a single barrel.|
+ *=========================================================*
+
+            Conduit      Maximum         Total        Maximum       Maximum    ##             Junction     Invert       Maximum 
+              Name          Flow          Flow       Velocity        Volume    ##               Name      Elevation    Elevation 
+                           (cfs)         (ft^3)        (ft/s)        (ft^3)    ##                           (ft)         (ft)   
+ --------------------  ----------  ------------    ----------    ----------    ##  --------------------  ---------    --------- 
+                  C1       7.2574    8678.0428         1.7760      291.7052    ##                   J1  4973.0000    4973.4888
+                  C2       6.9641   10047.5412         2.1020      354.4916    ##                   J2  4969.0000    4969.5213
+                  C3       4.2339    4959.4929         5.5572       15.7154    ##                   J3  4973.0000    4973.5714
+                  C4       4.2132    4967.8583         1.1729      530.5766    ##                   J4  4971.0000    4971.4350
+                  C5      10.6558   13634.0264         1.2839     1754.0965    ##                   J5  4969.8000    4970.6800
+                  C6       9.6421   11379.6894         2.0074      324.0067    ##                   J6  4969.0000    4969.9099
+                  C7      19.6157   25007.5675         9.8461       70.6823    ##                   J7  4971.5000    4972.0633
+                  C8      19.3399   25085.0230         2.0886     1232.5083    ##                   J8  4966.5000    4967.4266
+                  C9      17.5972   25077.9606         1.3521     4268.0410    ##                   J9  4964.8000    4965.9844
+                 C10      24.5485   39123.1388         1.7632     2145.4978    ##                  J10  4963.8000    4965.0319
+                 C11      34.6593   55490.5089         8.3301      370.3993    ##                  J11  4963.0000    4964.3540
+             FREE# 1      34.6603   55552.5471         0.0000        0.0000    ##                   O1  4962.0000    4963.3524
+
+ *====================================================*
+ |     Table E15a - SPREADSHEET REACH LIST            |
+ | Peak flow and Total Flow listed by Reach or those  |
+ |      conduits or diversions having the same        |
+ |      upstream and downstream nodes.                |
+ *====================================================*
+
+            Upstream           Downstream    Maximum           Total 
+                Node                 Node       Flow            Flow 
+                                               (cfs)          (ft^3) 
+ -------------------- -------------------- ----------       ---------
+                  J1                   J5     7.2574       8678.0428
+                  J2                  J11     6.9641      10047.5412
+                  J3                   J4     4.2339       4959.4929
+                  J4                   J5     4.2132       4967.8583
+                  J5                   J6    10.6558      13634.0264
+                  J7                   J6     9.6421      11379.6894
+                  J6                   J8    19.6157      25007.5675
+                  J8                   J9    19.3399      25085.0230
+                  J9                  J10    17.5972      25077.9606
+                 J10                  J11    24.5485      39123.1388
+                 J11                   O1    34.6593      55490.5089
+
+ #########################################################
+ # Table E16. New Conduit Information Section            #
+ #            Conduit Invert (IE) Elevation and Conduit  #
+ #            Maximum Water Surface (WS) Elevations      #
+ #########################################################
+
+         Conduit Name        Upstream Node      Downstream Node      IE Up      IE Dn      WS Up      WS Dn  Conduit Type
+ -------------------- -------------------- -------------------- ---------- ---------- ---------- ---------- -------------
+                   C1                   J1                   J5     4973.      4970.      4973.      4971.     Trapezoid
+                   C2                   J2                  J11     4969.      4967.      4970.      4967.     Trapezoid
+                   C3                   J3                   J4     4973.      4971.      4974.      4971.     Circular 
+                   C4                   J4                   J5     4971.      4970.      4971.      4971.     Trapezoid
+                   C5                   J5                   J6     4970.      4969.      4971.      4970.     Trapezoid
+                   C6                   J7                   J6     4972.      4969.      4972.      4970.     Trapezoid
+                   C7                   J6                   J8     4969.      4966.      4970.      4967.     Circular 
+                   C8                   J8                   J9     4966.      4965.      4967.      4966.     Trapezoid
+                   C9                   J9                  J10     4965.      4964.      4966.      4965.     Trapezoid
+                  C10                  J10                  J11     4964.      4963.      4965.      4964.     Trapezoid
+                  C11                  J11                   O1     4963.      4962.      4964.      4963.     Circular 
+
+ *=============================================================================*
+ |    Table E18 - Junction Continuity Error.   Division by Volume added 11/96  |
+ |                                                                             |
+ |  Continuity Error = Net Flow + Beginning Volume - Ending Volume             |
+ |                     -------------------------------------------------       |
+ |                     Total Flow + (Beginning Volume + Ending Volume)/2       |
+ |                                                                             |
+ |  Net Flow   = Node Inflow - Node Outflow                                    |
+ |  Total Flow = absolute (Inflow + Outflow)                                   |
+ |  Intermediate column is a judgement on the node continuity error.           |
+ |                                                                             |
+ |  Excellent  < 1 percent    Great  1 to  2 percent  Good  2 to  5 percent    |
+ |  Fair  5 to 10  percent    Poor  10 to 25 percent  Bad  25 to 50 percent    |
+ |  Terrible > 50  percent                                                     |
+ *=============================================================================*
+
+             Junction    <------Continuity Error ------->   Remaining   Beginning    Net Flow  Total Flow Failed to
+                 Name      Volume  % of Node  % of Inflow      Volume      Volume   Thru Node   Thru Node  Converge
+ --------------------    --------  ----------  ----------    --------  ----------  ----------  ---------- ---------
+                  J1    -19.3777     -0.1118      0.0350      0.3271      0.0000    -19.0506  17338.3743         0
+                  J2    -43.2923     -0.2159      0.0782      0.1831      0.0000    -43.1092  20051.5651         0
+                  J3     -2.2807     -0.0230      0.0041      0.0027      0.0000     -2.2780   9917.5118         0
+                  J4    -11.5004     -0.1158      0.0208      0.2362      0.0000    -11.2642   9927.3511         0
+                  J5      8.1723      0.0300      0.0148      0.9450      0.0000      9.1174  27279.9275         0
+                  J6      3.5263      0.0070      0.0064      0.4553      0.0000      3.9816  50021.2833         0
+                  J7    -18.5444     -0.0815      0.0335      0.0569      0.0000    -18.4875  22742.6267         0
+                  J8    -62.5363     -0.1248      0.1130      0.8290      0.0000    -61.7073  50092.5905         0
+                  J9    -20.5677     -0.0410      0.0372      3.3090      0.0000    -17.2587  50162.9836         0
+                 J10      1.8142      0.0023      0.0033      3.3974      0.0000      5.2116  78260.5959         0
+                 J11      5.5405      0.0050      0.0100      1.0167      0.0000      6.5572 110954.9528         0
+                  O1     -0.1633     -0.0001      0.0003      0.0468      0.0000     -0.1165 111043.0561         0
+ The total continuity error was  -159.21     cubic feet
+ The remaining total volume was   10.805     cubic feet
+ Your mean node continuity error was   Excellent                               
+ Your worst node continuity error was  Excellent                               
+
+   *===================================================*
+   |  Table E19 - Junction Inflow & Outflow Listing    |
+   |              Units are either ft^3 or m^3         |
+   |              depending on the units in your model.|
+   *===================================================*
+
+                        Constant       User       Interface       DWF         Inflow    RNF Layer     Inflow                                          
+             Junction     Inflow      Inflow        Inflow       Inlow       through      Inflow       from        Outflow    Evaporation       Basin 
+                 Name    to Node     to Node       to Node      to Node      Outfall      to Node    2D Layer     from Node    from Node        Infil.
+ --------------------  ----------  -----------  -----------  -----------  -----------  -----------  -----------  -----------  -----------  -----------
+                  J1      0.0000       0.0000       0.0000       0.0000       0.0000    8648.4041       0.0000       0.0000       0.0000         0.00
+                  J2      0.0000       0.0000       0.0000       0.0000       0.0000    9990.7118       0.0000       0.0000       0.0000         0.00
+                  J3      0.0000       0.0000       0.0000       0.0000       0.0000    4949.8265       0.0000       0.0000       0.0000         0.00
+                  J7      0.0000       0.0000       0.0000       0.0000       0.0000   11345.6915       0.0000       0.0000       0.0000         0.00
+                 J10      0.0000       0.0000       0.0000       0.0000       0.0000   14042.9962       0.0000       0.0000       0.0000         0.00
+                 J11      0.0000       0.0000       0.0000       0.0000       0.0000    6286.6303       0.0000       0.0000       0.0000         0.00
+                  O1      0.0000       0.0000       0.0000       0.0000       0.0000       0.0000       0.0000   55552.5471       0.0000         0.00
+
+   *=====================================================*
+   | Table E20 - Junction Flooding and Volume Listing.   |
+   |             The maximum volume is the total volume  |
+   |             in the node including the volume in the |
+   |             flooded storage area. This is the max   |
+   |             volume at any time. The volume in the   |
+   |             flooded storage area is the total volume|
+   |             above the ground elevation, where the   |
+   |             flooded pond storage area starts.       |
+   | The fourth column is instantaneous, the fifth is the|
+   | sum of the flooded volume over the entire simulation|
+   | Units are either ft^3 or m^3 depending on the units.|
+   *=====================================================*
+
+                                                     Out of               Passed to 2D cell
+                                                  1D-System               OR  Volume Stored
+             Junction    Surcharged   Flooded      (Flooded     Maximum    in allowed Flood
+                 Name    Time (min)  Time(min)      Volume)      Volume   Pond of 1D-System
+ --------------------    ----------  ---------    ---------   ---------   -----------------
+                   J1       0.000       0.000       0.000    6.14           0.000
+                   J2       0.000       0.000       0.000    6.55           0.000
+                   J3       0.000       0.000       0.000    7.18           0.000
+                   J4       0.000       0.000       0.000    5.47           0.000
+                   J5       0.000       0.000       0.000    11.1           0.000
+                   J6       0.000       0.000       0.000    11.4           0.000
+                   J7       0.000       0.000       0.000    7.08           0.000
+                   J8       0.000       0.000       0.000    11.6           0.000
+                   J9       0.000       0.000       0.000    14.9           0.000
+                  J10       0.000       0.000       0.000    15.5           0.000
+                  J11       0.000       0.000       0.000    17.0           0.000
+                   O1       0.000       0.000       0.000    17.0           0.000
+
+ *==================================*
+ | Simulation Specific Information  |
+ *==================================*
+ Number of Input Conduits..........        11 Number of Simulated Conduits......        12
+ Number of Natural Channels........         0 Number of Junctions...............        12
+ Number of Storage Junctions.......         0 Number of Weirs...................         0
+ Number of Orifices................         0 Number of Pumps...................         0
+ Number of Free Outfalls...........         1 Number of Tide Gate Outfalls......         0
+
+
+ *=========================================================*
+ | Average % Change in Junction or Conduit is defined as:  |
+ | Conduit  % Change ==> 100.0 ( Q(n+1) - Q(n) ) / Qfull   |
+ | Junction % Change ==> 100.0 ( Y(n+1) - Y(n) ) / Yfull   |
+ *=========================================================*
+
+ The Conduit with the largest average change was..                 C11 with     0.100 percent
+ The Junction with the largest average change was.                 J11 with     0.098 percent
+ The Conduit with the largest sinuosity was.......                 C11 with     0.354
+
+
+ *===================================================================*
+ | Table E21. Continuity balance at the end of the simulation        |
+ |            Junction Inflow, Outflow or Street Flooding            |
+ | Error = Inflow  + Initial Volume - Outflow - Final   Volume       |
+ *===================================================================*
+
+             Inflow          Inflow       Average
+             Junction   Volume,ft^3   Inflow, cfs
+ --------------------  ------------  -------------
+                  J1     8660.3315         0.4009
+                  J2    10004.0239         0.4631
+                  J3     4958.0189         0.2295
+                  J7    11362.9374         0.5261
+                 J10    14059.4966         0.6509
+                 J11     6293.7639         0.2914
+                  O1   -55552.5471        -2.5719
+
+             Outflow      Outflow          Average
+             Junction  Volume,ft^3    Outflow, cfs
+ --------------------  ------------   ------------
+                  O1    55552.5471         2.5719
+
+
+ *=====================================================*
+ | Initial system volume        =         0.0000 Cu Ft |
+ | Total system inflow volume   =     55264.2604 Cu Ft |
+ | Inflow + Initial volume      =     55264.2604 Cu Ft |
+ *=====================================================*
+ | Total system outflow         =     55552.5471 Cu Ft |
+ | Volume left (Final volume)   =        10.8050 Cu Ft |
+ | Evaporation                  =         0.0000 Cu Ft |
+ | Basin Infiltration           =         0.0000 Cu Ft |
+ | Outflow + Final Volume       =     55563.3521 Cu Ft |
+ *=====================================================*
+
+ *===============================================*
+ | Total Model Continuity Error                  |
+ | Error in Continuity, Percent =        -0.5412 |
+ | Error in Continuity, ft^3    =      -299.0918 |
+ | + Error means a continuity loss, - a gain     |
+ *===============================================*
+
+
+ ###################################################
+ # Table E22. Numerical Model judgement section    #
+ ###################################################
+
+ Overall error was (minimum of Table E18 & E21)             -0.2881 percent
+ Worst nodal error was in node J8                   with    -0.1248 percent
+ Of the total inflow this loss was                           0.1132 percent
+ Your overall continuity error was                  Excellent
+                                                   Fair Efficiency
+ Efficiency of the simulation                       4.03
+ Most Number of Non Convergences at one Node        0.
+ Total Number Non Convergences at all Nodes         0.
+ Total Number of Nodes with Non Convergences        0.
+
+
+ #########################################################
+ # Table E23. New Basin Design Information               #
+ #            Maximum Hydraulic Grade Line,              #
+ #            Out Conduit Sizes and Maximum Flow         #
+ #########################################################
+
+ A) Resize d/s Pipes based on given HGL
+ B) Resize Basin based on given HGL
+ C) Resize d/s Pipes and Basin based on HGL and max discharge
+ D) Resize d/s pipes based on given max discharge
+
+         Basin Name    Type    Max.HGL        Conduit         Depth   Width   Barrels   Max.Flow
+                                 (ft)                          (ft)    (ft)             (ft^3/s)
+ -------------------- ------  --------- -------------------- ------- ------- --------- ---------
+
+ ===> Hydraulic model simulation ended normally.
+ ===> XP-SWMM Simulation ended normally.
+ ===> Your input file was named  : D:\proj\fnafpm\training\xp2icm\model\xp\1D\xp\xp.DAT
+ ===> Your output file was named : D:\proj\fnafpm\training\xp2icm\model\xp\1D\xp\xp.out
+
+ *==============================================================*
+ |         XPSWMM/XPSTORM Simulation Date and Time Summary      |
+ *==============================================================*
+ | Starting Date... October    31, 2026  Time...  20:36:29.946  |
+ |   Ending Date... October    31, 2026  Time...  20:36:30.965  |
+ |  Elapsed Time...    0.01562 minutes or      0.93750 seconds  |
+ *==============================================================*
+
