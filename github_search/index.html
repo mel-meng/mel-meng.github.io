@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b34">
+  <meta name="description" content="Search and preview Ruby scripts and SQL queries in the Open-Source-Support InfoWorks ICM repository.">
+  <title>ICM Script Finder</title>
+  <style>
+    :root{color-scheme:light;--ink:#152723;--muted:#65756f;--line:#dce5df;--paper:#f4f7f3;--white:#fff;--green:#176c52;--green-dark:#123b34;--mint:#e6f3ed;--gold:#e5b65b;--shadow:0 14px 38px #163d3210}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:inherit}.wrap{max-width:1200px;margin:0 auto;padding:34px 24px 54px}
+    .topline{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:48px;color:#d7ebe1;font-size:13px;letter-spacing:.02em}
+    .brand{display:flex;align-items:center;gap:10px;color:var(--green-dark);font-weight:750}.mark{width:30px;height:30px;border-radius:10px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:16px}
+    .topline a{color:var(--green-dark);font-weight:650;text-decoration:none}.topline a:hover{text-decoration:underline}
+    .hero{max-width:780px;margin-bottom:28px}.eyebrow{margin:0 0 10px;color:var(--green);font-size:12px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}
+    h1{margin:0;color:var(--green-dark);font-size:clamp(36px,6vw,58px);line-height:1.04;letter-spacing:-.045em}.intro{max-width:610px;margin:16px 0 0;color:var(--muted);font-size:16px}
+    .search-card{padding:18px;background:var(--white);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+    .search-row{display:flex;gap:12px}.searchbox{position:relative;flex:1}.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#798780;font-size:19px;pointer-events:none}
+    input[type=search]{width:100%;height:54px;border:1px solid var(--line);border-radius:12px;padding:0 16px 0 46px;color:var(--ink);font:inherit;font-size:16px;outline:none}input[type=search]:focus{border-color:#6eac91;box-shadow:0 0 0 3px #d6ede1}
+    .clear{height:54px;padding:0 20px;border:0;border-radius:12px;background:var(--green);color:#fff;font:inherit;font-weight:700;cursor:pointer}.clear:hover{background:#11563f}
+    .tools{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:16px}.filters{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.filter-label{margin-right:4px;color:var(--muted);font-size:13px;font-weight:650}
+    .filter{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#50615b;font:inherit;font-size:13px;font-weight:650;cursor:pointer}.filter[aria-pressed=true]{border-color:var(--green);background:var(--mint);color:var(--green-dark)}
+    .index-note{color:var(--muted);font-size:12px}.index-note a{color:var(--green)}
+    .stats{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:25px 2px 12px;color:var(--muted);font-size:13px}.stats strong{color:var(--ink)}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.82fr);gap:16px;align-items:start}.results{display:grid;gap:9px;min-width:0}
+    .result{width:100%;padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:var(--white);text-align:left;cursor:pointer;transition:border-color .15s,transform .15s}.result:hover{border-color:#8db8a3;transform:translateY(-1px)}.result.selected{border-color:var(--green);box-shadow:0 0 0 2px #d7ece0}
+    .result-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.result-title{margin:0;color:var(--green-dark);font-size:15px;font-weight:720;overflow-wrap:anywhere}.badge{flex:none;padding:3px 8px;border-radius:999px;background:#edf3ef;color:#45675a;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}.badge.sql{background:#edf0fa;color:#465a8c}.path{display:block;margin-top:6px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}.result-meta{display:flex;gap:12px;margin-top:9px;color:#738079;font-size:11px}
+    .empty,.loading,.error{padding:32px 20px;border:1px dashed var(--line);border-radius:14px;background:#ffffffa8;color:var(--muted);text-align:center}.empty strong,.error strong{display:block;margin-bottom:5px;color:var(--ink)}.error button{margin-top:14px}
+    .preview{position:sticky;top:18px;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.preview-head{padding:15px 17px;border-bottom:1px solid var(--line)}.preview-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.preview-label{color:var(--green);font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.preview-actions{display:flex;gap:7px}.action{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--green-dark);font-size:12px;font-weight:700;text-decoration:none;cursor:pointer}.action.primary{border-color:var(--green);background:var(--green);color:#fff}.action:hover{filter:brightness(.96)}.preview-title{margin:12px 0 3px;color:var(--green-dark);font-size:15px;line-height:1.35;overflow-wrap:anywhere}.preview-path{margin:0;color:var(--muted);font-size:11px;overflow-wrap:anywhere}.preview-body{height:min(58vh,560px);min-height:260px;overflow:auto;background:#101c1a;color:#d8e7e1}.preview-placeholder{height:100%;display:grid;place-content:center;padding:24px;color:#9ab3a8;text-align:center}.preview-placeholder b{display:block;margin-bottom:6px;color:#d5e8de;font-size:24px}.preview pre{margin:0;padding:17px;white-space:pre;overflow:auto;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2}.preview-foot{padding:9px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}
+    .snip{display:block;margin-top:7px;color:#41524c;font-size:13px;overflow-wrap:anywhere}mark{background:#fbe9b3;color:inherit;border-radius:3px;padding:0 1px}.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}.chip{padding:2px 9px;border:1px solid var(--line);border-radius:999px;background:var(--mint);color:var(--green-dark);font:inherit;font-size:11px;font-weight:650;cursor:pointer}.chip:hover{border-color:var(--green)}.kwbar{display:flex;flex-wrap:wrap;gap:5px;padding:12px 17px 0}.preview pre.readme{white-space:pre-wrap;overflow-wrap:anywhere}.preview mark{background:#8a6d1f;color:#fff}.badge.python{background:#fff3d6;color:#7a5a12}.badge.other{background:#f0eaf5;color:#5e4a78}.result{display:block}
+    .tags{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px}.tags[hidden]{display:none}.tag-group{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}.tag-label{color:var(--muted);font-size:12px}.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 4px 3px 10px;border:1px solid #cfe3d8;border-radius:999px;background:var(--mint);color:var(--green-dark);font-size:12px;font-weight:650}.tag-x{width:18px;height:18px;border:0;border-radius:50%;background:transparent;color:var(--green-dark);font:inherit;font-size:14px;line-height:1;cursor:pointer}.tag-x:hover{background:#c9e3d6}
+    .footer{margin-top:34px;color:var(--muted);font-size:12px;text-align:center}.footer a{color:var(--green)}
+    @media(max-width:820px){.layout{grid-template-columns:1fr}.preview{position:static}.preview-body{height:45vh}.topline{margin-bottom:34px}}
+    @media(max-width:540px){.wrap{padding:22px 14px 38px}.search-row{gap:8px}.clear{padding:0 13px}.search-card{padding:13px}.stats{align-items:flex-start;flex-direction:column;gap:3px}.result{padding:13px}.topline{margin-bottom:30px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topline">
+      <div class="brand"><span class="mark" aria-hidden="true">⌕</span> Autodesk Water · Community scripts</div>
+      <a href="https://github.com/innovyze/Open-Source-Support/tree/main/01%20InfoWorks%20ICM" target="_blank" rel="noreferrer">Open ICM folder on GitHub ↗</a>
+    </div>
+    <section class="hero">
+      <p class="eyebrow">InfoWorks ICM · Script library</p>
+      <h1>Find the script<br>you need.</h1>
+      <p class="intro">Search keywords and README text across the community scripts, queries, models and workflows. Choose a result to read its README and open the source.</p>
+    </section>
+    <section class="search-card" aria-label="Search scripts">
+      <div class="search-row">
+        <div class="searchbox"><span class="search-icon" aria-hidden="true">⌕</span><input id="query" type="search" placeholder="Try: rainfall, manning, export csv, trace upstream…" autocomplete="off" aria-label="Search keywords and README text"></div>
+        <button class="clear" id="clear" type="button">Clear</button>
+      </div>
+      <div class="tags" id="tags" hidden aria-label="Related keywords added to the search"></div>
+      <div class="tools">
+        <div class="filters" role="group" aria-label="Filter by type">
+          <span class="filter-label">Show</span>
+          <button class="filter" type="button" data-type="all" aria-pressed="true">All</button>
+          <button class="filter" type="button" data-type="Ruby" aria-pressed="false">Ruby</button>
+          <button class="filter" type="button" data-type="SQL" aria-pressed="false">SQL</button><button class="filter" type="button" data-type="Python" aria-pressed="false">Python</button><button class="filter" type="button" data-type="Other" aria-pressed="false">Other</button>
+        </div>
+        <div class="index-note" id="index-note">Loading index…</div>
+      </div>
+    </section>
+    <div class="stats"><span id="count"><strong>Loading</strong> index…</span><span>Search matches keywords, titles and README text</span></div>
+    <section class="layout" aria-label="Script search results and preview">
+      <div class="results" id="results" aria-live="polite"><div class="loading">Loading the search index…</div></div>
+      <aside class="preview" aria-label="File preview">
+        <div class="preview-head" id="preview-head"><div class="preview-top"><span class="preview-label">Preview</span><div class="preview-actions" id="preview-actions"></div></div><h2 class="preview-title" id="preview-title">Select a script</h2><p class="preview-path" id="preview-path">Its source will appear here.</p></div>
+        <div class="preview-body" id="preview-body"><div class="preview-placeholder"><div><b>⌕</b>Choose a result to inspect the code.</div></div></div>
+        <div class="preview-foot" id="preview-foot">README shown from GitHub; falls back to the indexed text.</div>
+      </aside>
+    </section>
+    <div class="footer">Community scripts are provided in the source repository. Review each script before using it in a model.<br><a href="https://github.com/innovyze/Open-Source-Support" target="_blank" rel="noreferrer">innovyze/Open-Source-Support</a></div>
+  </main>
+  <script>
+    (() => {
+      const OWNER = 'innovyze', REPO = 'Open-Source-Support', BRANCH = 'main';
+      const ROOT = '01 InfoWorks ICM/';
+      const enc = path => path.split('/').map(encodeURIComponent).join('/');
+      const rawUrl = path => `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${enc(path)}`;
+      const treeUrl = path => `https://github.com/${OWNER}/${REPO}/tree/${BRANCH}/${enc(path)}`;
+      const blobUrl = path => `https://github.com/${OWNER}/${REPO}/blob/${BRANCH}/${enc(path)}`;
+      const el = id => document.getElementById(id);
+      const query = el('query'), resultRoot = el('results');
+      const KINDS = ['Ruby', 'SQL', 'Python', 'Other'];
+      let entries = [], selected = null, kind = 'all', reqId = 0;
+
+      const esc = v => String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const kindGroup = e => KINDS.includes(e.kind) ? e.kind : 'Other';
+      const folderPath = e => ROOT + e.path;
+      const RELATED_WEIGHT = 0.6; // related tags rank below the word the user actually typed
+      let synonyms = {};
+      const dismissed = {}; // typed word -> Set of related words the user removed
+
+      // Typed words, merging neighbours into a phrase when the phrase has synonyms (e.g. "selection list").
+      function units() {
+        const words = query.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+        const out = [];
+        for (let i = 0; i < words.length; i++) {
+          const pair = words[i + 1] ? words[i] + ' ' + words[i + 1] : '';
+          const term = pair && synonyms[pair] ? (i++, pair) : words[i];
+          const gone = dismissed[term] || new Set();
+          const tags = (synonyms[term] || []).filter(t => !gone.has(t) && !words.includes(t));
+          out.push({term, tags});
+        }
+        return out;
+      }
+      const flatTerms = us => us.flatMap(u => [u.term, ...u.tags]);
+
+      function scoreWord(e, t) {
+        const title = e.title.toLowerCase(), path = e.path.toLowerCase(), text = e.text.toLowerCase();
+        let s = 0;
+        const ki = e.keywords.indexOf(t);
+        if (ki >= 0) s += 12 + Math.max(0, 8 - ki); // earlier keywords are more characteristic of the script
+        else if (e.keywords.some(k => k.includes(t))) s += 6;
+        if (title.includes(t)) s += 10;
+        if (path.includes(t)) s += 4;
+        const n = text.split(t).length - 1;
+        if (n) s += Math.min(n, 5);
+        return s;
+      }
+      // AND across typed words; within one word the typed word OR any active related tag may match.
+      function score(e, us) {
+        let total = 0;
+        for (const u of us) {
+          const exact = scoreWord(e, u.term);
+          const related = Math.max(0, ...u.tags.map(t => scoreWord(e, t))) * RELATED_WEIGHT;
+          const s = Math.max(exact, related);
+          if (!s) return 0;
+          total += s;
+        }
+        return total;
+      }
+      function renderTags(us) {
+        const rows = us.filter(u => u.tags.length || (dismissed[u.term] && dismissed[u.term].size));
+        const root = el('tags');
+        if (!rows.length) { root.hidden = true; root.innerHTML = ''; return; }
+        root.hidden = false;
+        root.innerHTML = rows.map(u => `<span class="tag-group"><span class="tag-label">${esc(u.term)} also:</span>${u.tags.map(t => `<span class="tag">${esc(t)}<button type="button" class="tag-x" data-term="${esc(u.term)}" data-tag="${esc(t)}" aria-label="Remove ${esc(t)}">×</button></span>`).join('') || '<span class="tag-label">(none)</span>'}</span>`).join('');
+      }
+      function highlight(text, ts) {
+        const safe = esc(text);
+        if (!ts.length) return safe;
+        const re = new RegExp('(' + ts.map(t => escRe(esc(t))).join('|') + ')', 'gi');
+        return safe.replace(re, '<mark>$1</mark>');
+      }
+      function snippet(e, ts) {
+        const text = e.text;
+        const low = text.toLowerCase();
+        const hits = ts.map(t => low.indexOf(t)).filter(i => i >= 0);
+        if (!hits.length) return e.summary || text.slice(0, 220);
+        const at = Math.min(...hits);
+        const start = Math.max(0, at - 70);
+        return (start ? '… ' : '') + text.slice(start, start + 240) + (start + 240 < text.length ? ' …' : '');
+      }
+      function matches() {
+        const us = units();
+        return entries
+          .filter(e => kind === 'all' || kindGroup(e) === kind)
+          .map(e => ({e, s: us.length ? score(e, us) : 1}))
+          .filter(x => x.s > 0)
+          .sort((a, b) => b.s - a.s || a.e.path.localeCompare(b.e.path, undefined, {numeric: true}))
+          .map(x => x.e);
+      }
+      function render() {
+        const us = units(), ts = flatTerms(us), list = matches();
+        renderTags(us);
+        el('count').innerHTML = `<strong>${list.length.toLocaleString()}</strong> of ${entries.length.toLocaleString()} entries`;
+        if (!list.length) { resultRoot.innerHTML = '<div class="empty"><strong>No matches</strong>Try fewer or different words.</div>'; return; }
+        const shown = list.slice(0, 60);
+        resultRoot.innerHTML = shown.map(e => `<div class="result${e === selected ? ' selected' : ''}" role="button" tabindex="0" data-path="${esc(e.path)}"><span class="result-head"><span class="result-title">${highlight(e.title, ts)}</span><span class="badge ${esc(kindGroup(e).toLowerCase())}">${esc(e.kind)}</span></span><span class="path">${esc(e.path)}</span><span class="snip">${highlight(snippet(e, ts), ts)}</span><span class="chips">${e.keywords.slice(0, 8).map(k => `<button type="button" class="chip" data-kw="${esc(k)}">${esc(k)}</button>`).join('')}</span></div>`).join('');
+        if (list.length > shown.length) resultRoot.insertAdjacentHTML('beforeend', `<div class="empty">Showing the top ${shown.length}. Add a keyword to narrow the list.</div>`);
+      }
+      async function select(e) {
+        selected = e;
+        const id = ++reqId;
+        el('preview-title').textContent = e.title;
+        el('preview-path').textContent = e.path || 'InfoWorks ICM';
+        const links = [`<a class="action primary" href="${esc(treeUrl(folderPath(e).replace(/\/$/, '')))}" target="_blank" rel="noreferrer">Open folder ↗</a>`]
+          .concat(e.files.filter(f => /\.(rb|sql|py)$/i.test(f)).slice(0, 3).map(f => `<a class="action" href="${esc(blobUrl(folderPath(e) + '/' + f))}" target="_blank" rel="noreferrer">${esc(f)} ↗</a>`));
+        el('preview-actions').innerHTML = links.join('');
+        const ts = flatTerms(units());
+        const fallback = `<pre class="readme">${highlight(e.text, ts)}</pre>`;
+        el('preview-body').innerHTML = `<div class="kwbar">${e.keywords.map(k => `<button type="button" class="chip" data-kw="${esc(k)}">${esc(k)}</button>`).join('')}</div>${fallback}`;
+        el('preview-foot').textContent = `Files: ${e.files.join(', ') || 'none'}`;
+        render();
+        if (e.readme) {
+          try {
+            const r = await fetch(rawUrl(folderPath(e) + '/' + e.readme));
+            if (r.ok && id === reqId) {
+              const full = await r.text();
+              el('preview-body').querySelector('pre').innerHTML = highlight(full, ts);
+            }
+          } catch (_) { /* keep the indexed text */ }
+        }
+      }
+      function setKind(v) {
+        kind = v;
+        document.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.type === v)));
+        render();
+      }
+      function useKeyword(k) { query.value = k; render(); query.focus(); }
+
+      async function load() {
+        try {
+          const r = await fetch('search-index.json');
+          if (!r.ok) throw new Error(`search-index.json returned ${r.status}`);
+          const data = await r.json();
+          entries = data.entries;
+          synonyms = data.synonyms || {};
+          el('index-note').textContent = `${entries.length.toLocaleString()} entries indexed`;
+          const p = new URLSearchParams(location.search);
+          if (p.has('q')) query.value = p.get('q');
+          render();
+        } catch (err) {
+          el('count').innerHTML = '<strong>Could not load</strong> the index';
+          resultRoot.innerHTML = `<div class="error"><strong>Unable to load search-index.json</strong>${esc(err.message)}<br>Run <code>python build_index.py</code> and serve this folder over http.</div>`;
+        }
+      }
+      query.addEventListener('input', render);
+      el('clear').addEventListener('click', () => { query.value = ''; Object.keys(dismissed).forEach(k => delete dismissed[k]); setKind('all'); query.focus(); });
+      document.querySelectorAll('.filter').forEach(b => b.addEventListener('click', () => setKind(b.dataset.type)));
+      document.addEventListener('click', ev => {
+        const x = ev.target.closest('.tag-x');
+        if (x) {
+          (dismissed[x.dataset.term] = dismissed[x.dataset.term] || new Set()).add(x.dataset.tag);
+          render();
+          return;
+        }
+        const chip = ev.target.closest('.chip');
+        if (chip) { ev.stopPropagation(); useKeyword(chip.dataset.kw); return; }
+        const row = ev.target.closest('.result');
+        if (row) select(entries.find(x => x.path === row.dataset.path));
+      });
+      resultRoot.addEventListener('keydown', ev => { if (ev.key === 'Enter' && ev.target.classList.contains('result')) ev.target.click(); });
+      load();
+    })();
+  </script>
+</body>
+</html>
+
